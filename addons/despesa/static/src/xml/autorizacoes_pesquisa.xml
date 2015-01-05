@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="AutorizacoesPesquisa">
+        <div class="ui-toolbar oe_inline text_center" style="margin-bottom:0px;">
+
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Tipo de Documento :</h4>
+                <select class="oe_despesa_select_tipo_documento" >
+
+                </select>
+            </div>
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Utilizador :</h4>
+                <select class="oe_despesa_select_user" >
+
+                </select>
+            </div>
+
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <script>
+                    $(function() {
+                    $( "#autorizacao_from" ).datepicker({
+                        dateFormat: 'dd-mm-yy',
+                        changeMonth: true,
+                        changeYear: true     }).val();
+                    });
+                </script>
+                <h4>Desde a data: </h4>
+                <input type="text" id="autorizacao_from" class="oe_despesa_autorizacao_date_from"/>
+
+            </div>
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <script>
+                    $(function() {
+                        $( "#autorizacao_to" ).datepicker({
+                            dateFormat: 'dd-mm-yy',
+                            changeMonth: true,
+                            changeYear: true     }).val();
+                   });
+                </script>
+                <h4>Até a data: </h4>
+                <input type="text" id="autorizacao_to" class="oe_despesa_autorizacao_date_to"/>
+
+            </div>
+
+        </div>
+
+    </t>
+
+</templates>

@@ -1,0 +1,1301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+       <!-- Vista Estacionamento de Moradores 1 -->
+        <record id="view_sncp_receita_controlo_est_mor_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.est.mor.tree</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Estacionamento de Moradores">
+                    <field name="name" invisible="1"/>
+                    <field name="partner_id"/>
+                    <field name="sequencia"/>
+                    <field name="arruamento_id"/>
+                    <field name="inicio"/>
+                    <field name="fim"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_controlo_est_mor_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.est.mor.form</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Estacionamento de Moradores" version="7.0">
+                    <header>
+                        <div class="oe_inline">
+                            <button name="activar" string="Activar" type="object"
+                                    attrs="{'invisible': ['|',('id', '=', False),
+                                                              ('state', 'not in', ['draft'])]}"/>
+                            <button name="renovar" string="Renovar" type="object"
+                                    attrs="{'invisible': ['|',('renova_req', '=', False),
+                                                              ('state', 'in', ['draft'])]}"/>
+                        </div>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+
+                    <group>
+                        <field name="id" invisible="1"/>
+                        <field name="name" invisible="1"/>
+                        <field name="sector_id" options="{'no_open': True}"
+                               on_change="on_change_sector_id(sector_id)"
+                               attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"
+                               domain="[('tipo_controlo', 'in', ['1'])]" required="1"/>
+                        <field name="item_descr" readonly="1"/>
+                        <field name="partner_id" required="1" options="{'no_open': True}"
+                               on_change="on_change_partner_id(partner_id)"
+                               attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                        <field name="sequencia" readonly="1"
+                               attrs="{'invisible': [('id', '=', False)]}"/>
+                    </group>
+                    <group>
+                        <group>
+                            <label for="duracao_num"/>
+                            <div class="oe_inline">
+                                <field name="duracao_num" class="oe_inline"
+                                       attrs="{'required': [('duracao_tipo', 'not in', ['perpetual', 'indfly'])],
+                                               'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="duracao_tipo" required="1" class="oe_inline"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            </div>
+                            <field name="inicio" required="1"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                            ('state', 'not in', ['draft'])]}"/>
+                            <field name="fim" readonly="1"/>
+                            <field name="renovacoes" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="freguesia_id" required="1" options="{'no_open': True}"
+                                   on_change="on_change_freguesia_id(freguesia_id)"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="bairro_id" options="{'no_open': True}"
+                                   attrs="{'readonly': ['|',('freguesia_id', '=', False),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="arruamento_id" required="1" options="{'no_open': True}"
+                                   attrs="{'readonly': ['!',('freguesia_id', '=', False),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="num_itens" required="1"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="comprimento" invisible="1"/>
+                            <field name="largura" invisible="1"/>
+                            <field name="altura" invisible="1"/>
+                            <field name="area" invisible="1"/>
+                            <field name="volume" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notas"
+                               attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                    </group>
+                    <group>
+                        <field name="renova_req" invisible="1"/>
+                        <label for="despacho_user_id" />
+                        <div class="oe_inline">
+                            <field name="despacho_user_id" options="{'no_open': True}"
+                                   class="my_oe_r_space_50 oe_inline"
+                                   attrs="{'required': [('renova_req', '=', True)],
+                                           'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="despacho_data" class="oe_inline"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                        </div>
+                    </group>
+                    <group>
+                        <field name="controlo_guias_ids" readonly="1">
+                            <tree string="Guias">
+                                <field name="name"/>
+                                <field name="controlo_id" invisible="1"/>
+                                <field name="guia_id" invisible="1"/>
+                                <field name="data_emissao"/>
+                                <field name="montante"/>
+                                <field name="parceiro_ref"/>
+                                <field name="data_ini"/>
+                                <field name="data_fim"/>
+                            </tree>
+                        </field>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_controlo_est_mor_view">
+                <field name="name">Estacionamento de Moradores</field>
+                <field name="res_model">sncp.receita.controlo</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_est_mor_tree"/>
+                <field name="domain">[('sector_id.tipo_controlo','=','1')]</field>
+        </record>
+            <record id="action_sncp_receita_controlo_est_mor_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_est_mor_tree"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_est_mor_view"/>
+            </record>
+            <record id="action_sncp_receita_controlo_est_mor_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_est_mor_form"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_est_mor_view"/>
+            </record>
+        <menuitem name="Controlo de Receitas Renováveis"  parent="menu_receita" id="menu_receita_controlo"
+                      sequence="50"/>
+                <menuitem name="Estacionamento de Moradores" parent="menu_receita_controlo"
+                          id="menu_sncp_receita_controlo_est_mor_view"
+                          action="action_sncp_receita_controlo_est_mor_view" sequence="10"/>
+
+        <!-- Vista Estacionamento privativo 2 -->
+        <record id="view_sncp_receita_controlo_est_priv_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.est.priv.tree</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Estacionamento privativo">
+                    <field name="partner_id"/>
+                    <field name="sequencia"/>
+                    <field name="arruamento_id"/>
+                    <field name="numero"/>
+                    <field name="finalidade_id"/>
+                    <field name="inicio"/>
+                    <field name="fim"/>
+                    <field name="name" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_controlo_est_priv_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.est.priv.form</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Estacionamento privativo" version="7.0">
+                    <header>
+                        <div class="oe_inline">
+                            <button name="activar" string="Activar" type="object"
+                                    attrs="{'invisible': ['|',('id', '=', False),
+                                                              ('state', 'not in', ['draft'])]}"/>
+                            <button name="renovar" string="Renovar" type="object"
+                                    attrs="{'invisible': ['|',('renova_req', '=', False),
+                                                              ('state', 'in', ['draft'])]}"/>
+
+                        </div>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+
+                    <group>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="sector_id" options="{'no_open': True}"
+                                   on_change="on_change_sector_id(sector_id)"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"
+                                   domain="[('tipo_controlo', 'in', ['2'])]" required="1"/>
+                            <field name="item_descr" readonly="1"/>
+                            <field name="partner_id" required="1" options="{'no_open': True}"
+                               on_change="on_change_partner_id(partner_id)"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="sequencia" readonly="1"
+                                   attrs="{'invisible': [('id', '=', False)],
+                                           'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <label for="duracao_num"/>
+                            <div class="oe_inline">
+                                <field name="duracao_num" class="oe_inline"
+                                       attrs="{'required': [('duracao_tipo', 'not in', ['perpetual', 'indfly'])],
+                                               'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="duracao_tipo" required="1" class="oe_inline"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            </div>
+                            <field name="inicio" required="1"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="fim" readonly="1"/>
+                            <field name="renovacoes" readonly="1"/>
+
+                        </group>
+                        <group>
+                            <field name="freguesia_id" required="1" options="{'no_open': True}"
+                                   on_change="on_change_freguesia_id(freguesia_id)"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="bairro_id" options="{'no_open': True}"
+                                   attrs="{'readonly': ['|',('freguesia_id', '=', False),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="arruamento_id" required="1" options="{'no_open': True}"
+                                   attrs="{'readonly': ['|',('freguesia_id', '=', False),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="numero" required="1"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="num_itens" required="1"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="comprimento"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="largura"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="altura" invisible="1"/>
+                            <field name="area" invisible="1"/>
+                            <field name="volume" invisible="1"/>
+                        </group>
+                        <field name="name" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="renova_req" invisible="1"/>
+                        <label for="despacho_user_id" />
+                        <div class="oe_inline">
+                            <field name="despacho_user_id" options="{'no_open': True}"
+                                   class="my_oe_r_space_50 oe_inline"
+                                   attrs="{'required': [('renova_req', '=', True)],
+                                           'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="despacho_data" class="oe_inline"/>
+                        </div>
+                        <field name="notas"
+                               attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                    </group>
+                    <group>
+                        <field name="controlo_guias_ids" readonly="1">
+                            <tree string="Guias">
+                                <field name="name"/>
+                                <field name="controlo_id" invisible="1"/>
+                                <field name="guia_id" invisible="1"/>
+                                <field name="data_emissao"/>
+                                <field name="montante"/>
+                                <field name="parceiro_ref"/>
+                                <field name="data_ini"/>
+                                <field name="data_fim"/>
+                            </tree>
+                        </field>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_controlo_est_priv_view">
+                <field name="name">Estacionamento privativo</field>
+                <field name="res_model">sncp.receita.controlo</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_est_priv_tree"/>
+                <field name="domain">[('sector_id.tipo_controlo','=','2')]</field>
+        </record>
+            <record id="action_sncp_receita_controlo_est_priv_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_est_priv_tree"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_est_priv_view"/>
+            </record>
+            <record id="action_sncp_receita_controlo_est_priv_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_est_priv_form"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_est_priv_view"/>
+            </record>
+        <menuitem name="Estacionamento Privativo" parent="menu_receita_controlo"
+                  id="menu_sncp_receita_controlo_est_priv_view"
+                  action="action_sncp_receita_controlo_est_priv_view" sequence="20"/>
+
+        <!-- Vista Ocupação do Espaço Público 3 -->
+        <record id="view_sncp_receita_controlo_oep_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.oep.tree</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Ocupação do Espaço Público">
+                    <field name="partner_id"/>
+                    <field name="sequencia"/>
+                    <field name="arruamento_id"/>
+                    <field name="numero"/>
+                    <field name="finalidade_id"/>
+                    <field name="inicio"/>
+                    <field name="fim"/>
+                    <field name="name" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_controlo_oep_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.oep.form</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Ocupação do Espaço Público" version="7.0">
+                    <header>
+                        <div class="oe_inline">
+                            <button name="activar" string="Activar" type="object"
+                                    attrs="{'invisible': ['|',('id', '=', False),
+                                                              ('state', 'not in', ['draft'])]}"/>
+                            <button name="renovar" string="Renovar" type="object"
+                                    attrs="{'invisible': ['|',('renova_req', '=', False),
+                                                              ('state', 'in', ['draft'])]}"/>
+
+                        </div>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+
+                    <group>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="sector_id" options="{'no_open': True}"
+                               on_change="on_change_sector_id(sector_id)"
+                               attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"
+                               domain="[('tipo_controlo', 'in', ['3'])]" required="1"/>
+                            <field name="item_descr" readonly="1"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="partner_id" required="1" options="{'no_open': True}"
+                                   on_change="on_change_partner_id(partner_id)"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="sequencia" readonly="1"
+                                   attrs="{'invisible': [('id', '=', False)],
+                                           'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="finalidade_id" required="1" options="{'no_open': True}"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <label for="duracao_num"/>
+                            <div class="oe_inline">
+                                <field name="duracao_num" class="oe_inline"
+                                       attrs="{'required': [('duracao_tipo', 'not in', ['perpetual', 'indfly'])],
+                                               'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="duracao_tipo" required="1" class="oe_inline"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            </div>
+                            <field name="inicio" required="1"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="fim" readonly="1"/>
+                            <field name="renovacoes" readonly="1"/>
+
+                            </group>
+                            <group>
+                                <field name="freguesia_id" required="1" options="{'no_open': True}"
+                                       on_change="on_change_freguesia_id(freguesia_id)"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="bairro_id" options="{'no_open': True}"
+                                       attrs="{'readonly': ['|',('freguesia_id', '=', False),
+                                                                ('state', 'not in', ['draft'])]}"/>
+                                <field name="arruamento_id" required="1" options="{'no_open': True}"
+                                       attrs="{'readonly': ['|',('freguesia_id', '=', False),
+                                                               ('state', 'not in', ['draft'])]}"/>
+                                <field name="numero" required="1"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="comprimento"
+                                       on_change="on_change_medidas(comprimento,largura,altura,area,volume)"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="largura"
+                                       on_change="on_change_medidas(comprimento,largura,altura,area,volume)"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="altura"
+                                       on_change="on_change_medidas(comprimento,largura,altura,area,volume)"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="area"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="volume"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                        <!----></group>
+                        <field name="name" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="renova_req" invisible="1"/>
+                        <label for="despacho_user_id" />
+                        <div class="oe_inline">
+                            <field name="despacho_user_id" options="{'no_open': True}"
+                                   class="my_oe_r_space_50 oe_inline" required="1"
+                                   attrs="{'required': [('renova_req', '=', True)],
+                                           'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="despacho_data" class="oe_inline"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                        </div>
+                        <field name="notas"
+                               attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                    </group>
+                    <group>
+                        <field name="controlo_guias_ids" readonly="1">
+                            <tree string="Guias">
+                                <field name="name"/>
+                                <field name="controlo_id" invisible="1"/>
+                                <field name="guia_id" invisible="1"/>
+                                <field name="data_emissao"/>
+                                <field name="montante"/>
+                                <field name="parceiro_ref"/>
+                                <field name="data_ini"/>
+                                <field name="data_fim"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_controlo_oep_view">
+                <field name="name">Ocupação do Espaço Público</field>
+                <field name="res_model">sncp.receita.controlo</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_oep_tree"/>
+                <field name="domain">[('sector_id.tipo_controlo','=','3')]</field>
+        </record>
+            <record id="action_sncp_receita_controlo_oep_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_oep_tree"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_oep_view"/>
+            </record>
+            <record id="action_sncp_receita_controlo_oep_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_oep_form"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_oep_view"/>
+            </record>
+        <menuitem name="Ocupação do Espaço Público" parent="menu_receita_controlo"
+                  id="menu_sncp_receita_controlo_oep_view"
+                  action="action_sncp_receita_controlo_oep_view" sequence="30"/>
+
+        <!-- Vista Publicidade 4 -->
+        <record id="view_sncp_receita_controlo_publicidade_tree" model="ir.ui.view">
+            <field name="name">Publicidade</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Publicidade">
+                    <field name="partner_id"/>
+                    <field name="sequencia"/>
+                    <field name="arruamento_id"/>
+                    <field name="numero"/>
+                    <field name="andar"/>
+                    <field name="inicio"/>
+                    <field name="fim"/>
+                    <field name="name" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_controlo_publicidade_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.publicidade.form</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Publicidade" version="7.0">
+                    <header>
+                        <div class="oe_inline">
+                            <button name="activar" string="Activar" type="object"
+                                    attrs="{'invisible': ['|',('id', '=', False),
+                                                              ('state', 'not in', ['draft'])]}"/>
+                            <button name="renovar" string="Renovar" type="object"
+                                    attrs="{'invisible': ['|',('renova_req', '=', False),
+                                                              ('state', 'in', ['draft'])]}"/>
+
+                        </div>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+
+                    <group>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="sector_id" options="{'no_open': True}"
+                               on_change="on_change_sector_id(sector_id)"
+                               attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"
+                               domain="[('tipo_controlo', 'in', ['4'])]" required="1"/>
+                            <field name="item_descr" readonly="1"/>
+                            <field name="partner_id" required="1" options="{'no_open': True}"
+                                   on_change="on_change_partner_id(partner_id)"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="sequencia" readonly="1"
+                                   attrs="{'invisible': [('id', '=', False)]}"/>
+                            <label for="duracao_num"/>
+                            <div class="oe_inline">
+                                <field name="duracao_num" class="oe_inline"
+                                       attrs="{'required': [('duracao_tipo', 'not in', ['perpetual', 'indfly'])],
+                                               'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="duracao_tipo" required="1" class="oe_inline"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            </div>
+                            <field name="inicio" required="1"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="fim" readonly="1"/>
+                            <field name="renovacoes" readonly="1"/>
+
+                            </group>
+                            <group>
+                                <field name="freguesia_id" required="1" options="{'no_open': True}"
+                                       on_change="on_change_freguesia_id(freguesia_id)"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="bairro_id" options="{'no_open': True}"
+                                       attrs="{'readonly': ['|',('freguesia_id', '=', False),
+                                                                ('state', 'not in', ['draft'])]}"/>
+                                <field name="arruamento_id"  options="{'no_open': True}"
+                                       attrs="{'readonly': ['|',('freguesia_id', '=', False),
+                                                                ('state', 'not in', ['draft'])]}"/>
+                                <field name="numero" required="1"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="andar"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="comprimento"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                       on_change="on_change_medidas(comprimento,largura,altura,area,volume)"/>
+                                <field name="largura"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                       on_change="on_change_medidas(comprimento,largura,altura,area,volume)"/>
+                                <field name="area"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="altura" invisible="1"/>
+                                <field name="volume" invisible="1"/>
+                        </group>
+                        <field name="name" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="renova_req" invisible="1"/>
+                        <label for="despacho_user_id" />
+                        <div class="oe_inline">
+                            <field name="despacho_user_id" options="{'no_open': True}"
+                                   class="my_oe_r_space_50 oe_inline" required="1"
+                                   attrs="{'required': [('renova_req', '=', True)],
+                                           'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="despacho_data" class="oe_inline"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                        </div>
+                        <field name="notas"
+                                attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                    </group>
+                    <group>
+                        <field name="controlo_guias_ids" readonly="1">
+                            <tree string="Guias" >
+                                <field name="name"/>
+                                <field name="controlo_id" invisible="1"/>
+                                <field name="guia_id" invisible="1"/>
+                                <field name="data_emissao"/>
+                                <field name="montante"/>
+                                <field name="parceiro_ref"/>
+                                <field name="data_ini"/>
+                                <field name="data_fim"/>
+                            </tree>
+                        </field>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_controlo_publicidade_view">
+                <field name="name">Publicidade</field>
+                <field name="res_model">sncp.receita.controlo</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_publicidade_tree"/>
+                <field name="domain">[('sector_id.tipo_controlo','=','4')]</field>
+        </record>
+            <record id="action_sncp_receita_controlo_publicidade_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_publicidade_tree"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_publicidade_view"/>
+            </record>
+            <record id="action_sncp_receita_controlo_publicidade_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_publicidade_form"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_publicidade_view"/>
+            </record>
+        <menuitem name="Publicidade" parent="menu_receita_controlo"
+                  id="menu_sncp_receita_controlo_publicidade_view"
+                  action="action_sncp_receita_controlo_publicidade_view" sequence="40"/>
+
+        <!-- Vista Maquinas de diversão 5 -->
+        <record id="view_sncp_receita_controlo_maq_diver_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.maq.diver.tree</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Maquinas de diversão">
+                    <field name="partner_id"/>
+                    <field name="sequencia"/>
+                    <field name="arruamento_id"/>
+                    <field name="numero"/>
+                    <field name="name"/>
+                    <field name="inicio"/>
+                    <field name="fim"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_controlo_maq_diver_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.maq.diver.form</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Maquinas de diversão" version="7.0">
+                    <header>
+                        <div class="oe_inline">
+                            <button name="activar" string="Activar" type="object"
+                                    attrs="{'invisible': ['|',('id', '=', False),
+                                                              ('state', 'not in', ['draft'])]}"/>
+                            <button name="renovar" string="Renovar" type="object"
+                                    attrs="{'invisible': ['|',('renova_req', '=', False),
+                                                              ('state', 'in', ['draft'])]}"/>
+
+                        </div>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+
+                    <group>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="sector_id" options="{'no_open': True}"
+                               on_change="on_change_sector_id(sector_id)"
+                               attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"
+                               domain="[('tipo_controlo', 'in', ['5'])]" required="1"/>
+                            <field name="item_descr" readonly="1"/>
+                            <field name="partner_id" required="1" options="{'no_open': True}"
+                                   on_change="on_change_partner_id(partner_id)"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="sequencia" readonly="1"
+                                   attrs="{'invisible': [('id', '=', False)]}"/>
+                            <label for="duracao_num"/>
+                            <div class="oe_inline">
+                                <field name="duracao_num" class="oe_inline"
+                                       attrs="{'required': [('duracao_tipo', 'not in', ['perpetual', 'indfly'])],
+                                               'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="duracao_tipo" required="1" class="oe_inline"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            </div>
+                            <field name="inicio" required="1"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="fim" readonly="1"/>
+                            <field name="renovacoes" readonly="1"/>
+
+                            </group>
+                            <group>
+                                <field name="freguesia_id" required="1" options="{'no_open': True}"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                       on_change="on_change_freguesia_id(freguesia_id)"/>
+                                <field name="bairro_id" options="{'no_open': True}"
+                                       attrs="{'readonly': ['|',('freguesia_id', '=', False),
+                                                                ('state', 'not in', ['draft'])]}"/>
+                                <field name="arruamento_id"
+                                       options="{'no_open': True}" required="1"
+                                       attrs="{'readonly': ['|',('freguesia_id', '=', False),
+                                                                ('state', 'not in', ['draft'])]}"/>
+                                <field name="numero" required="1"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="andar"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="name" required="1"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="comprimento" invisible="1"/>
+                                <field name="largura" invisible="1"/>
+                                <field name="area" invisible="1"/>
+                                <field name="altura" invisible="1"/>
+                                <field name="volume" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="renova_req" invisible="1"/>
+                        <label for="despacho_user_id" />
+                        <div class="oe_inline">
+                            <field name="despacho_user_id" options="{'no_open': True}"
+                                   class="my_oe_r_space_50 oe_inline" required="1"
+                                   attrs="{'required': [('renova_req', '=', True)],
+                                           'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="despacho_data" class="oe_inline"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                        </div>
+                        <field name="notas"
+                                attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                    </group>
+                    <group>
+                        <field name="controlo_guias_ids" readonly="1">
+                            <tree string="Guias">
+                                <field name="name"/>
+                                <field name="controlo_id" invisible="1"/>
+                                <field name="guia_id" invisible="1"/>
+                                <field name="data_emissao"/>
+                                <field name="montante"/>
+                                <field name="parceiro_ref"/>
+                                <field name="data_ini"/>
+                                <field name="data_fim"/>
+                            </tree>
+                        </field>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_controlo_maq_diver_view">
+                <field name="name">Máquinas de diversão</field>
+                <field name="res_model">sncp.receita.controlo</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_maq_diver_tree"/>
+                <field name="domain">[('sector_id.tipo_controlo','=','5')]</field>
+        </record>
+            <record id="action_sncp_receita_controlo_maq_diver_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_maq_diver_tree"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_maq_diver_view"/>
+            </record>
+            <record id="action_sncp_receita_controlo_maq_diver_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_maq_diver_form"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_maq_diver_view"/>
+            </record>
+        <menuitem name="Máquinas de Diversão" parent="menu_receita_controlo"
+                  id="menu_sncp_receita_controlo_maq_diver_view"
+                  action="action_sncp_receita_controlo_maq_diver_view" sequence="50"/>
+
+        <!-- Vista Venda Ambulante 6 -->
+        <record id="view_sncp_receita_controlo_vend_amb_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.vend.amb.tree</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Venda Ambulante">
+                    <field name="partner_id"/>
+                    <field name="sequencia"/>
+                    <field name="zona_id"/>
+                    <field name="mercado_id"/>
+                    <field name="inicio"/>
+                    <field name="fim"/>
+                    <field name="name" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_controlo_vend_amb_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.vend.amb.form</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Venda Ambulante" version="7.0">
+                    <header>
+                        <div class="oe_inline">
+                            <button name="activar" string="Activar" type="object"
+                                    attrs="{'invisible': ['|',('id', '=', False),
+                                                              ('state', 'not in', ['draft'])]}"/>
+                            <button name="renovar" string="Renovar" type="object"
+                                    attrs="{'invisible': ['|',('renova_req', '=', False),
+                                                              ('state', 'in', ['draft'])]}"/>
+
+                        </div>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+
+                    <group>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="sector_id" options="{'no_open': True}"
+                               on_change="on_change_sector_id(sector_id)"
+                               attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"
+                               domain="[('tipo_controlo', 'in', ['6'])]" required="1"/>
+                            <field name="item_descr" readonly="1"/>
+                            <field name="partner_id" required="1" options="{'no_open': True}"
+                                   on_change="on_change_partner_id(partner_id)"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="sequencia" readonly="1"
+                                   attrs="{'invisible': [('id', '=', False)]}"/>
+                            <label for="duracao_num"/>
+                            <div class="oe_inline">
+                                <field name="duracao_num" class="oe_inline"
+                                       attrs="{'required': [('duracao_tipo', 'not in', ['perpetual', 'indfly'])],
+                                               'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="duracao_tipo" required="1" class="oe_inline"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            </div>
+                            <field name="inicio" required="1"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="fim" readonly="1"/>
+                            <field name="renovacoes" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="zona_id" options="{'no_open': True}"
+                                       attrs="{'readonly': ['|',('mercado_id', 'not in', [False]),
+                                                                ('state', 'not in', ['draft'])],
+                                               'required': [('mercado_id', 'in', [False])]}"/>
+                                <field name="mercado_id" options="{'no_open': True}"
+                                       attrs="{'readonly': ['|',('zona_id', 'not in', [False]),
+                                                            ('state', 'not in', ['draft'])],
+                                               'required': [('zona_id', 'in', [False])]}"/>
+                                <label for="name" string="Lugar/Matrícula"/>
+                                <field name="name" nolabel="1"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="comprimento"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                       on_change="on_change_medidas(comprimento,largura,altura,area,volume)"/>
+                                <field name="largura"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                       on_change="on_change_medidas(comprimento,largura,altura,area,volume)"/>
+                                <field name="altura" invisible="1"/>
+                                <field name="area"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="volume" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="renova_req" invisible="1"/>
+                        <label for="despacho_user_id" />
+                        <div class="oe_inline">
+                            <field name="despacho_user_id" options="{'no_open': True}"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                   class="my_oe_r_space_50 oe_inline" required="1"/>
+                            <field name="despacho_data" class="oe_inline"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                        </div>
+                        <field name="notas"
+                               attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                    </group>
+                    <group>
+                        <field name="controlo_guias_ids" readonly="1">
+                            <tree string="Guias">
+                                <field name="name"/>
+                                <field name="controlo_id" invisible="1"/>
+                                <field name="guia_id" invisible="1"/>
+                                <field name="data_emissao"/>
+                                <field name="montante"/>
+                                <field name="parceiro_ref"/>
+                                <field name="data_ini"/>
+                                <field name="data_fim"/>
+                            </tree>
+                        </field>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_controlo_vend_amb_view">
+                <field name="name">Venda Ambulante</field>
+                <field name="res_model">sncp.receita.controlo</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_vend_amb_tree"/>
+                <field name="domain">[('sector_id.tipo_controlo','=','6')]</field>
+        </record>
+            <record id="action_sncp_receita_controlo_vend_amb_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_vend_amb_tree"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_vend_amb_view"/>
+            </record>
+            <record id="action_sncp_receita_controlo_vend_amb_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_vend_amb_form"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_vend_amb_view"/>
+            </record>
+        <menuitem name="Venda Ambulante" parent="menu_receita_controlo"
+                  id="menu_sncp_receita_controlo_vend_amb_view"
+                  action="action_sncp_receita_controlo_vend_amb_view" sequence="60"/>
+
+        <!-- Vista Arrendamentos 7 -->
+        <record id="view_sncp_receita_controlo_arrendamentos_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.arrendamentos.tree</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Arrendamentos">
+                    <field name="partner_id"/>
+                    <field name="sequencia"/>
+                    <field name="arruamento_id"/>
+                    <field name="numero"/>
+                    <field name="andar"/>
+                    <field name="inicio"/>
+                    <field name="fim"/>
+                    <field name="name" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_controlo_arrendamentos_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.arrendamentos.form</field>
+            <field name="model">sncp.receita.controlo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Arrendamentos" version="7.0">
+                    <header>
+                        <div class="oe_inline">
+                            <button name="activar" string="Activar" type="object"
+                                    attrs="{'invisible': ['|',('id', '=', False),
+                                                              ('state', 'not in', ['draft'])]}"/>
+                            <button name="renovar" string="Renovar" type="object"
+                                    attrs="{'invisible': ['|',('renova_req', '=', False),
+                                                              ('state', 'in', ['draft'])]}"/>
+
+                        </div>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+
+                    <group>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="sector_id" options="{'no_open': True}"
+                               on_change="on_change_sector_id(sector_id)"
+                               attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"
+                               domain="[('tipo_controlo', 'in', ['7'])]" required="1"/>
+                            <field name="item_descr" readonly="1"/>
+                            <field name="partner_id" required="1" options="{'no_open': True}"
+                                   on_change="on_change_partner_id(partner_id)"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="sequencia" readonly="1"
+                                   attrs="{'invisible': [('id', '=', False)]}"/>
+                            <label for="duracao_num"/>
+                            <div class="oe_inline">
+                                <field name="duracao_num" class="oe_inline"
+                                       attrs="{'required': [('duracao_tipo', 'not in', ['perpetual', 'indfly'])],
+                                               'readonly': [('state', 'not in', ['draft'])]}"/>
+                                <field name="duracao_tipo" required="1" class="oe_inline"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            </div>
+                            <field name="inicio" required="1"
+                                   attrs="{'readonly': ['|',('id', 'not in', [False]),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="fim" readonly="1"/>
+                            <field name="renovacoes" readonly="1"/>
+
+                            </group>
+                        <group>
+                            <field name="freguesia_id" required="1" options="{'no_open': True}"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                   on_change="on_change_freguesia_id(freguesia_id)"/>
+                            <field name="bairro_id" options="{'no_open': True}"
+                                   attrs="{'readonly': ['|',('freguesia_id', '=', False),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="arruamento_id"
+                                   options="{'no_open': True}" required="1"
+                                   attrs="{'readonly': ['|',('freguesia_id', '=', False),
+                                                        ('state', 'not in', ['draft'])]}"/>
+                            <field name="numero" required="1"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="andar"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="comprimento" invisible="1"/>
+                            <field name="largura" invisible="1"/>
+                            <field name="altura" invisible="1"/>
+                            <field name="area"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="volume" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="renova_req" invisible="1"/>
+                        <label for="despacho_user_id" />
+                        <div class="oe_inline">
+                            <field name="despacho_user_id" options="{'no_open': True}"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                   class="my_oe_r_space_50 oe_inline" required="1"/>
+                            <field name="despacho_data" class="oe_inline"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                        </div>
+                        <field name="notas"
+                               attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                    </group>
+                    <group>
+                        <field name="controlo_guias_ids" readonly="1">
+                            <tree string="Guias">
+                                <field name="name"/>
+                                <field name="controlo_id" invisible="1"/>
+                                <field name="guia_id" invisible="1"/>
+                                <field name="data_emissao"/>
+                                <field name="montante"/>
+                                <field name="parceiro_ref"/>
+                                <field name="data_ini"/>
+                                <field name="data_fim"/>
+                            </tree>
+                        </field>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_controlo_arrendamentos_view">
+                <field name="name">Arrendamentos</field>
+                <field name="res_model">sncp.receita.controlo</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_arrendamentos_tree"/>
+                <field name="domain">[('sector_id.tipo_controlo','=','7')]</field>
+        </record>
+            <record id="action_sncp_receita_controlo_arrendamentos_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_arrendamentos_tree"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_arrendamentos_view"/>
+            </record>
+            <record id="action_sncp_receita_controlo_arrendamentos_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_receita_controlo_arrendamentos_form"/>
+                <field name="act_window_id" ref="action_sncp_receita_controlo_arrendamentos_view"/>
+            </record>
+        <menuitem name="Arrendamentos" parent="menu_receita_controlo"
+                  id="menu_sncp_receita_controlo_arrendamentos_view"
+                  action="action_sncp_receita_controlo_arrendamentos_view" sequence="70"/>
+
+        <!-- Configuração Geral-->
+        <record id="view_sncp_receita_controlo_config_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.config.tree</field>
+            <field name="model">sncp.receita.controlo.config</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Configuração Geral">
+                    <field name="name"/>
+                    <field name="last_uid"/>
+                    <field name="last_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_controlo_config_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.controlo.config.form</field>
+            <field name="model">sncp.receita.controlo.config</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Configuração Geral" version="7.0">
+                    <group attrs="{'invisible': [('id', 'not in', [False])]}">
+                        <field name="tipo_controlo" required="1"/>
+                        <field name="cod_contab_id" options="{'no_open': True}"
+                                   attrs="{'required': [('id', '=', False)],
+                                           'readonly': [('id', 'not in', [False])]}"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="name" readonly="1"
+                                   attrs="{'invisible': [('id', '=', False)]}"/>
+                            <label for="validade_num" attrs="{'invisible': [('id', '=', False)]}"/>
+                            <div class="oe_inline">
+                                <field name="validade_num" class="oe_inline"
+                                       attrs="{'invisible': [('id', '=', False)],
+                                               'required': [('validade_tipo', 'not in', ['indfty'])]}"/>
+                                <field name="validade_tipo" class="oe_inline"
+                                       on_change="on_change_validade_tipo(validade_tipo)"
+                                       attrs="{'invisible': [('id', '=', False)],
+                                           'required': [('id', 'not in', [False])]}"/>
+                            </div>
+                            <field name="pagam_tipo"
+                                   attrs="{'readonly': [('validade_tipo', 'not in', ['indfty'])],
+                                           'invisible': [('id', '=', False)]}"/>
+                            <field name="cond_pagam_id" options="{'no_open': True}"
+                                   attrs="{'invisible': [('id', '=', False)],
+                                           'required': [('id', 'not in', [False])]}"/>
+                        </group>
+                        <group string="Renovação" attrs="{'invisible': [('id', '=', False)]}">
+                            <field name="renova"
+                                   on_change="on_change_renova(renova)"
+                                   attrs="{'readonly': [('validade_tipo', '=', 'indfty')]}"/>
+                            <field name="renova_limite"
+                                   attrs="{'readonly': [('renova', '=', False)]}"/>
+                            <field name="automatica"
+                                   on_change="on_change_automatica(automatica)"
+                                   attrs="{'readonly': [('renova', '=', False)]}"/>
+                            <field name="renova_req"
+                                   on_change="on_change_renova_req(renova_req)"
+                                   attrs="{'readonly': ['|',('renova', '=', False),
+                                                            ('automatica', '=', True)]}"/>
+                            <field name="renova_aprov_id" options="{'no_open': True}"
+                                   attrs="{'readonly': ['|','|',('renova', '=', False),
+                                                            ('renova_req', '=', False),
+                                                            ('automatica', '=', True)],
+                                           'required': [('renova_req', '=', True)]}"/>
+                        </group>
+                    </group>
+                    <group attrs="{'invisible': [('id', '=', False)]}">
+                        <field name="aviso_prev"/>
+                        <field name="aviso_texto"
+                               attrs="{'required': [('aviso_prev', '&gt;', 0 )]}"/>
+                    </group>
+
+
+                    <group string="Notificações"
+                                   attrs="{'invisible': [('id', '=', False)]}">
+                    <notebook>
+                        <page string="Novo">
+                            <group>
+                                <field name="novo_notif1_id" options="{'no_open': True}"
+                                       on_change="on_change_user_id(novo_notif1_id)"
+                                       attrs="{'required': ['|',('novo_notif2_id', 'not in', [False]),
+                                                                ('novo_notif3_id', 'not in', [False])]}"/>
+                                <field name="novo_notif2_id" options="{'no_open': True}"
+                                       on_change="on_change_user_id(novo_notif2_id)"
+                                       attrs="{'required': [('novo_notif3_id', 'not in', [False])],
+                                               'readonly': [('novo_notif1_id', '=', False)]}"/>
+                                <field name="novo_notif3_id" options="{'no_open': True}"
+                                       on_change="on_change_user_id(novo_notif3_id)"
+                                       attrs="{'readonly': ['|',('novo_notif2_id', '=', False)]}"/>
+                                <field name="novo_notif_texto"
+                                       attrs="{'required': [('novo_notif1_id', 'not in', [False])]}"/>
+                            </group>
+                        </page>
+                        <page string="Caducidade">
+                            <group>
+                                <field name="caduc_notif1_id" options="{'no_open': True}"
+                                       on_change="on_change_user_id(caduc_notif1_id)"
+                                       attrs="{'required': ['|',('caduc_notif2_id', 'not in', [False]),
+                                                                ('caduc_notif3_id', 'not in', [False])]}"/>
+                                <field name="caduc_notif2_id" options="{'no_open': True}"
+                                       on_change="on_change_user_id(caduc_notif2_id)"
+                                       attrs="{'required': [('caduc_notif3_id', 'not in', [False])],
+                                               'readonly': [('caduc_notif1_id', '=', False)]}"/>
+                                <field name="caduc_notif3_id" options="{'no_open': True}"
+                                       on_change="on_change_user_id(caduc_notif3_id)"
+                                       attrs="{'readonly': ['|',('caduc_notif2_id', '=', False)]}"/>
+                                <field name="caduc_notif_texto"
+                                       attrs="{'required': [('caduc_notif1_id', 'not in', [False])]}"/>
+                            </group>
+                        </page>
+                        <page string="Renovação">
+                            <group>
+                                <field name="renov_notif1_id" options="{'no_open': True}"
+                                       on_change="on_change_user_id(renov_notif1_id)"
+                                       attrs="{'required': ['|',('renov_notif2_id', 'not in', [False]),
+                                                                ('renov_notif3_id', 'not in', [False])]}"/>
+                                <field name="renov_notif2_id" options="{'no_open': True}"
+                                       on_change="on_change_user_id(renov_notif2_id)"
+                                       attrs="{'required': [('renov_notif3_id', 'not in', [False])],
+                                               'readonly': [('renov_notif1_id', '=', False)]}"/>
+                                <field name="renov_notif3_id" options="{'no_open': True}"
+                                       on_change="on_change_user_id(renov_notif2_id)"
+                                       attrs="{'readonly': ['|',('renov_notif2_id', '=', False)]}"/>
+                                <field name="renov_notif_texto"
+                                       attrs="{'required': [('renov_notif1_id', 'not in', [False])]}"/>
+                            </group>
+                        </page>
+                    </notebook></group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_controlo_config_view">
+            <field name="name">Configuração Geral</field>
+            <field name="res_model">sncp.receita.controlo.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Configurações" parent="menu_receita_controlo" id="menu_receita_controlo_config"
+                      sequence="80"/>
+                    <menuitem name="Configuração Geral" parent="menu_receita_controlo_config"
+                              id="menu_sncp_receita_controlo_config_view"
+                          action="action_sncp_receita_controlo_config_view" sequence="10"/>
+
+        <!-- Zonas de Venda Ambulante-->
+        <record id="view_sncp_receita_zonas_venda_amb_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.zonas.venda.amb.tree</field>
+            <field name="model">sncp.receita.zonas.venda.amb</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Zonas de Venda Ambulante">
+                    <field name="name"/>
+                    <button name="open_map" string="Mapa" type="object" icon="gtk-zoom-in"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_zonas_venda_amb_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.zonas.venda.amb.form</field>
+            <field name="model">sncp.receita.zonas.venda.amb</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Zonas de Venda Ambulante" version="7.0">
+                    <sheet>
+                    <group>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="name" required="1"/>
+                            <label string="Ver no Mapa"/>
+                            <button name="open_map" string="Mapa" type="object" icon="gtk-zoom-in"/>
+                            <field name="notas"/>
+                        </group>
+                        <group>
+                            <field name="coord_p1"/>
+                            <field name="coord_p2"/>
+                            <field name="coord_p3"/>
+                            <field name="coord_p4"/>
+                        </group>
+                    </group></sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_zonas_venda_amb_view">
+            <field name="name">Zonas de Venda Ambulante</field>
+            <field name="res_model">sncp.receita.zonas.venda.amb</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Zonas de Venda Ambulante" parent="menu_receita_controlo_config"
+                  id="menu_sncp_receita_zonas_venda_amb_view"
+                  action="action_sncp_receita_zonas_venda_amb_view" sequence="20"/>
+
+        <!-- Vista Mercados e Feiras-->
+        <record id="view_sncp_receita_mercados_feiras_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.mercados.feiras.tree</field>
+            <field name="model">sncp.receita.mercados.feiras</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Mercados e Feiras">
+                    <field name="name"/>
+                    <field name="tipo"/>
+                    <field name="realizacao"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_mercados_feiras_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.mercados.feiras.form</field>
+            <field name="model">sncp.receita.mercados.feiras</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Mercados e Feiras" version="7.0">
+                    <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="tipo" required="1"/>
+                            <field name="realizacao" required="1"/>
+                            <field name="dia"
+                                   attrs="{'invisible': [('realizacao', 'not in', ['weekly', 'monthly'])]}"
+                                   placeholder="Dia do mês da realização mensal, ou dia da semana"/>
+                        </group>
+                        <group>
+                            <field name="coord_centro"/>
+                            <label string="Ver no Mapa"/>
+                            <button name="open_map" string="Mapa" type="object" icon="gtk-zoom-in"/>
+                            <field name="area"/>
+                            <field name="area_coberta"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notas"/>
+                    </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_mercados_feiras_view">
+            <field name="name">Mercados e Feiras</field>
+            <field name="res_model">sncp.receita.mercados.feiras</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Mercados e Feiras" parent="menu_receita_controlo_config"
+                  id="menu_sncp_receita_mercados_feiras_view"
+                  action="action_sncp_receita_mercados_feiras_view" sequence="30"/>
+
+        <!-- Vista Ocupação Espaço Público-->
+        <record id="view_sncp_receita_oep_finalidades_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.oep.finalidades.tree</field>
+            <field name="model">sncp.receita.oep.finalidades</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Mercados e Feiras" editable="top">
+                    <field name="name" required="1"/>
+                    <field name="natureza" required="1"/>
+                    <field name="solo"/>
+                    <field name="subsolo"/>
+                    <field name="aereo"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_oep_finalidades_view">
+            <field name="name">Ocupação Espaço Público</field>
+            <field name="res_model">sncp.receita.oep.finalidades</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Ocupação Espaço Público" parent="menu_receita_controlo_config"
+                  id="menu_sncp_receita_oep_finalidades_view"
+                  action="action_sncp_receita_oep_finalidades_view" sequence="40"/>
+    </data>
+</openerp>

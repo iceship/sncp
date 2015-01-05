@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record id="formulario_oc_select_compromisso_wizard_view" model="ir.ui.view">
+            <field name="name">Nome</field>
+            <field name="model">formulario.ordem.compra.select.compromisso</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="string" version="7.0">
+                    <group>
+                        <field name="compromisso_ref" required="1"/>
+                    </group>
+                    <footer>
+                        <div align="left" style="width:500px" class="oe_inline">
+                            <button name="continuar" type="object" string="Continuar"/>
+                            <button name="descartar" type="object" string="Descartar"/>
+                        </div>
+                    </footer>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cabimento" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="OPENERP_RELATIONS" value="[&apos;cab_linhas_id&apos;]"/>
+	<parameter name="IDS" class="java.lang.Object">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PIDS" class="java.util.List">
+		<defaultValueExpression><![CDATA[$P{IDS}.toList()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT CAB.id,EXTRACT(Year FROM CAB.data) AS ANO,CAB.cabimento,CAB.data,CAB.name,
+CABLINHA.id AS CABLINHAID,
+COALESCE(
+       (SELECT AAA.code
+       FROM account_analytic_account AS AAA
+       WHERE AAA.id=CABLINHA.organica_id),'') AS ORGANICA_CODE,
+COALESCE(
+       (SELECT AAA.code
+       FROM account_analytic_account AS AAA
+       WHERE AAA.id=CABLINHA.economica_id),'') AS ECONOMICA_CODE,
+
+COALESCE(
+       (SELECT AAA.code
+       FROM account_analytic_account AS AAA
+       WHERE AAA.id=CABLINHA.funcional_id),'') AS FUNCIONAL_CODE,
+--CALCULO DA DOTAÇÃO INICIAL
+  ROUND(
+  COALESCE(
+  (SELECT montante
+  FROM sncp_orcamento_historico AS HISTORICO
+  WHERE HISTORICO.name = EXTRACT(Year FROM CAB.data) AND HISTORICO.categoria='01ddota'
+  AND(
+       (CABLINHA.organica_id IS NULL AND HISTORICO.organica_id IS NULL) OR
+       (CABLINHA.organica_id IS NOT NULL AND HISTORICO.organica_id=CABLINHA.organica_id)
+     )
+  AND(
+       (CABLINHA.economica_id IS NULL AND HISTORICO.economica_id IS NULL) OR
+       (CABLINHA.economica_id IS NOT NULL AND HISTORICO.economica_id=CABLINHA.economica_id)
+     )
+  AND(
+       (CABLINHA.funcional_id IS NULL AND HISTORICO.funcional_id IS NULL) OR
+       (CABLINHA.funcional_id IS NOT NULL AND HISTORICO.funcional_id=CABLINHA.funcional_id)
+     )),0.0),2) AS DOTACAO_INICIAL,
+
+
+
+-- CALCULO REFORÇOS - ANULAÇÕES
+ROUND(
+COALESCE(
+   (SELECT montante
+   FROM sncp_orcamento_historico AS HISTORICO
+   WHERE HISTORICO.name = EXTRACT(Year FROM CAB.data) AND HISTORICO.categoria='02drefo'
+AND(
+       (CABLINHA.organica_id IS NULL AND HISTORICO.organica_id IS NULL) OR
+       (CABLINHA.organica_id IS NOT NULL AND HISTORICO.organica_id=CABLINHA.organica_id)
+     )
+  AND(
+       (CABLINHA.economica_id IS NULL AND HISTORICO.economica_id IS NULL) OR
+       (CABLINHA.economica_id IS NOT NULL AND HISTORICO.economica_id=CABLINHA.economica_id)
+     )
+  AND(
+       (CABLINHA.funcional_id IS NULL AND HISTORICO.funcional_id IS NULL) OR
+       (CABLINHA.funcional_id IS NOT NULL AND HISTORICO.funcional_id=CABLINHA.funcional_id)
+     )
+AND
+datahora <= (SELECT  datahora - INTERVAL '1' SECOND FROM sncp_orcamento_historico AS HISTORICO
+WHERE HISTORICO.cabimento_linha_id=CABLINHA.id)),0.0)
+-
+COALESCE((SELECT montante
+   FROM sncp_orcamento_historico AS HISTORICO
+   WHERE HISTORICO.name = EXTRACT(Year FROM CAB.data) AND HISTORICO.categoria='03dabat'
+AND(
+       (CABLINHA.organica_id IS NULL AND HISTORICO.organica_id IS NULL) OR
+       (CABLINHA.organica_id IS NOT NULL AND HISTORICO.organica_id=CABLINHA.organica_id)
+     )
+  AND(
+       (CABLINHA.economica_id IS NULL AND HISTORICO.economica_id IS NULL) OR
+       (CABLINHA.economica_id IS NOT NULL AND HISTORICO.economica_id=CABLINHA.economica_id)
+     )
+  AND(
+       (CABLINHA.funcional_id IS NULL AND HISTORICO.funcional_id IS NULL) OR
+       (CABLINHA.funcional_id IS NOT NULL AND HISTORICO.funcional_id=CABLINHA.funcional_id)
+     )AND
+datahora <= (SELECT  datahora - INTERVAL '1' SECOND FROM sncp_orcamento_historico AS HISTORICO
+WHERE HISTORICO.cabimento_linha_id=CABLINHA.id)),0.0),2)  AS REFORCO_ANULACAO,
+ROUND(
+(COALESCE(
+(
+SELECT SUM(HISTORICO.montante)
+FROM sncp_orcamento_historico AS HISTORICO
+WHERE HISTORICO.name = EXTRACT(Year FROM CAB.data) AND
+       HISTORICO.categoria='04cabim' AND
+       HISTORICO.cabimento_linha_id<>CABLINHA.id)
+,0.0))
++
+(CABLINHA.montante)
+-
+(SELECT SUM(montante)
+FROM sncp_despesa_cabimento_linha AS CABLINHA
+WHERE cabimento_id IN (
+   SELECT id
+   FROM sncp_despesa_cabimento
+   WHERE id = CAB.id OR
+    origem_id = CAB.id
+   ) AND
+ linha = CABLINHA.linha),2) AS COMPROMISSOS_ASSUMIDOS,
+CABLINHA.montante AS COMPROMISSO_RELATIVO_A_DESPESA_EM_ANALISE
+FROM sncp_despesa_cabimento AS CAB
+LEFT OUTER JOIN sncp_despesa_cabimento_linha AS CABLINHA ON CAB.id=CABLINHA.cabimento_id
+WHERE CAB.state='cont' AND $X{IN,CAB.id,PIDS}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="ano" class="java.lang.Double"/>
+	<field name="cabimento" class="java.lang.String"/>
+	<field name="data" class="java.sql.Date"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="cablinhaid" class="java.lang.Integer"/>
+	<field name="organica_code" class="java.lang.String"/>
+	<field name="economica_code" class="java.lang.String"/>
+	<field name="funcional_code" class="java.lang.String"/>
+	<field name="dotacao_inicial" class="java.math.BigDecimal"/>
+	<field name="reforco_anulacao" class="java.math.BigDecimal"/>
+	<field name="compromissos_assumidos" class="java.math.BigDecimal"/>
+	<field name="compromisso_relativo_a_despesa_em_analise" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="185" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamento Financeiro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="33" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Anexo 1 - Informação do Cabimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="355" y="53" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cabimento:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="455" y="53" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cabimento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="92" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Descrição:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="66" y="92" width="151" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="112" width="217" height="20" backcolor="#FFFFFF"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="112" width="217" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entidade]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="217" y="112" width="195" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="223" y="112" width="170" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Câmara Municipal do Funchal]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="412" y="112" width="47" height="20" backcolor="#FFFFFF"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="412" y="112" width="43" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="112" width="98" height="20"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="464" y="112" width="91" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="132" width="217" height="20" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="217" y="132" width="338" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="223" y="132" width="317" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[POCAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="132" width="217" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Sistema de contabilidade aplicável]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="152" width="555" height="22"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="154" width="555" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Fonte de financiamento indicando as respectivas percentagens]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="490" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="28" width="555" height="80"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="217" y="28" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Orçamento do ano]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="312" y="28" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ano}.intValue()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="48" width="144" height="20"/>
+				<textElement/>
+				<text><![CDATA[Classificação Orgânica:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="68" width="144" height="20"/>
+				<textElement/>
+				<text><![CDATA[Classificação Funcional:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="88" width="144" height="20"/>
+				<textElement/>
+				<text><![CDATA[Classificação Económica:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="108" width="457" height="180" backcolor="#FFFFFF"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="7" y="109" width="457" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Dotação Inicial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="128" width="457" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Reforços / Anulações]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="148" width="457" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Congelamentos / Descongelamentos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="168" width="457" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Dotação corrigida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="188" width="457" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Compromissos assumidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="208" width="457" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Dotação disponível]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="228" width="457" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Compromisso relativo à despesa em análise]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="248" width="457" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Saldo Residual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="268" width="457" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="108" width="98" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="128" width="98" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="148" width="98" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="168" width="98" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="188" width="98" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="208" width="98" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="228" width="98" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="248" width="98" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="268" width="98" height="20"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="459" y="108" width="92" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dotacao_inicial}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="128" width="94" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{reforco_anulacao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="168" width="94" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dotacao_inicial}+$F{reforco_anulacao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="208" width="94" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dotacao_inicial}+$F{reforco_anulacao}-$F{compromissos_assumidos}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="227" width="94" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{compromisso_relativo_a_despesa_em_analise}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="248" width="94" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dotacao_inicial}+$F{reforco_anulacao}-$F{compromissos_assumidos}-$F{compromisso_relativo_a_despesa_em_analise}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="464" y="268" width="87" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="127" width="457" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="147" width="457" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="168" width="457" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="187" width="457" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="208" width="457" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="228" width="457" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="247" width="457" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="267" width="457" height="1"/>
+			</line>
+			<break>
+				<reportElement x="0" y="5" width="100" height="1"/>
+			</break>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="151" y="48" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{organica_code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="151" y="88" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{economica_code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="151" y="68" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{funcional_code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="189" width="94" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{compromissos_assumidos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

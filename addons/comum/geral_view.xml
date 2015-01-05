@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Top menu item-->
+        <menuitem id="menu" name="SNCP" sequence="2" groups="base.group_user" />
+        <menuitem id="menu_sncp" parent="menu" name="SNCP" sequence="2" groups="base.group_user" />
+
+        <menuitem name="Comum" parent="menu_sncp" id="menu_comum"  sequence="10"/>
+
+        <!--Calendário-->
+        <record id="view_sncp_comum_calendario_kanban" model="ir.ui.view">
+            <field name="name">view.sncp.comum.calendario.kanban</field>
+            <field name="model">sncp.comum.calendario</field>
+            <field name="type">kanban</field>
+            <field name="arch" type="xml">
+                <kanban create="false">
+                    <templates>
+                    <t t-name="kanban-box">
+                    <div class="oe_comum_vignette">
+                        <div class="oe_comum_image">
+                            <a type="edit" ><img t-att-src="kanban_image('sncp.comum.calendario', 'image_small', name)"
+                                              class="oe_comum_picture" icon="icon"/></a>
+                        </div>
+                        <div class="oe_comum_details">
+                            <ul>
+                               <li><field name="name"/></li>
+                             </ul>
+                        </div>
+                    </div>
+                </t>
+                </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="view_sncp_comum_calendario_form" model="ir.ui.view">
+            <field name="name">view.sncp.comum.calendario.form</field>
+            <field name="model">sncp.comum.calendario</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Calendário" version="7.0">
+                    <sheet>
+                        <field name="state" invisible="1"/>
+                        <div >
+                            <label for="name"/>
+                            <field name="name" readonly="1"  class="oe_inline my_oe_r_space_50"/>
+                            <button string="Copiar feriados para o próximo ano" name="copiar_ano"
+                                    type="object"  class="oe_inline"
+                                    attrs="{'invisible':[('state', 'in', [1])]}"/>
+                        </div>
+                        <group>
+                            <notebook>
+                                <page string="Feriados">
+                                    <field name="feriado_id" options="{'no_open': True}">
+                                        <tree string="Feriados" editable="top">
+                                            <field name="data" required="1"/>
+                                            <field name="name" required="1"/>
+                                            <field name="tipo" required="1"
+                                                    on_change="on_change_create(tipo)"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_comum_calendario_view">
+            <field name="name">Feriados</field>
+            <field name="res_model">sncp.comum.calendario</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,form</field>
+        </record>
+        <menuitem name="Calendário" parent="menu_comum" id="menu_sncp_comum_calendario_view"
+                      action="action_sncp_comum_calendario_view" sequence="10"/>
+
+
+        <!-- Condições de pagamento-->
+        <record id="view_sncp_comum_cond_pagam_tree" model="ir.ui.view">
+            <field name="name">view.sncp.comum.cond.pagam.tree</field>
+            <field name="model">sncp.comum.cond.pagam</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Condições de Pagamento">
+                    <field name="name"/>
+                    <field name="descricao"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_comum_cond_pagam_form" model="ir.ui.view">
+            <field name="name">view.sncp.comum.cond.pagam.form</field>
+            <field name="model">sncp.comum.cond.pagam</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Condições de Pagamento" version="7.0">
+                    <sheet>
+                        <div>
+                            <label for="name" class="my_oe_r_space_50"/>
+                            <field name="name" class="oe_inline my_oe_r_space_20" required="1"/>
+                            <label for="anual" class="oe_inline"/>
+                            <field name="anual" class="oe_inline"
+                                   on_change="on_change_anual_true(anual)"/>
+                            <separator/>
+                            <label for="descricao" class="my_oe_r_space_50"/>
+                            <field name="descricao" class="oe_inline my_oe_r_space_50"/>
+                            <label for="dias_descanso" class="oe_inline"/>
+                            <field name="dias_descanso" required="1" class="oe_inline"/>
+                            <field name="estado" invisible="1"/>
+                        </div>
+                        <separator/>
+                        <group colspan="4" cols="2">
+                            <group>
+                                <field name="quantidade"
+                                       attrs="{'readonly':[('estado', 'in', [1])],
+                                                'required': [('estado', 'not in', [1])]}"/>
+                                <field name="tipo"
+                                       attrs="{'readonly':[('estado', 'in', [1])],
+                                                'required': [('estado', 'not in', [1])]}"/>
+                                <field name="contagem"
+                                       attrs="{'readonly':[('estado', 'in', [1])],
+                                               'required': [('estado', 'not in', [1])]}"/>
+                            </group>
+                            <group>
+                                <field name="dia"
+                                        attrs="{'readonly':[('estado', 'in', [0])],
+                                                'required': [('estado', 'not in', [0])]}"/>
+                                <field name="mes"
+                                       attrs="{'readonly':[('estado', 'in', [0])],
+                                                'required': [('estado', 'not in', [0])]}"/>
+                                <field name="payment_term_id"
+                                       required="1"
+                                       options="{'no_open': True}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_comum_cond_pagam_view">
+            <field name="name">Condições de Pagamento</field>
+            <field name="res_model">sncp.comum.cond.pagam</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Condições de Pagamento" parent="menu_comum"
+                  id="menu_sncp_comum_cond_pagam_view"
+                  action="action_sncp_comum_cond_pagam_view" sequence="30"/>
+
+        <!-- Códigos Contabilização -->
+        <record id="view_sncp_comum_codigos_contab_tree" model="ir.ui.view">
+            <field name="name">view.sncp.comum.codigos.contab.tree</field>
+            <field name="model">sncp.comum.codigos.contab</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Códigos de contabilização">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="natureza"/>
+                    <field name="ean13"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_comum_codigos_contab_form" model="ir.ui.view">
+            <field name="name">view.sncp.comum.codigos.contab.form</field>
+            <field name="model">sncp.comum.codigos.contab</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Códigos de Contabilização" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="item_id" required="1"
+                                   options="{'no_open': True}"
+                                   />
+                        </group>
+                        <group colspan="4" cols="2">
+                            <group>
+                                <field name="natureza" required="1"/>
+                                <field name="cond_pag_id" options="{'no_open': True}"
+                                       attrs="{'invisible': [('natureza', 'in', ['des'])]}"/>
+                                <!-- Metodo de calculo de juros em receita/herancas_view/ -->
+                                <field name="cpv_id" options="{'no_open': True}"
+                                       attrs="{'invisible': [('natureza', 'in', ['rec', 'ots'])]}"/>
+                            </group>
+                            <group>
+                                <field name="conta_id" options="{'no_open': True}"
+                                       attrs="{'required': [('natureza', 'in', ['ots'])]}"/>
+                                <field name="organica_id"  options="{'no_open': True}"
+                                       attrs="{'required': [('natureza', 'in', ['des'])]}"/>
+                                <field name="economica_id" options="{'no_open': True}"
+                                       attrs="{'required': [('natureza', 'not in', ['ots'])]}"/>
+                                <field name="funcional_id" options="{'no_open': True}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_comum_codigos_contab_view">
+            <field name="name">Códigos de Contabilização</field>
+            <field name="res_model">sncp.comum.codigos.contab</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Códigos de Contabilização" parent="menu_comum"
+                  id="menu_sncp_comum_codigos_contab_view"
+                  action="action_sncp_comum_codigos_contab_view" sequence="40" />
+
+        <!-- meios pagamento -->
+        <record id="view_sncp_comum_meios_pagamento_tree" model="ir.ui.view">
+            <field name="name">view.sncp.comum.meios.pagamento.tree</field>
+            <field name="model">sncp.comum.meios.pagamento</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Meios de Pagamento" editable="top">
+                    <field name="metodo" required="1"/>
+                    <field name="name" required="1"/>
+                    <field name="tipo" required="1"/>
+                    <field name="meio" required="1"/>
+                    <field name="echeque" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_comum_meios_pagamento_view" >
+            <field name="name">Meios de Pagamento</field>
+            <field name="res_model">sncp.comum.meios.pagamento</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+         <menuitem name="Meios de Pagamento" parent="menu_comum"
+                   id="menu_sncp_comum_meios_pagamento_view"
+                   action="action_sncp_comum_meios_pagamento_view" sequence="50"/>
+
+
+        <!-- cpv -->
+        <record id="view_sncp_comum_cpv_tree" model="ir.ui.view">
+            <field name="name">view.sncp.comum.cpv.tree</field>
+            <field name="model">sncp.comum.cpv</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="CPV" editable="top">
+                    <field name="codigo_120" required="1"/>
+                    <field name="name" required="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_comum_cpv_view" >
+            <field name="name">Vocabulário Comum para os Contratos Públicos (CPV)</field>
+            <field name="res_model">sncp.comum.cpv</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="CPV" parent="menu_comum" id="menu_sncp_comum_cpv_view"
+                      action="action_sncp_comum_cpv_view" sequence="60"/>
+
+        <!-- Freguesias -->
+        <record id="view_sncp_comum_freguesias_tree" model="ir.ui.view">
+            <field name="name">view.sncp.comum.freguesias.tree</field>
+            <field name="model">sncp.comum.freguesias</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Freguesias" editable="top">
+                    <field name="name" required="1"/>
+                    <field name="coord_centro"/>
+                    <field name="populacao"/>
+                    <field name="eleitores"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_comum_freguesias_view">
+            <field name="name">Freguesias</field>
+            <field name="res_model">sncp.comum.freguesias</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="Referências Geográficas" parent="menu_comum" id="menu_ref_geo" sequence="80"/>
+                <menuitem name="Freguesias" parent="menu_ref_geo" id="menu_sncp_comum_freguesias_view"
+                          action="action_sncp_comum_freguesias_view" sequence="10"/>
+
+        <!-- Bairros -->
+        <record id="view_sncp_comum_bairros_tree" model="ir.ui.view">
+            <field name="name">view.sncp.comum.bairros.tree</field>
+            <field name="model">sncp.comum.bairros</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Bairros" editable="top">
+                    <field name="name" required="1"/>
+                    <field name="coord_centro"/>
+                    <field name="freguesia_id" required="1" options="{'no_open': True}"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_comum_bairros_view">
+            <field name="name">Bairros</field>
+            <field name="res_model">sncp.comum.bairros</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Bairros" parent="menu_ref_geo" id="menu_sncp_comum_bairros_view"
+                          action="action_sncp_comum_bairros_view" sequence="20"/>
+
+        <!-- Vista Arruamentos -->
+        <record id="view_sncp_comum_arruamentos_tree" model="ir.ui.view">
+            <field name="name">view.sncp.comum.arruamentos.tree</field>
+            <field name="model">sncp.comum.arruamentos</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Arruamentos">
+                    <field name="name"/>
+                    <field name="inicio_desc"/>
+                    <field name="termo_desc"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_comum_arruamentos_form" model="ir.ui.view">
+            <field name="name">view.sncp.comum.arruamentos.form</field>
+            <field name="model">sncp.comum.arruamentos</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Arruamentos" version="7.0" create="false">
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="bairro_id" options="{'no_open': True}"/>
+                        </group>
+                        <group>
+                            <button name="open_map" class="oe_inline"
+                                    string="Mapa"
+                                    type="object" icon="gtk-zoom-in"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="inicio_desc"/>
+                            <field name="inicio_coord"/>
+                            <button name="open_inicio" class="oe_inline"
+                                    string="Coordenadas do Início no Mapa"
+                                     type="object" icon="gtk-zoom-in"/>
+                        </group>
+                        <group>
+                            <field name="termo_desc"/>
+                            <field name="termo_coord" class="oe_inline"/>
+                            <button name="open_termo" class="oe_inline"
+                                    string="Coordenadas do Termo no Mapa"
+                                    type="object" icon="gtk-zoom-in"/>
+                        </group>
+                    </group>
+
+                    <group string="Freguesia">
+                        <group>
+                            <field name="freguesia1_id" required="1" options="{'no_open': True}"/>
+                            <field name="n1_freg1"/>
+                            <field name="n2_freg1"/>
+                        </group>
+                        <group>
+                            <field name="freguesia2_id" options="{'no_open': True}"/>
+                            <field name="n1_freg2"/>
+                            <field name="n2_freg2"/>
+                        </group>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_comum_arruamentos_view">
+            <field name="name">Arruamentos</field>
+            <field name="res_model">sncp.comum.arruamentos</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Arruamentos" parent="menu_ref_geo" id="menu_sncp_comum_arruamentos_view"
+                          action="action_sncp_comum_arruamentos_view" sequence="30"/>
+
+        <!-- etiquetas -->
+        <record id="view_sncp_comum_etiquetas_tree" model="ir.ui.view">
+            <field name="name">view.sncp.comum.etiquetas.tree</field>
+            <field name="model">sncp.comum.etiquetas</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml" >
+                <tree string="Etiquetas" create="false" delete="false">
+                    <field name="name"/>
+                    <field name="descr"/>
+                    <field name="model_id" options="{'no_open': True}"/>
+                    <field name="path" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_comum_etiquetas_view">
+            <field name="name">Etiquetas</field>
+            <field name="res_model">sncp.comum.etiquetas</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Etiquetas" parent="menu_comum" id="menu_sncp_comum_etiquetas_view"
+                      action="action_sncp_comum_etiquetas_view" sequence="90"/>
+
+    </data>
+</openerp>

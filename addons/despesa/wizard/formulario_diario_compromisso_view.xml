@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <!-- ALTEREI AQUI 9 DE JULHO 2014-->
+        <record model="ir.ui.view" id="formulario_sncp_despesa_compromisso_diario_view">
+            <field name="model">formulario.sncp.despesa.compromisso.diario</field>
+            <field name="arch" type="xml">
+                <form string="Diário" version="7.0">
+                    <div style="width:500px;">
+                    <group colspan="4">
+                        <field name="name" required="1"/>
+                        <field name="tipo" invisible="True" readonly="True"/>
+                        <field name="dia_mes_pag" attrs="{'invisible':[('tipo', 'in', ['com', 'plu'])],
+                        'required':[('tipo', 'not in', ['com', 'plu'])]}"/>
+                        <field name="res" invisible="True" readonly="True"/>
+                        <field name="diario_id"  options="{'no_open': True}"
+                               attrs="{'invisible':[('res', 'in', [3])],
+                                       'required':[('res', 'not in', [3])]}"/>
+                        <field name="diario_fut_id" options="{'no_open': True}"
+                               attrs="{'invisible':[('res', 'in', [1])],
+                                       'required':[('res', 'not in', [1])]}"/>
+                        <field name="datahora" required="1"/>
+                    </group>
+                    <footer>
+                        <div align="left" style="width:500px">
+                            <button name="end" type="object" string="Contabilizar" />
+                            <button name="descartar" type="object" string="Descartar"/>
+                        </div>
+                    </footer></div>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

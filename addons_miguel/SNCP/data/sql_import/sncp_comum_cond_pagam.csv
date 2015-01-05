@@ -1,0 +1,10 @@
+"id","contagem","anual","name","descricao","dia","mes","dias_descanso","quantidade","tipo","estado"
+"1","imed","False","PP","Pronto Pagamento",,"","mant",,"dia",
+"2","imed","False","30D","A 30 dias",,"","ante",30,"dia",
+"3","imes","False","D8I","Até dia 8 do corrente mês",,"","adia",8,"dia",
+"4","imes","False","D10","Até ao dia 10 do corrente mês",,"","adia",10,"dia",
+"5","fmes","False","D8F","Até dia 8 do mês seguinte",,"","ante",8,"dia",
+"6","","True","PUB","Até 15 de Outubro","15","10","ante",,"",1
+"7","imed","False","30M","A 30 meses",,"","adia",30,"mes",
+"8","imes","False","30I","A 30 meses do início do mês",,"","adia",30,"mes",
+"9","fmes","False","30F","A 30 meses do final do mês",,"","ante",30,"mes",

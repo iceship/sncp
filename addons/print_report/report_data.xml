@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <!--                                                         Modelo
+        <report auto="False" id="sncp_receita__report_id" string=""
+                model="sncp.receita."
+                name="sncp.orcamento..report"
+                rml="print_report/sncp_receita.jrxml"/>
+        -->
+        <!-- ====================================================== HERANÇAS ====================-->
+        <report auto="False" id="account_analytic_account_report_id" string="Contas Analíticas"
+                model="account.analytic.account"
+                name="account.analytic.account.report"
+                rml="print_report/account_analytic_account.jrxml"/>
+
+        <report auto="False" id="account_invoice_report_id" string="Imprimir Faturas"
+                model="account.invoice"
+                name="account.invoice.report"
+                rml="print_report/account_invoice.jrxml"/>
+
+
+        <!-- ====================================================== COMUM ====================-->
+        <report auto="False" id="sncp_comum_calendario_report_id" string="Calendário"
+                model="sncp.comum.calendario"
+                name="sncp.comum.calendario.report"
+                rml="print_report/sncp_comum_calendario.jrxml"/>
+
+        <report auto="False" id="sncp_comum_cond_pagam_report_id" string="Condições de Pagamento"
+                model="sncp.comum.cond.pagam"
+                name="sncp.comum.cond.pagam.report"
+                rml="print_report/sncp_comum_cond_pagam.jrxml"/>
+
+        <report auto="False" id="sncp_comum_cpv_report_id" string="CPV"
+                model="sncp.comum.cpv"
+                name="sncp.comum.cpv.report"
+                rml="print_report/sncp_comum_cpv.jrxml"/>
+
+        <report auto="False" id="sncp_comum_meios_pagamento_report_id" string="Meios de Pagamento"
+                model="sncp.comum.meios.pagamento"
+                name="sncp.comum.meios.pagamento.report"
+                rml="print_report/sncp_comum_meios_pagamento.jrxml"/><!--    -->
+
+        <!-- ====================================================== ORCAMENTO ====================-->
+        <report auto="False" id="sncp_orcamento_receita_report_id" string="Orçamento da Receita"
+                model="sncp.orcamento"
+                name="sncp.orcamento.receita.report"
+                rml="print_report/sncp_orcamento_receita.jrxml"/>
+
+        <report auto="False" id="sncp_orcamento_despesa_report_id" string="Orçamento da Despesa"
+                model="sncp.orcamento"
+                name="sncp.orcamento.despesa.report"
+                rml="print_report/sncp_orcamento_despesa.jrxml"/>
+
+        <report auto="False" id="sncp_orcamento_resumo_config_report_id" string="Configuração do Resumo do Orçamento"
+                model="sncp.orcamento.resumo.config"
+                name="sncp.orcamento.resumo.config.report"
+                rml="print_report/sncp_orcamento_resumo_config.jrxml"/>
+
+        <report auto="False" id="sncp_modificacao_receita_report_id" string="Modificação da Receita"
+                model="sncp.modificacao.imprimir.receita"
+                name="sncp.modificacao.receita.report"
+                rml="print_report/sncp_modificacao_receita.jrxml"/>
+
+        <report auto="False" id="sncp_modificacao_despesa_report_id" string="Modificação da Despesa"
+                model="sncp.modificacao.imprimir.despesa"
+                name="sncp.modificacao.despesa.report"
+                rml="print_report/sncp_modificacao_despesa.jrxml"/>
+
+        <report auto="False" id="sncp_orcamento_historico_receita_report_id" string="Histórico da Receita"
+                model="sncp.orcamento.historico.cabecalho"
+                name="sncp.orcamento.historico.cabecalho.receita.report"
+                rml="print_report/sncp_orcamento_historico_receita.jrxml"/>
+
+        <report auto="False" id="sncp_orcamento_historico_despesa_report_id" string="Histórico da Despesa"
+                model="sncp.orcamento.historico.cabecalho"
+                name="sncp.orcamento.historico.cabecalho.despesa.report"
+                rml="print_report/sncp_orcamento_historico_despesa.jrxml"/>
+
+        <report auto="False" id="sncp_orcamento_acumulados_receita_report_id" string="Acumulados da Receita"
+                model="sncp.orcamento.acumulados.cabecalho"
+                name="sncp.orcamento.acumulados.cabecalho.receita.report"
+                rml="print_report/sncp_orcamento_acumulados_receita.jrxml"/>
+
+        <report auto="False" id="sncp_orcamento_acumulados_despesa_report_id" string="Acumulados da Despesa"
+                model="sncp.orcamento.acumulados.cabecalho"
+                name="sncp.orcamento.acumulados.cabecalho.despesa.report"
+                rml="print_report/sncp_orcamento_acumulados_despesa.jrxml"/>
+
+        <report auto="False" id="sncp_orcamento_ppi_imprimir_report_id" string="Imprimir PPI"
+                model="sncp.orcamento.ppi.imprimir"
+                name="sncp.orcamento.ppi.imprimir.report"
+                rml="print_report/sncp_orcamento_ppi_imprimir.jrxml"/>
+
+        <report auto="False" id="sncp_comum_codigos_contab_report_id" string="Códigos de Contabilização"
+                model="sncp.comum.codigos.contab"
+                name="sncp.comum.codigos.contab.report"
+                rml="print_report/sncp_comum_codigos_contab.jrxml"/>
+
+
+        <!-- ====================================================== DESPESA ====================-->
+        <report auto="False" id="sncp_despesa_cabimento_report_id" string="Cabimento"
+                model="sncp.despesa.cabimento"
+                name="sncp.despesa.cabimento.report"
+                rml="print_report/sncp_despesa_cabimento.jrxml"/>
+
+
+
+        <report auto="False" id="sncp_despesa_cofinanciamentos_report_id" string="Cofinanciamentos"
+                model="sncp.despesa.cofinanciamentos"
+                name="sncp.despesa.cofinanciamentos.report"
+                rml="print_report/sncp_despesa_cofinanciamentos.jrxml"/>
+
+        <report auto="False" id="sncp_despesa_compromisso_report_id" string="Compromisso"
+                model="sncp.despesa.compromisso"
+                name="sncp.despesa.compromisso.report"
+                rml="print_report/sncp_despesa_compromisso.jrxml"/>
+
+        <report auto="False" id="sncp_despesa_fundamentos_report_id" string="Fundamentos"
+                model="sncp.despesa.fundamentos"
+                name="sncp.despesa.fundamentos.report"
+                rml="print_report/sncp_despesa_fundamentos.jrxml"/>
+
+        <report auto="False" id="sncp_despesa_naturezas_report_id" string="Naturezas"
+                model="sncp.despesa.naturezas"
+                name="sncp.despesa.naturezas.report"
+                rml="print_report/sncp_despesa_naturezas.jrxml"/>
+
+        <report auto="False" id="sncp_despesa_ordem_report_id" string="Ordem de Pagamento"
+                model="sncp.despesa.pagamentos.ordem"
+                name="sncp.despesa.pagamentos.ordem.report"
+                rml="print_report/sncp_despesa_pagamentos_ordem.jrxml"/>
+
+        <report auto="False" id="sncp_despesa_pagamentos_reposicoes_report_id" string="Reposições de Ordens de Pagamentos"
+                model="sncp.despesa.pagamentos.reposicoes"
+                name="sncp.despesa.pagamentos.reposicoes.report"
+                rml="print_report/sncp_despesa_pagamentos_reposicoes.jrxml"/>
+
+        <report auto="False" id="sncp_despesa_procedimentos_report_id" string="Procedimentos"
+                model="sncp.despesa.procedimentos"
+                name="sncp.despesa.procedimentos.report"
+                rml="print_report/sncp_despesa_procedimentos.jrxml"/>
+
+        <report auto="False" id="sncp_despesa_requisicoes_report_id" string="Requisição"
+                model="sncp.despesa.requisicoes"
+                name="sncp.despesa.requisicoes.report"
+                rml="print_report/sncp_despesa_requisicoes.jrxml"/><!--    -->
+
+
+
+        <!-- ====================================================== RECEITA ====================-->
+        <report auto="False" id="sncp_receita_guia_rec_report_id" string="Guia de Receita"
+                model="sncp.receita.guia.rec"
+                name="sncp.receita.guia.rec.report"
+                rml="print_report/sncp_receita_guia_rec.jrxml"/><!--    -->
+
+        <report auto="False" id="sncp_receita_print_report_report_id" string="Carta de Aviso"
+                model="sncp.receita.print.report"
+                name="sncp.receita.print.report.report"
+                rml="print_report/sncp_receita_print_report.jrxml"/>
+
+
+
+        <!-- ====================================================== TESOURARIA ====================-->
+        <report auto="False" id="sncp_tesouraria_conta_corrente_report_id" string="Conta Corrente"
+                model="sncp.tesouraria.conta.corrente"
+                name="sncp.tesouraria.conta.corrente.report"
+                rml="print_report/sncp_tesouraria_conta_corrente.jrxml"/>
+
+        <report auto="False" id="sncp_tesouraria_folha_caixa_report_id" string="Folha de Caixa"
+                model="sncp.tesouraria.folha.caixa"
+                name="sncp.tesouraria.folha.caixa.report"
+                rml="print_report/sncp_tesouraria_folha_caixa.jrxml"/>
+
+        <report auto="False" id="sncp_tesouraria_mapa_ots_report_id" string="Mapa OTS"
+                model="sncp.tesouraria.mapa.ots"
+                name="sncp.tesouraria.mapa.ots.report"
+                rml="print_report/sncp_tesouraria_mapa_ots.jrxml"/>
+
+        <report auto="False" id="sncp_tesouraria_mapas_diario_resumo_report_id" string="Mapas Diário Resumo"
+                model="sncp.tesouraria.mapas.diario.resumo"
+                name="sncp.tesouraria.mapas.diario.resumo.report"
+                rml="print_report/sncp_tesouraria_mapas_diario_resumo.jrxml"/>
+
+        <report auto="False" id="sncp_tesouraria_movim_fundos_maneio_report_id" string="Movimentos de Fundos De Maneio"
+                model="sncp.tesouraria.movim.fundos.maneio"
+                name="sncp.tesouraria.movim.fundos.maneio.report"
+                rml="print_report/sncp_tesouraria_movim_fundos_maneio.jrxml"/><!--    -->
+    </data>
+</openerp>

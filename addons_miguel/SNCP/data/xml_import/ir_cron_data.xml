@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="avisos_automaticos" model="ir.cron">
+            <field name="function">avisa</field>
+            <field name="interval_type">work_days</field>
+            <field name="user_id">1</field>
+            <field name="name">Avisos dos controlos automáticos</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall" eval="2014,10,16"/>
+            <field name="priority">9</field>
+            <field name="active">True</field>
+            <field name="interval_number">1</field>
+            <field name="model">sncp.receita.print.report</field>
+        </record>
+
+    </data>
+</openerp>

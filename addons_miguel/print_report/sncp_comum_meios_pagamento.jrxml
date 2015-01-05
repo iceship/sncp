@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="meio_pagam" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="IDS" class="java.lang.Object">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PIDS" class="java.util.List">
+		<defaultValueExpression><![CDATA[$P{IDS}.toList()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT metodo, name,
+	(CASE
+		WHEN tipo = 'rec' THEN 'Recebimento'
+		WHEN tipo = 'pag' THEN 'Pagamento'
+	END) AS tipo,
+	(CASE
+		WHEN meio = 'cx' THEN 'Caixa'
+		WHEN meio = 'bk' THEN 'Banco'
+		WHEN meio = 'fm' THEN 'Fundo de Maneio'
+		WHEN meio = 'dc' THEN 'Documento'
+	END) AS meio
+FROM sncp_comum_meios_pagamento AS MP
+WHERE $X{IN,MP.id,PIDS}
+ORDER BY tipo,metodo]]>
+	</queryString>
+	<field name="metodo" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="meio" class="java.lang.String"/>
+	<group name="meio">
+		<groupExpression><![CDATA[$F{tipo}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<rectangle>
+					<reportElement x="455" y="30" width="100" height="20" backcolor="#404040"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="455" y="30" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Meio]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="100" y="30" width="355" height="20" backcolor="#404040"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="30" width="100" height="20" backcolor="#404040"/>
+				</rectangle>
+				<textField>
+					<reportElement x="105" y="30" width="350" height="20"/>
+					<textElement verticalAlignment="Middle" markup="none"/>
+					<textFieldExpression class="java.lang.String"><![CDATA["Descrição"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="30" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+					<textFieldExpression class="java.lang.String"><![CDATA["Método"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="0" y="0" width="555" height="30"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{tipo}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="27" width="555" height="28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Meios de Pagamento]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="355" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="455" y="0" width="100" height="20"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="105" y="0" width="350" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="455" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{meio}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{metodo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

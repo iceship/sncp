@@ -1,0 +1,31 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+orcamento_manager,"Orcamento manager",model_sncp_orcamento,group_orcamento_manager,1,1,1,1
+orcamento_line_manager,"Orcamento Line manager",model_sncp_orcamento_linha,group_orcamento_manager,1,1,1,1
+orcamento_acumulados_manager,"Orcamento acumulados manager",model_sncp_orcamento_acumulados,group_orcamento_manager,1,1,1,1
+orcamento_historico_manager,"Orcamento historico manager",model_sncp_orcamento_historico,group_orcamento_manager,1,1,1,1
+formulario_sncp_orcamento_diario_manager,"Orcamento Diario manager",model_formulario_sncp_orcamento_diario,group_orcamento_manager,1,1,1,1
+orcamento_user,"Orcamento user",model_sncp_orcamento,group_orcamento_user,1,1,0,0
+orcamento_line_user,"Orcamento Line user",model_sncp_orcamento_linha,group_orcamento_user,1,1,1,0
+sncp_orcamento_resumo_config_manager,"Orcamento resumo config manager",model_sncp_orcamento_resumo_config,group_orcamento_manager,1,1,1,1
+sncp_orcamento_imprimir_resumo_config_manager,"Orcamento imprimir resumo config manager",model_sncp_orcamento_imprimir_resumo_config,group_orcamento_manager,1,1,1,1
+sncp_orcamento_imprimir_ano_receita_manager,"Orcamento imprimir ano receita manager",model_sncp_orcamento_imprimir_ano_receita,group_orcamento_manager,1,1,1,1
+sncp_orcamento_imprimir_ano_despesa_manager,"Orcamento imprimir ano despesa manager",model_sncp_orcamento_imprimir_ano_despesa,group_orcamento_manager,1,1,1,1
+sncp_orcamento_imprimir_receita_manager,"Orcamento imprimir receita manager",model_sncp_orcamento_imprimir_receita,group_orcamento_manager,1,1,1,1
+sncp_orcamento_imprimir_despesa_manager,"Orcamento imprimir despesa manager",model_sncp_orcamento_imprimir_despesa,group_orcamento_manager,1,1,1,1
+sncp_modificacao_imprimir_ano_receita_manager,"Modificacao imprimir ano receita manager",model_sncp_modificacao_imprimir_ano_receita,group_orcamento_manager,1,1,1,1
+sncp_modificacao_imprimir_ano_despesa_manager,"Modificacao imprimir ano despesa manager",model_sncp_modificacao_imprimir_ano_despesa,group_orcamento_manager,1,1,1,1
+sncp_modificacao_imprimir_receita_manager,"Modificacao imprimir receita manager",model_sncp_modificacao_imprimir_receita,group_orcamento_manager,1,1,1,1
+sncp_modificacao_imprimir_despesa_manager,"Modificacao imprimir despesa manager",model_sncp_modificacao_imprimir_despesa,group_orcamento_manager,1,1,1,1
+formulario_sncp_orcamento_copia_manager,"Copia orcamento modificacao manager",model_formulario_sncp_orcamento_copia,group_orcamento_manager,1,1,1,1
+sncp_orcamento_historico_cabecalho_manager,"Orcamento historico cabecalho manager",model_sncp_orcamento_historico_cabecalho,group_orcamento_manager,1,1,1,1
+sncp_orcamento_historico_rodape_manager,"Orcamento historico rodape manager",model_sncp_orcamento_historico_rodape,group_orcamento_manager,1,1,1,1
+sncp_orcamento_acumulados_cabecalho_manager,"Orcamento acumulados cabecalho manager",model_sncp_orcamento_acumulados_cabecalho,group_orcamento_manager,1,1,1,1
+sncp_orcamento_acumulados_rodape_manager,"Orcamento acumulados rodape manager",model_sncp_orcamento_acumulados_rodape,group_orcamento_manager,1,1,1,1
+sncp_orcamento_ppi_eixos_manager,"Orcamento PPI eixos manager",model_sncp_orcamento_ppi_eixos,group_orcamento_manager,1,1,1,1
+sncp_orcamento_ppi_objetivos_manager,"Orcamento PPI objetivos manager",model_sncp_orcamento_ppi_objetivos,group_orcamento_manager,1,1,1,1
+sncp_orcamento_ppi_programas_manager,"Orcamento PPI programas manager",model_sncp_orcamento_ppi_programas,group_orcamento_manager,1,1,1,1
+sncp_orcamento_ppi_accoes_manager,"Orcamento PPI accoes manager",model_sncp_orcamento_ppi_accoes,group_orcamento_manager,1,1,1,1
+sncp_orcamento_ppi_dotacoes_manager,"Orcamento PPI dotacoes manager",model_sncp_orcamento_ppi_dotacoes,group_orcamento_manager,1,1,1,1
+sncp_orcamento_ppi_imprimir_manager,"Orcamento PPI imprimir manager",model_sncp_orcamento_ppi_imprimir,group_orcamento_manager,1,1,1,1
+sncp_orcamento_ppi_anual,"Orcamento PPI anual manager",model_sncp_orcamento_ppi_anual,group_orcamento_manager,1,1,1,1
+sncp_orcamento_ppi,"Orcamento PPI manager",model_sncp_orcamento_ppi,group_orcamento_manager,1,1,1,1

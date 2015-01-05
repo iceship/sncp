@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="miguel" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="IDS" class="java.lang.Object">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PIDS" class="java.util.List">
+		<defaultValueExpression><![CDATA[$P{IDS}.toList()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT id,COALESCE(quantidade,0) AS quantidade,name,
+    CASE
+        WHEN tipo='dia' THEN 'Dia'
+        WHEN tipo='mes' THEN 'Mês'
+        ELSE 'Não Aplicável'
+    END AS tipo
+,
+CASE
+WHEN anual=TRUE THEN 'Sim'
+ELSE 'Não'
+END AS
+anual_ok,anual,
+CASE
+    WHEN dia IS NULL THEN 0
+    ELSE dia
+END AS dia,
+descricao,
+CASE
+   WHEN dias_descanso='ante' THEN 'Antecipa'
+   WHEN dias_descanso='adia' THEN 'Adia'
+   ELSE 'Mantém'
+END AS dias_descanso,
+CASE
+   WHEN mes='1' THEN 'Janeiro'
+   WHEN mes='2' THEN 'Fevereiro'
+   WHEN mes='3' THEN 'Março'
+   WHEN mes='4' THEN 'Abril'
+   WHEN mes='5' THEN 'Maio'
+   WHEN mes='6' THEN 'Junho'
+   WHEN mes='7' THEN 'Julho'
+   WHEN mes='8' THEN 'Agosto'
+   WHEN mes='9' THEN 'Setembro'
+   WHEN mes='10' THEN 'Outubro'
+   WHEN mes='11' THEN 'Novembro'
+   WHEN mes='12' THEN 'Dezembro'
+   ELSE 'Não Aplicável'
+END AS mes,
+CASE
+   WHEN contagem='imes' THEN 'Início do mês'
+   WHEN contagem='fmes' THEN 'Fim do mês'
+   WHEN contagem='imed' THEN 'Imediata'
+   ELSE 'Não Aplicável'
+END AS contagem
+FROM sncp_comum_cond_pagam AS COND_PAGAM
+WHERE $X{IN,COND_PAGAM.id,PIDS}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="quantidade" class="java.lang.Integer"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="anual_ok" class="java.lang.String"/>
+	<field name="anual" class="java.lang.Boolean"/>
+	<field name="dia" class="java.lang.Integer"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="dias_descanso" class="java.lang.String"/>
+	<field name="mes" class="java.lang.String"/>
+	<field name="contagem" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="24" width="555" height="36"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Condições de Pagamento]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="27">
+			<rectangle>
+				<reportElement x="0" y="7" width="100" height="20" backcolor="#404040"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="100" y="7" width="174" height="20" backcolor="#404040"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="274" y="7" width="54" height="20" backcolor="#404040"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="328" y="7" width="100" height="20" backcolor="#404040"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="428" y="7" width="127" height="20" backcolor="#404040"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="7" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="7" width="174" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="274" y="7" width="54" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Anual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="328" y="7" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dias descanso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="7" width="127" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dados]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="174" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="274" y="0" width="54" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="328" y="0" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="428" y="0" width="127" height="20"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="110" y="0" width="164" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="328" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dias_descanso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="438" y="0" width="27" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{anual}==true ? "" : $F{quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="454" y="0" width="27" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{anual}==true ? "" : $F{tipo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="274" y="0" width="54" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{anual_ok}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="481" y="0" width="74" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{anual}==true ? "" : $F{contagem}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="438" y="0" width="16" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{anual}==true ? $F{dia} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="454" y="0" width="55" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{anual}==true ?  $F{mes} : ""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

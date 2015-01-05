@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+    <t t-name="Parametros">
+        <div class="ui-toolbar oe_inline text_center" style="margin-bottom:0px;">
+
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Dono de Anexo :</h4>
+                <select class="oe_regproc_select_user" >
+
+                </select>
+            </div>
+
+        </div>
+
+    </t>
+
+</templates>

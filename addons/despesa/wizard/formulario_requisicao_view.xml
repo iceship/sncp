@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record id="formulario_requisicoes_converter_wizard_view" model="ir.ui.view">
+            <field name="model">sncp.despesa.requisicoes.converter.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Seleciona as Linhas pretendidas" version="7.0">
+                    <field name="select_ids">
+                        <tree create="false" delete="false" editable="true">
+
+                          <field name="requisicao_id" readonly="1" />
+                          <field name="name" readonly="1"/>
+                          <field name="departamento_id" readonly="1"/>
+                          <field name="item_id" readonly="1"/>
+                          <field name="quant_req" readonly="1"/>
+                          <field name="uom_id" readonly="1"/>
+                          <field name="selecionada"/>
+
+                        </tree>
+                    </field>
+                    <footer>
+                        <div align="left" style="width:500px" class="oe_inline">
+                            <button name="continuar" type="object" string="Continuar"/>
+                            <button name="descartar" type="object" string="Descartar" />
+                        </div>
+                    </footer>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

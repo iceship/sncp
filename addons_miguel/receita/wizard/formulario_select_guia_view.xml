@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record model="ir.ui.view" id="formulario_select_guia_view">
+            <field name="model">formulario.sncp.receita.select.guia</field>
+            <field name="arch" type="xml">
+            <form string="Selecciona Guia de Receita Pretendida" version="7.0">
+                <group>
+                    <field name="name" invisible="1"/>
+                    <field name="data_reinicio"
+                           attrs="{'invisible': [('name', '=', 1)],
+                                   'required': [('name', '=', 2)]}"/>
+                    <field name="data_despacho"
+                           attrs="{'invisible': [('name', '=', 1)],
+                                   'required': [('name', '=', 2)]}"/>
+                    <field name="notas" readonly="1"/>
+                </group>
+
+                <field name="guias_ids">
+                    <tree create="false" delete="false" editable="true">
+                        <field name="name" nolabel="1"/>
+                        <field name="guia_id" readonly="1"/>
+                        <field name="data" readonly="1"/>
+                        <field name="montante" readonly="1"/>
+                    </tree>
+                </field>
+                 <footer>
+                    <div align="left" style="width:500px">
+                        <button name="end" type="object" string="Continuar"/>
+                        <button name="descartar" type="object" string="Descartar"/>
+                    </div>
+                </footer>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

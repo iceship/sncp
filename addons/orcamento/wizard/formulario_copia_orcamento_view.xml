@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record model="ir.ui.view" id="formulario_copia_orcamento_view">
+            <field name="model">formulario.sncp.orcamento.copia</field>
+            <field name="arch" type="xml">
+                <form string="Parametros" version="7.0">
+                    <div style="width:500px;">
+                    <field name="name" invisible="1"/>
+                    <group colspan="4">
+                        <group string="Fonte">
+                            <field name="ano_origem" required="1"/>
+                        </group>
+                        <group string="Destino">
+                            <field name="ano_destino" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group colspan="4">
+                        <group>
+                            <field name="numero"  attrs="{'invisible': [('name', 'not in', ['rev','alt'])],
+                                                         'required': [('name', 'in', ['rev','alt'])],
+                                                         }"/>
+                        </group>
+                        <group>
+                            <field name="tipo_mod" attrs="{'invisible': [('name', 'not in', ['rev','alt'])],
+                                                           'required': [('name', 'in', ['rev','alt'])],
+                                                          }"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="fator" required="1"/>
+                    </group>
+
+                    <group>
+                        <group>
+                            <field name="adiciona_valor"/>
+                        </group>
+                        <group>
+                            <field name="substitui_valor"/>
+                        </group>
+                    </group>
+
+                    <footer>
+                        <div align="left" style="width:500px">
+                            <button name="end" type="object" string="Copiar"/>
+                            <button name="descartar" type="object" string="Descartar"/>
+                        </div>
+                    </footer></div>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

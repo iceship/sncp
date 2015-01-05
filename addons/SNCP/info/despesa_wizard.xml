@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <delete model="ir.actions.wizard" search="[('wiz_name','like','cabimento')]" />
+
+        <wizard id="wizard1" string="Parametros" model="sncp.despesa.cabimento"
+                name="formulario_cabimento" />
+        <wizard id="wizard2" string="Agenda" model="sncp.despesa.compromisso"
+                name="formulario_compromisso_agenda"/>
+    </data>
+</openerp>

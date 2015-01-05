@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- _________________Vistas__________________________-->
+
+        <!-- _________________Acrescimo de dimenções nas vistas__________________________-->
+        <record model="ir.ui.view" id="view_sncp_account_analytic_account_add_dim_form">
+            <field name="name">view.sncp.account.analytic.account.add.dim.form</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name='name' position="after">
+
+                        <h4><label string="Tipo de Dimensão" attrs="{'invisible':[('tipo_dim','in',['cc','ce','uo','cf'])]}"/></h4>
+                        <field name="estado" invisible="1"/>
+                        <field name="tipo_dim" attrs="{'readonly':[('estado','in',['cc','ce','uo','cf'])]}" on_change="on_change_tipo_dim(tipo_dim)"
+                                groups="account.group_account_user"/>
+
+                        <separator colspan="4"/>
+                    </field>
+                    <field name="parent_id" position="replace">
+                        <field name="parent_id"  options="{'no_open': True}"/>
+                    </field>
+                    <field name="code" position="replace">
+                        <field name="code" required="1"/>
+                    </field>
+
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_sncp_account_analytic_account_add_dim_list">
+            <field name="name">view.sncp.account.analytic.account.add.dim.list</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="account.view_account_analytic_account_list"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name='complete_name' position="before">
+                        <field name="tipo_dim"  groups="account.group_account_user"/>
+                    </field>
+                    <field name="parent_id" position="replace">
+                        <field name="parent_id" options="{'no_open': True}"/>
+                    </field>
+                    <field name="code" position="replace">
+                        <field name="code" required="1"/>
+                    </field>
+                </data>
+            </field>
+            </record>
+
+        <record model="ir.actions.act_window" id="action_account_analytic_account_view">
+            <field name="name">Contas Analíticas</field>
+            <field name="res_model">account.analytic.account</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Contas Analíticas" parent="menu_comum" id="menu_account_analytic_account_view"
+                  action="action_account_analytic_account_view" sequence="20"/>
+
+
+        <!--<record model="ir.ui.view" id="account_multidim_search">-->
+        <record id="view_account_analytic_account_search" model="ir.ui.view">
+            <field name="name">account.analytic.account.search</field>
+            <field name="model">account.analytic.account</field>
+            <field name="arch" type="xml">
+                <search string="Analytic Account">
+                    <field name="name" filter_domain="['|', ('name','ilike',self), ('code','ilike',self)]" string="Analytic Account"/>
+                    <field name="date"/>
+                    <field name="partner_id" filter_domain="[('partner_id','child_of',self)]"/>
+                    <field name="manager_id"/>
+                    <field name="parent_id"/>
+                    <field name="tipo_dim" domain="[]" filter_domain="[('tipo_dim','=',self)]"/>
+                    <field name="user_id"/>
+                    <filter string="Organica" domain="[('tipo_dim','=','uo')]" help="Dimenção organica"/>
+                    <filter string="Open" domain="[('state','=','open')]" help="Current Accounts"/>
+                    <filter string="Pending" domain="[('state','=','pending')]" help="Pending Accounts"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Associated Partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Type" domain="[]" context="{'group_by':'type'}"/>
+                        <filter string="Template" domain="[]" context="{'group_by':'template_id'}"/>
+                        <filter string="Parent Account" domain="[]" context="{'group_by':'parent_id'}"/>
+                        <filter string="Status" domain="[]" context="{'group_by':'state'}" groups="base.group_no_one"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--acrescenta departamento nas faturas de clientes-->
+        <record id="view_account_invoice_client_form_add_department" model="ir.ui.view">
+            <field name="name">view.account.invoice.client.form.add.department</field>
+		    <field name="model">account.invoice</field>
+		    <field name="inherit_id" ref="account.invoice_form"/>
+		    <field name="arch" type="xml">
+		        <data>
+		            <field name='fiscal_position' position="after">
+		                <field name="department_id"
+                               attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+		            </field>
+		        </data>
+		    </field>
+        </record>
+
+        <!--acrescenta departamento nas faturas de fornecedores-->
+        <record id="view_account_invoice_supplier_form_add_department" model="ir.ui.view">
+            <field name="name">view.account.invoice.supplier.form.add.department</field>
+		    <field name="model">account.invoice</field>
+		    <field name="inherit_id" ref="account.invoice_supplier_form"/>
+		    <field name="arch" type="xml">
+		        <data>
+		            <field name='fiscal_position' position="after">
+		                <field name="department_id" required="1"
+                               attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+		            </field>
+		        </data>
+		    </field>
+        </record>
+
+
+
+
+              
+	  	
+    </data>
+</openerp>

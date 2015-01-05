@@ -1,0 +1,20 @@
+@charset "utf-8";
+.openerp .oe_inline {
+ 
+ display: inline-block;
+ 
+}
+
+[data-id="ano_planeado"] {    width: 100px;}
+[data-id="montante"] {    width: 60px;}
+
+.openerp .my_oe_r_space_50{
+ margin-right: 50px;
+}
+
+.openerp .my_oe_r_space_20{
+ margin-right: 20px;
+}
+
+
+

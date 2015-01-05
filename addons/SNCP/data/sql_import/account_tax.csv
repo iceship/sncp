@@ -1,0 +1,5 @@
+id,active,applicable_type,type_tax_use,description,company_id/id,amount,name,type,sequence
+1,True,true,all,IVA23,1,0.23,IVA23,percent,1
+2,True,true,all,IVA13,1,0.13,IVA13,percent,1
+3,True,true,all,IVA6,1,0.06,IVA6,percent,1
+4,True,true,all,IVA0,1,0.00,IVA0,percent,1

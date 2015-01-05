@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Orçamento -->
+        <record id="view_sncp_orcamento_tree" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.tree</field>
+            <field name="model">sncp.orcamento</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Orçamento" delete="false">
+                    <field name="name"/>
+                    <field name="titulo"/>
+                    <field name="ano"/>
+                    <field name="state" invisible="1"/>
+                    <field name="tipo_orc" invisible="1"/>
+                    <button name="unlink" string="Apagar" states="draft,proposed" type="object" icon="gtk-cancel"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_orcamento_form" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.form</field>
+            <field name="model">sncp.orcamento</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Orçamento" version="7.0" delete="false" create="false">
+                    <header>
+                        <div class="oe_inline">
+                        <button name="orcamento_proposed" type="object" string="Para Aprovação" states="draft"/>
+                        <button name="orcamento_approved" type="object" string="Aprovar" states="proposed" group="group_orcamento_manager"/>
+                        <button name="call_formulario" type="object" string="Contabilizar" states="approved" group="group_orcamento_manager" />
+
+                        <button name="approved_cancel" type="object" string="Anular aprovação" states="approved" class="oe_highlight" group="group_orcamento_manager"/>
+                        <button name="accounted_cancel" type="object" string="Anular contabilização" states="accounted" class="oe_highlight" group="group_orcamento_manager"/>
+                        <button name="orcamento_closed" type="object" string="Fechar" states="accounted" group="group_orcamento_manager"/>
+                        </div>
+                        <field name='state' widget='statusbar' readonly="1"/>
+                    </header>
+                    <group colspan="4" col="2">
+                        <group col="2">
+                            <field name="cab_readonly" invisible="1"/>
+                            <!-- ___________ Falta colocar o cabeçalho readonly _______-->
+                            <field name="ano" required="1"
+                                   attrs="{'readonly':['|',('state','not in',['draft']),
+                                                            ('cab_readonly','in',[1])]}"
+                                    on_change="descricao(ano, titulo)"/>
+                            <field name="tipo_orc" invisible="1"/>
+                            <field name="titulo" required="1"
+                                   attrs="{'readonly':['|',('state', 'not in', ['draft']),
+                                                           ('cab_readonly','in',[1])]}"
+                                   on_change="descricao(ano, titulo)"/>
+                            <field name="id" invisible="True"/>
+                        </group>
+                        <group>
+                            <field name="name" attrs="{'readonly':[('state', 'not in', ['draft', 'proposed'])]}" required="1"/>
+                            <field name="contab" readonly="1"/>
+                        </group>
+                    </group>
+                    <separator string="Aprovações" colspan="4"/>
+                        <group colspan="4" col="8">
+                            <field name="aprova1" attrs="{'readonly':[('state', 'not in', ['proposed'])]}"/>
+                            <field name="aprova2" attrs="{'readonly':[('state', 'not in', ['proposed'])]}"/>
+                            <field name="aprova3" attrs="{'readonly':[('state', 'not in', ['proposed'])]}"/>
+                        </group>
+                    <group>
+                        <button name="cria_linha"
+                                attrs="{'invisible': [('state','not in',['draft','proposed'])
+                                ]}"
+                                type="object" string="Criar linhas"/>
+                        <button name="copiar_linhas_orcamento"
+                                attrs="{'invisible': [('state','not in',['draft','proposed'])
+                                ]}"
+                                type="object" string="Copiar linhas"/>
+                    </group>
+
+                    <notebook colspan="4">
+                        <page>
+                            <field  name="orc_linhas_id" nolabel="1" attrs="{'readonly':[('state', 'not in', ['draft', 'proposed'])]}">
+                                <!-- <tree editable="bottom"> -->
+                                <tree create="false" editable="true">
+                                    <field name="orcamento_id" invisible="1"/>
+
+                                    <field name="titulo" invisible="1"/>
+                                    <field name="organica_id" options="{'no_open': True}"
+                                           attrs="{'invisible':[('titulo', 'in', ['rece'])],
+                                                   'required': [('titulo', 'in', ['desp'])]}"/>
+
+                                    <field name="economica_id" options="{'no_open': True}"
+                                            required="1"/>
+                                    <field name="funcional_id" options="{'no_open': True}"
+                                           attrs="{'invisible':[('titulo', 'in', ['rece'])]}"/>
+
+                                    <field name="reforco" string="Dotação" />
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_orcamento_view">
+                <field name="name">Orçamento</field>
+                <field name="res_model">sncp.orcamento</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="view_sncp_orcamento_tree"/>
+                <field name="context">{'tipo_orc':'orc'}</field>
+                <field name="domain">[('tipo_orc','=','orc')]</field>
+        </record>
+            <record id="action_sncp_orcamento_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_orcamento_tree"/>
+                <field name="act_window_id" ref="action_sncp_orcamento_view"/>
+            </record>
+            <record id="action_sncp_orcamento_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_orcamento_form"/>
+                <field name="act_window_id" ref="action_sncp_orcamento_view"/>
+            </record>
+
+        <menuitem name="Orçamento" parent="comum.menu_sncp" id="menu_orcamento" sequence="20"/>
+                <menuitem name="Orçamento" parent="menu_orcamento" id="menu_sncp_orcamento_view"
+                          action="action_sncp_orcamento_view" sequence="10"/>
+
+        <!-- Modificações -->
+        <record id="view_sncp_orcamento_modificacao_tree" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.modificacao.tree</field>
+            <field name="model">sncp.orcamento</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Modificações" delete="false">
+                    <field name="name"/>
+                    <field name="titulo"/>
+                    <field name="ano"/>
+                    <field name="tipo_mod"/>
+                    <field name="state" invisible="1"/>
+                    <button name="unlink" string="Apagar" states="draft,proposed" type="object" icon="gtk-cancel"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_orcamento_modificacao_form" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.modificacao.form</field>
+            <field name="model">sncp.orcamento</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Modificações" version="7.0" create="false" delete="false">
+                    <header>
+                        <div class="oe_inline">
+                        <button name="orcamento_proposed" type="object" string="Para Aprovação" states="draft"/>
+                        <button name="orcamento_approved" type="object" string="Aprovar" states="proposed" group="group_orcamento_manager"/>
+                        <button name="call_formulario" type="object" string="Contabilizar" states="approved" group="group_orcamento_manager" />
+                        <button name="approved_cancel" type="object" string="Não aprovado" states="approved" class="oe_highlight" group="group_orcamento_manager"/>
+                        <button name="accounted_cancel" type="object" string="Não contabilizado" states="accounted" class="oe_highlight" group="group_orcamento_manager"/>
+                        <button name="orcamento_closed" type="object" string="Fechar" states="accounted" group="group_orcamento_manager"/>
+                        </div>
+                        <field name='state' widget='statusbar' readonly="1"/>
+                    </header>
+                    <group colspan="4" col="2">
+                        <group col="2">
+                            <field name="cab_readonly" invisible="1"/>
+                            <field name="ano" required="1" on_change="descricao_mod(ano,titulo,tipo_mod,numero,alt_principal)"
+                                   attrs="{'readonly':['|',('state','not in',['draft']),('cab_readonly','in',[1])]}"/>
+                            <field name="tipo_orc" invisible="1"/>
+                            <field name="titulo" required="1" on_change="descricao_mod(ano,titulo,tipo_mod,numero,alt_principal)"
+                                   attrs="{'readonly':['|',('state', 'not in', ['draft']),('cab_readonly','in',[1])]}"/>
+                            <field name="tipo_mod" required="1" on_change="descricao_mod(ano,titulo,tipo_mod,numero,alt_principal)"
+                                   attrs="{'readonly':['|',('state','not in',['draft']),('cab_readonly','in',[1])]}"/>
+                            <field name="numero" required="1" on_change="descricao_mod(ano,titulo,tipo_mod,numero,alt_principal)"
+                                    attrs="{'readonly':['|',('state','not in',['draft']),('cab_readonly','in',[1])]}"/>
+                        </group>
+                        <group>
+                            <field name="name" attrs="{'readonly':[('state', 'not in', ['draft', 'proposed'])]}" required="1"/>
+                            <field name="alt_principal" on_change="descricao_mod(ano,titulo,tipo_mod,numero,alt_principal)"
+                                   attrs="{'readonly':['|',('state','not in',['draft']),('cab_readonly','in',[1])],
+                                           'invisible':[('tipo_mod','in',['rev'])],
+                                           'required': [('tipo_mod','in', ['alt'])],
+                                           }"/>
+                            <field name="contab" readonly="1"/>
+                        </group>
+                    </group>
+                    <separator string="Aprovações" colspan="4"/>
+                        <group colspan="4" col="8">
+                            <field name="aprova1" attrs="{'readonly':[('state', 'not in', ['proposed'])]}"/>
+                            <field name="aprova2" attrs="{'readonly':[('state', 'not in', ['proposed'])]}"/>
+                            <field name="aprova3" attrs="{'readonly':[('state', 'not in', ['proposed'])],
+                                'invisible':[('tipo_mod', 'in', ['alt'])]}"/>
+                        </group>
+                        <group>
+                        <button name="cria_linha"
+                                attrs="{'invisible': [('state','not in',['draft','proposed'])
+                                ]}"
+                                type="object" string="Criar linhas"/>
+
+                        <button name="copiar_linhas_orcamento"
+                                attrs="{'invisible': [('state','not in',['draft','proposed'])
+                                ]}"
+                                type="object" string="Copiar linhas"/>
+
+                        </group>
+                    <notebook colspan="4">
+                        <page>
+                            <field  name="orc_linhas_id" nolabel="1" attrs="{'readonly':[('state', 'not in', ['draft', 'proposed'])]}">
+                                <tree create="false" editable="true">
+                                    <field name="titulo" invisible="1"/>
+                                    <field name="organica_id" options="{'no_open': True}"
+                                           attrs="{'invisible':[('titulo', 'in', ['rece'])],
+                                                   'required': [('titulo', 'in', ['desp'])]}"
+                                           />
+                                    <field name="economica_id" options="{'no_open': True}"
+                                           required="1"
+                                           />
+                                    <field name="funcional_id" options="{'no_open': True}"
+                                           attrs="{'invisible':[('titulo', 'in', ['rece'])]}"
+                                           />
+                                    <field name="reforco" />
+                                    <field name="anulacao"/>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_orcamento_modificacao_view">
+                <field name="name">Modificações</field>
+                <field name="res_model">sncp.orcamento</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="view_sncp_orcamento_modificacao_tree"/>
+                <field name="context">{'default_tipo_orc':'rev'}</field>
+                <field name="domain">[('tipo_orc','in',['rev','alt'])]</field>
+       </record>
+            <record id="action_sncp_orcamento_modificacao_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_orcamento_modificacao_tree"/>
+                <field name="act_window_id" ref="action_sncp_orcamento_modificacao_view"/>
+            </record>
+            <record id="action_sncp_orcamento_modificacao_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_orcamento_modificacao_form"/>
+                <field name="act_window_id" ref="action_sncp_orcamento_modificacao_view"/>
+            </record>
+        <menuitem name="Modificações" parent="menu_orcamento" id="menu_sncp_orcamento_modificacao_view"
+                          action="action_sncp_orcamento_modificacao_view" sequence="30"/>
+
+        <!-- Histórico -->
+        <record id="view_sncp_orcamento_historico_tree" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.historico.tree</field>
+            <field name="model">sncp.orcamento.historico</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Histórico" create="false" edit="false" delete="false" version="7.0">
+                    <field name="name"/>
+                    <field name="categoria"/>
+                    <field name="datahora"/>
+                    <field name="organica_id"/>
+                    <field name="economica_id"/>
+                    <field name="funcional_id"/>
+                    <field name="centrocustos_id"/>
+                    <field name="montante"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_orcamento_historico_view" >
+            <field name="name">Histórico</field>
+            <field name="res_model">sncp.orcamento.historico</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree_orcamento_historico_pesquisa</field>
+            <field name="view_id" ref="view_sncp_orcamento_historico_tree"/>
+            <field name="context">{'tree_view_ref': 'view_sncp_orcamento_historico_tree'}</field>
+        </record>
+        <menuitem name="Histórico" parent="menu_orcamento" id="menu_sncp_orcamento_historico_view"
+                          action="action_sncp_orcamento_historico_view" sequence="40"/>
+
+        <!-- Vista lista acumulados -->
+        <record id="view_sncp_orcamento_acumulados_tree" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.acumulados.tree</field>
+            <field name="model">sncp.orcamento.acumulados</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Acumulados" create="false" edit="false" delete="false" version="7.0">
+                    <field name="name"/>
+                    <field name="categoria"/>
+                    <field name="organica_id"/>
+                    <field name="economica_id"/>
+                    <field name="funcional_id"/>
+                    <field name="montante"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_orcamento_acumulados_view" >
+            <field name="name">Acumulados</field>
+            <field name="res_model">sncp.orcamento.acumulados</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree_orcamento_acumulados_pesquisa</field>
+            <field name="view_id" ref="view_sncp_orcamento_acumulados_tree"/>
+            <field name="context">{'tree_view_ref': 'view_sncp_orcamento_acumulados_tree'}</field>
+        </record>
+        <menuitem name="Acumulados" parent="menu_orcamento" id="menu_sncp_orcamento_acumulados_view"
+                          action="action_sncp_orcamento_acumulados_view" sequence="50"/>
+
+    </data>
+</openerp>

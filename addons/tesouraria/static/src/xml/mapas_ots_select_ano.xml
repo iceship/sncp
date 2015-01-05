@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+    <t t-name="MapasOtsSelectAno">
+        <div class="oe_account_quickadd ui-toolbar" style="margin-bottom:0px;">
+            <div class="oe_form_dropdown_section">
+                <h4>Ano :</h4>
+                <select class="select_ano">
+
+                </select>
+            </div>
+
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="compromisso" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="374"/>
+	<parameter name="IDS" class="java.lang.Object">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PIDS" class="java.util.List">
+		<defaultValueExpression><![CDATA[$P{IDS}.toList()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT COMP.id AS COMP_ID,COMPANO.id AS COMPANO_ID,COMPLINHA.id AS COMPLINHA_ID,COMP.compromisso,
+(CASE WHEN COMP.name IS NULL
+          THEN CASE WHEN COMP.desc2 IS NULL
+                        THEN ''
+                    ELSE COMP.desc2
+	       END
+     ELSE CASE WHEN COMP.desc2 IS NULL
+                   THEN COMP.name
+               ELSE COMP.name || ' ' || COMP.desc2
+          END
+END) AS REFERENCIA,
+(EXTRACT(YEAR FROM (SELECT MAX(datahora)
+                    FROM sncp_orcamento_historico AS HISTORICO
+                    WHERE HISTORICO.compromisso_id = COMP.id))) AS ANO,
+
+
+(SELECT DATE(MAX(datahora))
+FROM sncp_orcamento_historico AS HISTORICO
+WHERE HISTORICO.compromisso_id = COMP.id) AS DATA,
+COALESCE(
+       (SELECT AAA.code
+       FROM account_analytic_account AS AAA
+       WHERE AAA.id=COMPLINHA.organica_id),'') AS ORGANICA_CODE,
+COALESCE(
+       (SELECT AAA.code
+       FROM account_analytic_account AS AAA
+       WHERE AAA.id=COMPLINHA.economica_id),'') AS ECONOMICA_CODE,
+
+COALESCE(
+       (SELECT AAA.code
+       FROM account_analytic_account AS AAA
+       WHERE AAA.id=COMPLINHA.funcional_id),'') AS FUNCIONAL_CODE,
+--CÁLCULO DA DOTAÇÃO INICIAL
+  COALESCE(
+  (SELECT montante
+  FROM sncp_orcamento_historico AS HISTORICO
+  WHERE HISTORICO.name = COMPANO.ano AND HISTORICO.categoria='01ddota'
+  AND(
+       (COMPLINHA.organica_id IS NULL AND HISTORICO.organica_id IS NULL) OR
+       (COMPLINHA.organica_id IS NOT NULL AND HISTORICO.organica_id=COMPLINHA.organica_id)
+     )
+  AND(
+       (COMPLINHA.economica_id IS NULL AND HISTORICO.economica_id IS NULL) OR
+       (COMPLINHA.economica_id IS NOT NULL AND HISTORICO.economica_id=COMPLINHA.economica_id)
+     )
+  AND(
+       (COMPLINHA.funcional_id IS NULL AND HISTORICO.funcional_id IS NULL) OR
+       (COMPLINHA.funcional_id IS NOT NULL AND HISTORICO.funcional_id=COMPLINHA.funcional_id)
+     )),0.0) AS DOTACAO_INICIAL,
+-- CALCULO REFORÇOS - ANULAÇÕES
+COALESCE(
+   (SELECT montante
+   FROM sncp_orcamento_historico AS HISTORICO
+   WHERE HISTORICO.name = COMPANO.ano AND HISTORICO.categoria='02drefo'
+AND(
+       (COMPLINHA.organica_id IS NULL AND HISTORICO.organica_id IS NULL) OR
+       (COMPLINHA.organica_id IS NOT NULL AND HISTORICO.organica_id=COMPLINHA.organica_id)
+     )
+  AND(
+       (COMPLINHA.economica_id IS NULL AND HISTORICO.economica_id IS NULL) OR
+       (COMPLINHA.economica_id IS NOT NULL AND HISTORICO.economica_id=COMPLINHA.economica_id)
+     )
+  AND(
+       (COMPLINHA.funcional_id IS NULL AND HISTORICO.funcional_id IS NULL) OR
+       (COMPLINHA.funcional_id IS NOT NULL AND HISTORICO.funcional_id=COMPLINHA.funcional_id)
+     )
+AND
+datahora <= (SELECT  datahora - INTERVAL '1' SECOND FROM sncp_orcamento_historico AS HISTORICO
+WHERE HISTORICO.compromisso_linha_id=COMPLINHA.id)),0.0)
+-
+COALESCE((SELECT montante
+   FROM sncp_orcamento_historico AS HISTORICO
+   WHERE HISTORICO.name = COMPANO.ano AND HISTORICO.categoria='03dabat'
+AND(
+       (COMPLINHA.organica_id IS NULL AND HISTORICO.organica_id IS NULL) OR
+       (COMPLINHA.organica_id IS NOT NULL AND HISTORICO.organica_id=COMPLINHA.organica_id)
+     )
+  AND(
+       (COMPLINHA.economica_id IS NULL AND HISTORICO.economica_id IS NULL) OR
+       (COMPLINHA.economica_id IS NOT NULL AND HISTORICO.economica_id=COMPLINHA.economica_id)
+     )
+  AND(
+       (COMPLINHA.funcional_id IS NULL AND HISTORICO.funcional_id IS NULL) OR
+       (COMPLINHA.funcional_id IS NOT NULL AND HISTORICO.funcional_id=COMPLINHA.funcional_id)
+     )AND
+datahora <= (SELECT  datahora - INTERVAL '1' SECOND FROM sncp_orcamento_historico AS HISTORICO
+WHERE HISTORICO.compromisso_linha_id=COMPLINHA.id)),0.0)  AS REFORCO_ANULACAO,
+-- COMPROMISSOS ASSUMIDOS
+-- C
+COALESCE(
+(
+SELECT	SUM(HISTORICO.montante)
+FROM	sncp_orcamento_historico AS HISTORICO
+WHERE	HISTORICO.name = COMPANO.ano and
+	HISTORICO.categoria='05compr' and
+	HISTORICO.compromisso_linha_id<>COMPLINHA.id)
+
+,0.0) as COMPROMISSOS_ASSUMIDOS,
+COMPLINHA.montante AS COMPROMISSO_RELATIVO_A_DESPESA_EM_ANALISE,
+
+(SELECT montante
+ FROM   sncp_despesa_fundos_disponiveis
+ WHERE  mes=EXTRACT(MONTH FROM (SELECT DATE(MAX(datahora))
+				FROM   sncp_orcamento_historico AS HISTORICO
+                                WHERE HISTORICO.compromisso_id = COMP.id))) AS FUNDO_DISPONIVEL_MES,
+--MES por extenso
+(SELECT
+       CASE
+           WHEN mes=1 THEN 'Janeiro'
+           WHEN mes=2 THEN 'Fevereiro'
+           WHEN mes=3 THEN 'Março'
+           WHEN mes=4 THEN 'Abril'
+           WHEN mes=5 THEN 'Maio'
+           WHEN mes=6 THEN 'Junho'
+           WHEN mes=7 THEN 'Julho'
+           WHEN mes=8 THEN 'Agosto'
+           WHEN mes=9 THEN 'Setembro'
+           WHEN mes=10 THEN 'Outubro'
+           WHEN mes=11 THEN 'Novembro'
+           ELSE 'Dezembro'
+       END
+ FROM sncp_despesa_fundos_disponiveis
+ WHERE mes=EXTRACT(MONTH FROM (SELECT DATE(MAX(datahora))
+				FROM   sncp_orcamento_historico AS HISTORICO
+                                WHERE HISTORICO.compromisso_id = COMP.id))) AS MES,
+--COMPROMISSOS ASSUMIDOS NO PERIODO
+COALESCE((SELECT SUM(montante)
+	  FROM	sncp_orcamento_historico AS HISTORICO
+	  WHERE	compromisso_id<>COMP.id AND
+	        HISTORICO.name=COMPANO.ano AND
+	        HISTORICO.datahora BETWEEN
+	        (DATE(CONCAT(EXTRACT(YEAR FROM (SELECT DATE(MAX(datahora))
+					       FROM sncp_orcamento_historico AS HISTORICO
+                                               WHERE HISTORICO.compromisso_id = COMP.id)),
+                           '-',EXTRACT(MONTH FROM (SELECT DATE(MAX(datahora))
+					           FROM sncp_orcamento_historico AS HISTORICO
+                                                   WHERE HISTORICO.compromisso_id = COMP.id)),
+                           '-',1))+INTERVAL '1' SECOND
+                )
+
+                AND
+
+		(SELECT MAX(datahora)
+	        FROM   sncp_orcamento_historico AS HISTORICO
+                WHERE HISTORICO.compromisso_id = COMP.id)
+
+),0.0) AS COMPROMISSO_ASSUMIDO_NO_PERIODO,
+-- COMPROMISSO EMERGENTE
+COALESCE((SELECT SUM(montante)
+	  FROM sncp_despesa_compromisso_linha AS COMPLINHA
+	  WHERE COMPLINHA.compromisso_ano_id=COMPANO.id AND
+		COMPANO.ano=EXTRACT(YEAR FROM (SELECT DATE(MAX(datahora))
+				FROM   sncp_orcamento_historico AS HISTORICO
+                                WHERE HISTORICO.compromisso_id = COMP.id))
+),0.0) AS COMPROMISSO_EMERGENTE
+
+FROM sncp_despesa_compromisso AS COMP
+INNER JOIN sncp_despesa_compromisso_ano AS COMPANO
+ON COMP.id=COMPANO.compromisso_id
+INNER JOIN sncp_despesa_compromisso_linha AS COMPLINHA
+ON COMPANO.id=COMPLINHA.compromisso_ano_id
+WHERE COMPANO.ano = EXTRACT(YEAR FROM (
+				       SELECT DATE(MAX(datahora))
+				       FROM   sncp_orcamento_historico AS HISTORICO
+                                       WHERE HISTORICO.compromisso_id = COMP.id
+                        )) AND $X{IN,COMP.id,PIDS}]]>
+	</queryString>
+	<field name="comp_id" class="java.lang.Integer"/>
+	<field name="compano_id" class="java.lang.Integer"/>
+	<field name="complinha_id" class="java.lang.Integer"/>
+	<field name="compromisso" class="java.lang.String"/>
+	<field name="referencia" class="java.lang.String"/>
+	<field name="ano" class="java.lang.Double"/>
+	<field name="data" class="java.sql.Date"/>
+	<field name="organica_code" class="java.lang.String"/>
+	<field name="economica_code" class="java.lang.String"/>
+	<field name="funcional_code" class="java.lang.String"/>
+	<field name="dotacao_inicial" class="java.math.BigDecimal"/>
+	<field name="reforco_anulacao" class="java.math.BigDecimal"/>
+	<field name="compromissos_assumidos" class="java.math.BigDecimal"/>
+	<field name="compromisso_relativo_a_despesa_em_analise" class="java.math.BigDecimal"/>
+	<field name="fundo_disponivel_mes" class="java.math.BigDecimal"/>
+	<field name="mes" class="java.lang.String"/>
+	<field name="compromisso_assumido_no_periodo" class="java.math.BigDecimal"/>
+	<field name="compromisso_emergente" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="170" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="35" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Anexo 1 - Informação do Compromisso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamento Financeiro]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="219" y="115" width="336" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="228" y="115" width="317" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[POCAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="55" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Compromisso:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="414" y="95" width="50" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="412" y="95" width="50" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="2" y="95" width="217" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="7" y="95" width="217" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entidade]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="2" y="135" width="553" height="22"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="2" y="75" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Descrição:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="138" width="553" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Fonte de financiamento indicando as respectivas percentagens]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="2" y="115" width="217" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="117" width="217" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Sistema de contabilidade aplicável]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="459" y="95" width="96" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="67" y="75" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{referencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="442" y="55" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{compromisso}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="466" y="95" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="219" y="95" width="195" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="228" y="95" width="172" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Câmara Municipal do Funchal]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="501" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="33" width="555" height="80"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="455" y="273" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="455" y="253" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="455" y="213" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="455" y="233" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="455" y="153" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="455" y="113" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="455" y="173" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="455" y="193" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="455" y="133" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="173" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="133" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="193" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="153" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="113" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="213" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="233" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="273" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="253" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="457" y="392" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="457" y="412" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="457" y="432" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="457" y="452" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="457" y="472" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="2" y="432" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="2" y="412" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="2" y="392" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="2" y="452" width="455" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="2" y="472" width="455" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="215" y="33" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Orçamento do ano]]></text>
+			</staticText>
+			<textField pattern="###0">
+				<reportElement x="310" y="33" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{ano}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="53" width="144" height="20"/>
+				<textElement/>
+				<text><![CDATA[Classificação Orgânica:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="73" width="144" height="20"/>
+				<textElement/>
+				<text><![CDATA[Classificação Funcional:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="93" width="144" height="20"/>
+				<textElement/>
+				<text><![CDATA[Classificação Económica:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="53" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{organica_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="93" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{economica_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="73" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{funcional_code}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="113" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Dotação Inicial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="133" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Reforços / Anulações]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="153" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Congelamentos / Descongelamentos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="173" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Dotação corrigida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="193" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Compromissos assumidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="213" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Dotação disponível]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="233" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Compromisso relativo à despesa em análise]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="253" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Saldo Residual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="273" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="455" y="113" width="93" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{dotacao_inicial}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="455" y="133" width="93" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{reforco_anulacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="455" y="173" width="93" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dotacao_inicial}+$F{reforco_anulacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="455" y="193" width="93" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{compromissos_assumidos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="455" y="213" width="93" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dotacao_inicial}+$F{reforco_anulacao}-$F{compromissos_assumidos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="455" y="233" width="93" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{compromisso_relativo_a_despesa_em_analise}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="455" y="253" width="93" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dotacao_inicial}+$F{reforco_anulacao}-$F{compromissos_assumidos}-$F{compromisso_relativo_a_despesa_em_analise}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="462" y="273" width="93" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="392" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Fundos disponíveis para o mês]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="412" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Compromissos assumidos no mês]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="432" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Saldo Atual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="452" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Compromisso emergente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="472" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Saldo Residual]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="464" y="392" width="84" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fundo_disponivel_mes}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="464" y="412" width="84" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{compromisso_assumido_no_periodo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="464" y="432" width="84" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fundo_disponivel_mes}-$F{compromisso_assumido_no_periodo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="464" y="452" width="84" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{compromisso_emergente}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="464" y="472" width="84" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fundo_disponivel_mes}-$F{compromisso_assumido_no_periodo}-$F{compromisso_emergente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="167" y="332" width="221" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Demonstração de Fundos Disponíveis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="352" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mês:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="492" y="352" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="14" width="100" height="1"/>
+			</break>
+		</band>
+	</detail>
+</jasperReport>

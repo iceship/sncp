@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- _____________________Ordem___________________-->
+        <record id="view_sncp_despesa_pagamentos_ordem_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.pagamentos.ordem.tree</field>
+            <field name="model">sncp.despesa.pagamentos.ordem</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Ordem de Pagamento" version="7.0" create="false" delete="false"
+                      attrs="{'readonly':[('state', 'not in', ['draft'])]}">
+                    <field name="state" widget="statusbar"/>
+                    <field name="nif"/>
+                    <field name="partner_id"/>
+                    <field name="montante_iliq"/>
+                    <field name="montante_ret"/>
+                    <field name="meio_desc"/>
+                    <field name="bcfm"/>
+                    <field name="num_pag"/>
+                    <button name="unlink" string="Apagar" states="draft" type="object" icon="gtk-cancel"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_despesa_pagamentos_ordem_form" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.pagamentos.ordem.form</field>
+            <field name="model">sncp.despesa.pagamentos.ordem</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Pagamento Ordem" version="7.0" create="false" delete="false"
+                      attrs="{'readonly':[('state', 'not in', ['draft'])]}">
+                    <header>
+                        <div class="oe_inline">
+                            <button name="pag_ord_cnf" type="object" string="Conferida" states="draft"/>
+                        </div>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+
+                    <!-- _______campos de estado_______________-->
+                    <field name="estado_descontos" invisible="1"/>
+                    <field name="id" invisible="1"/>
+                    <field name="estado_serie" invisible="1"/>
+                    <!-- _______FIM_____-->
+
+                    <sheet>
+                     <!-- name readonly-->
+                    <label for="name"/>
+                    <field name="name" readonly="1" class="oe_inline my_oe_r_space_50"/>
+                    <label for="tipo"/>
+                    <field name="tipo" readonly="1" class="oe_inline my_oe_r_space_50"/>
+                    <label for="proposta_id"/>
+                    <field name="proposta_id" readonly="1" class="oe_inline"/>
+
+
+                    <separator/>
+                    <label for="partner_id"/>
+                    <field name="partner_id" readonly="1" class="oe_inline my_oe_r_space_50"
+                            options="{'no_open': True}"/>
+                    <label for="coletiva"/>
+                    <field name="coletiva" readonly="1" class="oe_inline my_oe_r_space_150"/>
+                    <!-- Alterei aqui-->
+                    <button name="desconto_visivel" string="Descontos/Retenções" type="object"
+                            attrs="{'invisible': [('estado_descontos', 'not in', [0])]}"/>
+
+                    <separator/>
+
+                    <label for="meio_pag_id"/>
+                    <field name="meio_pag_id" class="oe_inline my_oe_r_space_20" options="{'no_open': True}"
+                           attrs="{'readonly':[('state', 'not in', ['draft'])]}"/>
+
+                    <label for="num_pag"/>
+                    <field name="num_pag" class="oe_inline my_oe_r_space_20"
+                           attrs="{'readonly':['|',('state', 'not in', ['draft']),
+                                               ('estado_serie','in',[1,2])]}"/>
+                    <label for="referencia"/>
+                    <field name="referencia" class="oe_inline my_oe_r_space_20"
+                          attrs="{'readonly':[('state', 'not in', ['draft'])]}"/>
+                    <separator/>
+                    <group>
+                        <field name="observ" attrs="{'readonly':[('state', 'not in', ['draft'])]}"/>
+                    </group>
+                    <separator/>
+                        <label for="montante_iliq"/>
+                        <field name="montante_iliq" readonly="1" class="oe_inline my_oe_r_space_50"/>
+                        <label for="montante_desc"/>
+                        <field name="montante_desc" readonly="1" class="oe_inline my_oe_r_space_50"/>
+                        <label for="montante_ret"/>
+                        <field name="montante_ret" readonly="1" class="oe_inline"/>
+
+
+                    <separator/>
+                    <label for="conferida_user_id" attrs="{'invisible':[('state', 'not in', ['cnf'])]}"/>
+                    <field name="conferida_user_id" readonly="1" class="oe_inline my_oe_r_space_50"
+                           attrs="{'invisible':[('state', 'not in', ['cnf'])]}"/>
+                    <label for="conferida_data" attrs="{'invisible':[('state', 'not in', ['cnf'])]}"/>
+                    <field name="conferida_data" readonly="1" class="oe_inline"
+                               attrs="{'invisible':[('state', 'not in', ['cnf'])]}"/>
+                    <separator/>
+                    <label for="autorizada_user_id" attrs="{'invisible':[('state', 'not in', ['aut'])]}"/>
+                    <field name="autorizada_user_id" readonly="1" class="oe_inline my_oe_r_space_50"
+                               attrs="{'invisible':[('state', 'not in', ['aut'])]}"/>
+                    <label for="autorizada_data" attrs="{'invisible':[('state', 'not in', ['aut'])]}"/>
+                    <field name="autorizada_data" readonly="1" class="oe_inline"
+                                attrs="{'invisible':[('state', 'not in', ['aut'])]}"/>
+
+                    <separator/>
+                    <group>
+
+                        <field name="liquidada" readonly="1"
+                               attrs="{'invisible':[('state', 'not in', ['liq'])]}"/>
+                    </group>
+                    <group>
+                        <field name="paga" readonly="1"
+                               attrs="{'invisible':[('state', 'not in', ['pag'])]}"/>
+                    </group>
+
+
+                    <notebook>
+                        <page string="Linhas"> <!-- _______LINHAS_______________-->
+                            <field name="ordem_linha_id" nolabel="1" attrs="{'readonly':[('state','not in',['draft'])]}">
+                                <tree string="Linhas da Ordem" editable="true" create="false" version="7.0">
+                                    <field name="account_invoice_id" readonly="1"/>
+                                    <field name="account_invoice_line_id" readonly="1"/>
+                                    <field name="compromisso_id" readonly="1"/>
+                                    <field name="compromisso_linha_id" readonly="1"/>
+                                    <field name="montante" />
+                                </tree>
+                            </field>
+                        </page>
+                        <!-- _____________________________DESCONTOS/RETENÇOES______________-->
+                        <page string="Descontos/Retenções"
+                                attrs="{'invisible': [('estado_descontos', 'in', [0])]}">
+                            <field name="descontos_retencoes_id"
+                                    attrs="{'readonly': [('state', 'not in', ['draft'])]}">
+                                <tree string="Descontos/Retenções" editable="top">
+                                    <field name="opag_id" invisible="1"/>
+                                    <field name="ret_desc_id" required="1" options="{'no_open': True}"
+                                            on_change="on_change_ret_desc_id(parent.id, ret_desc_id)"/>
+                                    <field name="montante"
+                                            on_change="on_change_ret_desc_montante(
+                                                parent.id, ret_desc_id, montante)"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_sncp_despesa_pagamentos_ordem_view">
+            <field name="name">Ordens de Pagamento</field>
+            <field name="res_model">sncp.despesa.pagamentos.ordem</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sncp_despesa_pagamentos_ordem_tree"/>
+            <field name="domain">[('state', 'in', ['draft', 'cnf', 'aut'])]</field>
+        </record>
+            <record id="action_sncp_despesa_pagamentos_ordem_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_despesa_pagamentos_ordem_tree"/>
+                <field name="act_window_id" ref="action_sncp_despesa_pagamentos_ordem_view"/>
+            </record>
+            <record id="action_sncp_despesa_pagamentos_ordem_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_despesa_pagamentos_ordem_form"/>
+                <field name="act_window_id" ref="action_sncp_despesa_pagamentos_ordem_view"/>
+            </record>
+
+        <menuitem name="Ordens de Pagamento" parent="menu_despesa_pagamentos"
+                  id="menu_despesa_pagamentos_ordem" sequence="50"/>
+            <menuitem name="Ordens" parent="menu_despesa_pagamentos_ordem"
+                      id="menu_sncp_despesa_pagamentos_ordem_view" sequence="10"
+                      action="action_sncp_despesa_pagamentos_ordem_view"/>
+
+        <!-- _____________________Conferir___________________-->
+        <record id="view_sncp_despesa_pagamentos_ordem_conferir_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.pagamentos.ordem.conferir.tree</field>
+            <field name="model">sncp.despesa.pagamentos.ordem</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Pagamento Ordem" version="7.0" create="false" delete="false">
+                    <field name="state" invisible="1"/>
+                    <field name="nif"/>
+                    <field name="partner_id"/>
+                    <field name="montante_iliq"/>
+                    <field name="montante_ret"/>
+                    <field name="meio_desc"/>
+                    <field name="bcfm"/>
+                    <field name="num_pag"/>
+                    <field name="name" invisible="1"/>
+                    <button string="Conferir" name="pag_ord_cnf" type="object" states="draft" icon="gtk-go-forward"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_despesa_pagamentos_ordem_conferir_view">
+            <field name="name">Ordens de Pagamento para Conferir</field>
+            <field name="res_model">sncp.despesa.pagamentos.ordem</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_sncp_despesa_pagamentos_ordem_conferir_tree"/>
+            <field name="domain">[('state', 'in', ['draft', 'cnf'])]</field>
+        </record>
+            <record id="action_sncp_despesa_pagamentos_ordem_conferir_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_despesa_pagamentos_ordem_conferir_tree"/>
+                <field name="act_window_id" ref="action_sncp_despesa_pagamentos_ordem_conferir_view"/>
+            </record>
+        <menuitem name="Conferir" parent="menu_despesa_pagamentos_ordem"
+                  id="menu_sncp_despesa_pagamentos_ordem_conferir_view" sequence="20"
+                  action="action_sncp_despesa_pagamentos_ordem_conferir_view"/>
+
+        <!-- _____________________Autorizar___________________-->
+        <record id="view_sncp_despesa_pagamentos_ordem_autorizar_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.pagamentos.ordem.autorizar.tree</field>
+            <field name="model">sncp.despesa.pagamentos.ordem</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Pagamento Ordem" version="7.0"  create="false" delete="false"
+                      attrs="{'readonly':[('state', 'not in', ['draft'])]}">
+                    <field name="state" invisible="1"/>
+                    <field name="nif"/>
+                    <field name="partner_id" />
+                    <field name="montante_iliq"/>
+                    <field name="montante_ret"/>
+                    <field name="meio_desc"/>
+                    <field name="bcfm"/>
+                    <field name="num_pag"/>
+                    <field name="name" invisible="1"/>
+                    <button string="Corrigir" name="pag_ord_rascunho" type="object" states="cnf" icon="gtk-go-back"/>
+                    <button string="Autorizar" name="pag_ord_aut" type="object" states="cnf" icon="gtk-apply"/>
+                    <button string="Desautorizar" name="pag_ord_desaut" type="object" states="aut" icon="gtk-cancel"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_despesa_pagamentos_ordem_autorizar_view">
+            <field name="name">Ordens de Pagamento para Autorizar/Desautorizar</field>
+            <field name="res_model">sncp.despesa.pagamentos.ordem</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_sncp_despesa_pagamentos_ordem_autorizar_tree"/>
+            <field name="domain">[('state', 'in', ['cnf', 'aut'])]</field>
+        </record>
+            <record id="action_sncp_despesa_pagamentos_ordem_autorizar_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_despesa_pagamentos_ordem_autorizar_tree"/>
+                <field name="act_window_id" ref="action_sncp_despesa_pagamentos_ordem_autorizar_view"/>
+            </record>
+        <menuitem name="Autorizar/Desautorizar" parent="menu_despesa_pagamentos_ordem"
+                  id="menu_sncp_despesa_pagamentos_ordem_autorizar_view" sequence="30"
+                            action="action_sncp_despesa_pagamentos_ordem_autorizar_view"/>
+
+
+
+    </data>
+</openerp>

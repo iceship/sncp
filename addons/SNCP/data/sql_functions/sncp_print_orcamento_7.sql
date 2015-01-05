@@ -1,0 +1,1 @@
+﻿UPDATE sncp_print_orcamento SET linha='artigo' WHERE linha=''

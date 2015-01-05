@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record model="ir.ui.view" id="formulario_mensagem_despesa_view">
+            <field name="model">formulario.mensagem.tesouraria</field>
+            <field name="arch" type="xml">
+                <form string="" version="7.0">
+                    <field name="name" class="my_message"
+                           readonly="1"/>
+                    <footer>
+                        <div align="left" style="width:500px">
+                            <button name="sim" type="object" string="Sim"/>
+                            <button name="nao" type="object" string="Nao"/>
+                        </div>
+                    </footer>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

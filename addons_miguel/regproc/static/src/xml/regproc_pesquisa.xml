@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+    
+    <t t-name="Pesquisa">
+        <div class="ui-toolbar oe_inline text_center" style="margin-bottom:0px;">
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Objeto do Acto Notarial :</h4>
+                <select class="oe_regproc_select_objecto" >
+
+                </select>
+            </div>
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Aquisição/Alienação :</h4>
+                <select class="oe_regproc_select_aquis_alien" >
+
+                </select>
+            </div>
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Outorgante :</h4>
+                <select class="oe_regproc_select_outrg" >
+
+                </select>
+            </div>
+            <div class="oe_inline my_oe_r_space_50">
+                <h4>Contém texto na descrição:</h4>
+                <input class="oe_regproc_input_desc"/>
+            </div>
+
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <script>
+                    $(function() {
+                    $( "#regproc_from" ).datepicker({
+                        dateFormat: 'dd-mm-yy',
+                        changeMonth: true,
+                        changeYear: true     }).val();
+                    });
+                </script>
+                <h4>Desde a data: </h4>
+                <input type="text" id="regproc_from" class="oe_regproc_input_date_from"/>
+
+            </div>
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <script>
+                    $(function() {
+                        $( "#regproc_to" ).datepicker({
+                            dateFormat: 'dd-mm-yy',
+                            changeMonth: true,
+                            changeYear: true     }).val();
+                   });
+                </script>
+                <h4>Até a data: </h4>
+                <input type="text" id="regproc_to" class="oe_regproc_input_date_to"/>
+
+            </div>
+        </div>
+    </t>
+
+</templates>

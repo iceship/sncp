@@ -1,0 +1,83 @@
+<openerp>
+    <data>
+
+        <!-- _________________Vistas__________________________-->
+
+        <!-- Vista forma Criar Guia Receita NA RECEITA-->
+        <record id="view_sncp_receita_fact_cobrar_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.fact.cobrar.form</field>
+            <field name="model">sncp.receita.fact.cobrar</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Criar Guia de Receita" version="7.0" create="false" delete="false">
+                    <header>
+                        <button name="criar_linhas" string="Continuar" type="object"
+                                    attrs="{'invisible': [('state', 'not in', 0)]}"/>
+                        <button name="descartar" string="Não Gerar Guia de Receita" type="object"
+                                attrs="{'invisible': [('state','in',[0])]}"/>
+                    </header>
+                    <group>
+                        <!-- STATE FIELDS-->
+                        <field name="state" invisible="1"/>
+                        <!-- FIM-->
+                        <field name="name" invisible="1"/>
+                        <field name="data" invisible="1"/>
+                        <group>
+                            <field name="origem" required="1"
+                                   attrs="{'readonly':[('state', 'not in', [0])]}"/>
+                        </group>
+                        <group>
+                            <field name="department_id" options="{'no_open': True}"
+                                   attrs="{'invisible':[('origem', 'not in', ['serv'])],
+                                           'required': [('origem', 'in', ['serv'])],
+                                           'readonly':[('state', 'not in', [0])] }"/>
+                            <field name="partner_id" options="{'no_open': True}"
+                                   attrs="{'invisible':[('origem', 'not in', ['part'])],
+                                           'required':[('origem', 'in', ['part'])],
+                                            'readonly':[('state', 'not in', [0])] }"/>
+                        </group>
+                    </group>
+                    <group><field name="obsv"/></group>
+                    <button name="verifica_processar" string="Gerar" type="object"
+                                    attrs="{'invisible': [('state', 'not in', 2)]}"/>
+                    <group>
+                        <field name="fact_cobrar_linhas" nolabel="1"
+                                attrs="{'invisible':[('state', '=', 0)]}">
+                            <tree delete="false" create="false"><!---->
+                                <field name="fact_cobrar_id" invisible="1"/>
+                                <field name="name" invisible="1"/>
+
+                                <field name="linha"  readonly="1"/>
+                                <field name="fatura_id"  readonly="1"/>
+                                <field name="department_id" readonly="1"/>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="data_venc"  readonly="1"/>
+                                <field name="montante_orig"  invisible="1"/>
+                                <field name="montante_pend"  readonly="1"/>
+                                <field name="montante_cobr"
+                                       on_change="on_change_montante_cobr(
+                                                fact_cobrar_id, fatura_id,
+                                                montante_pend, montante_cobr, montante_orig)"/>
+                                <field name="montante_rema"  readonly="1"/>
+                                <field name="juros"  readonly="1"/>
+                                <field name="montante_juro"  readonly="1"/>
+                                <field name="a_processar"
+                                       on_change="on_change_processar(fact_cobrar_id, a_processar)"/>
+                                <field name="obsv"  readonly="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_fact_cobrar_view">
+            <field name="name">Criar Guia de Receita</field>
+            <field name="res_model">sncp.receita.fact.cobrar</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_receita_fact_cobrar_form"/>
+        </record>
+        <menuitem name="Criar Guia de Receita" parent="menu_receita" id="menu_sncp_receita_fact_cobrar_view"
+                  action="action_sncp_receita_fact_cobrar_view" sequence="30"/>
+    </data>
+</openerp>

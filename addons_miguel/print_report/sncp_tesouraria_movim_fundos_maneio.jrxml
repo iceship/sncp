@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Movimentos FM" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="83"/>
+	<parameter name="IDS" class="java.lang.Object">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PIDS" class="java.util.List">
+		<defaultValueExpression><![CDATA[$P{IDS}.toList()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	COALESCE((SELECT COMP.name FROM res_company AS COMP
+           WHERE id=(SELECT company_id FROM account_account
+	           WHERE id=(SELECT conta_id FROM sncp_tesouraria_caixas
+		           WHERE id=MV.caixa_id))),'') AS companhia,
+
+	COALESCE((SELECT CURR.name FROM res_currency AS CURR
+           WHERE id=(SELECT currency_id
+		FROM res_company WHERE id=
+		(SELECT company_id FROM account_account
+	 	 WHERE id=(SELECT conta_id FROM sncp_tesouraria_caixas
+		           WHERE id=MV.caixa_id)))),'') AS moeda,
+
+	COALESCE((SELECT HR_EMP.name_related FROM hr_employee AS HR_EMP
+	WHERE id=(SELECT emp_tesoureiro FROM sncp_comum_param
+		WHERE state='draft')),'') AS nome_tesoureiro,
+
+	COALESCE((SELECT HR_JOB.name FROM hr_job AS HR_JOB
+	WHERE id=(SELECT HR_EMP.job_id FROM hr_employee AS HR_EMP
+		WHERE id=(SELECT emp_tesoureiro FROM sncp_comum_param
+			WHERE state='draft'))),'') AS cargo,
+
+	(SELECT MV.empregado_id) AS responsavel_fm,
+	FM.name AS Nome_FM,
+	EXTRACT(YEAR FROM MV.data_mov) as ano,
+	MV.montante,
+	(CASE WHEN COALESCE(MV.montante,0.0)-1000 BETWEEN  0 AND 999
+       THEN '(' || concat('',overlay(fu_extenso_euro(MV.montante) placing '' from 1 for 3))
+	|| ')'
+       ELSE  '(' || concat('',fu_extenso_euro(MV.montante)) || ')'
+END) AS numero_extenso,
+	(CASE
+		WHEN EXTRACT(MONTH FROM MV.data_mov)=1 THEN 'Janeiro'
+		WHEN EXTRACT(MONTH FROM MV.data_mov)=2 THEN 'Fevereiro'
+		WHEN EXTRACT(MONTH FROM MV.data_mov)=3 THEN 'Março'
+		WHEN EXTRACT(MONTH FROM MV.data_mov)=4 THEN 'Abril'
+		WHEN EXTRACT(MONTH FROM MV.data_mov)=5 THEN 'Maio'
+		WHEN EXTRACT(MONTH FROM MV.data_mov)=6 THEN 'Junho'
+		WHEN EXTRACT(MONTH FROM MV.data_mov)=7 THEN 'Julho'
+		WHEN EXTRACT(MONTH FROM MV.data_mov)=8 THEN 'Agosto'
+		WHEN EXTRACT(MONTH FROM MV.data_mov)=9 THEN 'Setembro'
+		WHEN EXTRACT(MONTH FROM MV.data_mov)=10 THEN 'Outubro'
+		WHEN EXTRACT(MONTH FROM MV.data_mov)=11 THEN 'Novembro'
+		ELSE 'Dezembro'  END ) AS mes_extenso,
+
+	EXTRACT(DAY FROM MV.data_mov) AS dia,
+
+	(CASE
+		WHEN MV.tipo_mov_fm = 'con' THEN 'Constituição'
+		WHEN MV.tipo_mov_fm = 'rec' THEN 'Reconstituição'
+		ELSE 'Reposição' END) AS tipo_movimento,
+
+	(SELECT AM.name FROM account_move AS AM WHERE id=MV.movimento_id) AS nome_movim
+FROM sncp_tesouraria_movim_fundos_maneio AS MV
+LEFT OUTER JOIN sncp_tesouraria_fundos_maneio AS FM ON FM.id=MV.name
+WHERE $X{IN,MV.id,PIDS}]]>
+	</queryString>
+	<field name="companhia" class="java.lang.String"/>
+	<field name="moeda" class="java.lang.String"/>
+	<field name="nome_tesoureiro" class="java.lang.String"/>
+	<field name="cargo" class="java.lang.String"/>
+	<field name="responsavel_fm" class="java.lang.String"/>
+	<field name="nome_fm" class="java.lang.String"/>
+	<field name="ano" class="java.lang.Integer"/>
+	<field name="montante" class="java.math.BigDecimal"/>
+	<field name="numero_extenso" class="java.lang.String"/>
+	<field name="mes_extenso" class="java.lang.String"/>
+	<field name="dia" class="java.lang.Integer"/>
+	<field name="tipo_movimento" class="java.lang.String"/>
+	<field name="nome_movim" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="274" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="77" width="555" height="36"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Departamento Financeiro]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="41" width="555" height="36"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{companhia}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="325" y="199" width="230" height="41"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome_movim}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="162" width="245" height="37"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipo_movimento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="245" y="162" width="310" height="37"/>
+				<textElement verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[ de Fundo de Maneio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="199" width="325" height="41"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Nota de Lançamento n.º ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="391" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="3" width="555" height="68"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["   Vai o " + $F{cargo}+" do "+$F{companhia}+
+($F{tipo_movimento}.equals("Reposição")
+    ? " receber" : " entregar")+
+" o valor de "+ $F{montante} +" "+$F{moeda}+" "+
+$F{numero_extenso}+" do senhor/a "+$F{responsavel_fm}+", para "+$F{tipo_movimento}
++" do Fundo de Maneio "+
+($F{tipo_movimento}.equals("Constituição")
+    ? " para o ano de "+$F{ano} : " afecto a "+ $F{nome_fm}) + ($F{tipo_movimento}.equals("Reposição")
+    ? " referente o ano de "+$F{ano} : ".")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="23" y="108" width="175" height="30"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Em "+$F{dia} +" de "+$F{mes_extenso}+" de "+$F{ano}+","]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="10" y="163" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["O "+$F{cargo}+":"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="23" y="237" width="509" height="1"/>
+			</line>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="274" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Recebi:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="23" y="350" width="509" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

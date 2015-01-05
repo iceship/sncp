@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3:
+-->
+<openerp>
+    <data>
+        <template id="assets_backend" name="regproc assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/regproc/static/src/css/oe_display.css"/>
+                <link rel="stylesheet" href="/regproc/static/src/css/regproc_pesquisa.css"/>
+                <link rel="stylesheet" href="/regproc/static/src/css/filter_manager.css"/>
+                <script type="text/javascript" src="/regproc/static/src/js/regproc_pesquisa.js"></script>
+                <script type="text/javascript" src="/regproc/static/src/js/filter_manager.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

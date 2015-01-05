@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- _________________Vistas__________________________ -->
+
+        <!--Procedimentos -->
+        <record id="view_sncp_despesa_procedimentos_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.procedimentos.tree</field>
+            <field name="model">sncp.despesa.procedimentos</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Procedimentos" editable="top" version="7.0">
+                    <field name="codigo_120" required="1"/>
+                    <field name="name" required="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_despesa_procedimentos_view" >
+            <field name="name">Procedimentos</field>
+            <field name="res_model">sncp.despesa.procedimentos</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="Dados Gerais" parent="menu_despesa" id="menu_despesa_dados_gerais" sequence="80"/>
+        <menuitem name="Procedimentos" parent="menu_despesa_dados_gerais" id="menu_sncp_despesa_procedimentos_view"
+                  action="action_sncp_despesa_procedimentos_view" sequence="10"/>
+
+
+        <!-- Fundamentos -->
+        <record id="view_sncp_despesa_fundamentos_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.fundamentos.tree</field>
+            <field name="model">sncp.despesa.fundamentos</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Fundamentos" editable="top" version="7.0">
+                    <field name="codigo_120" required="1"/>
+                    <field name="name" required="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_despesa_fundamentos_view" >
+            <field name="name">Fundamentos</field>
+            <field name="res_model">sncp.despesa.fundamentos</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Fundamentos" parent="menu_despesa_dados_gerais"
+                  id="menu_sncp_despesa_fundamentos_view"
+                  action="action_sncp_despesa_fundamentos_view" sequence="20"/>
+
+
+        <!-- Naturezas -->
+        <record id="view_sncp_despesa_naturezas_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.naturezas.tree</field>
+            <field name="model">sncp.despesa.naturezas</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Naturezas" editable="top">
+                    <field name="codigo_120" required="1"/>
+                    <field name="name" required="1"/>
+                    <field name="empreitada"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_despesa_naturezas_view" >
+            <field name="name">Naturezas</field>
+            <field name="res_model">sncp.despesa.naturezas</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Naturezas" parent="menu_despesa_dados_gerais"
+                  id="menu_sncp_despesa_naturezas_view" action="action_sncp_despesa_naturezas_view" sequence="30"/>
+
+        <!-- Aprovadores-->
+        <record id="view_sncp_despesa_aprovadores_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.aprovadores.tree</field>
+            <field name="model">sncp.despesa.aprovadores</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Aprovações" >
+                    <field name="aprovador_id"/>
+                    <field name="departamento_id"/>
+                    <field name="requisicoes"/>
+                    <field name="compras"/>
+                    <field name="faturas"/>
+                    <field name="pagamentos"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_despesa_aprovadores_form" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.aprovadores.form</field>
+            <field name="model">sncp.despesa.aprovadores</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Aprovadores" create="false" delete="false" version="7.0">
+                    <group>
+                        <group>
+                            <field name="aprovador_id"
+                                   on_change="on_change_aprovador(aprovador_id)" style="width:400px;"
+                                   required="1" options="{'no_open': True}"/>
+                            <field name="departamento_id"
+                                   style="width:400px;" required="1" options="{'no_open': True}"/>
+                            <field name="user_id" style="width:400px;"
+                               readonly="1" options="{'no_open': True}"/>
+                        </group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="fim" required="1"/>
+                        </group>
+
+                    </group>
+                    <group>
+                        <group>
+                            <field name="requisicoes" on_change="on_change_requisicoes(requisicoes)"/>
+                            <field name="compras" on_change="on_change_compras(compras)"/>
+                            <field name="faturas" on_change="on_change_faturas(faturas)"/>
+                            <field name="pagamentos" on_change="on_change_pagamentos(pagamentos)"/>
+                        </group>
+                        <group>
+                            <field name="limite_req" attrs="{'readonly': [('requisicoes','=',False)],
+                                                             'required': [('requisicoes','=',True)] }"/>
+                            <field name="limite_comp" attrs="{'readonly': [('compras','=',False)],
+                                                              'required': [('compras','=',True)]}"/>
+                            <field name="limite_fat" attrs="{'readonly': [('faturas','=',False)],
+                                                             'required': [('faturas','=',True)]}"/>
+                            <field name="limite_pagam" attrs="{'readonly': [('pagamentos','=',False)],
+                                                               'required': [('pagamentos','=',True)]}"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_despesa_aprovadores_view" >
+            <field name="name">Aprovadores</field>
+            <field name="res_model">sncp.despesa.aprovadores</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Aprovadores" parent="menu_despesa_dados_gerais"
+                  id="menu_sncp_despesa_aprovadores_view"
+                  action="action_sncp_despesa_aprovadores_view" sequence="40"/>
+    </data>
+</openerp>

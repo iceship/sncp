@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3:
+-->
+<openerp>
+    <data>
+        <template id="assets_backend" name="despesa assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/despesa/static/src/css/oe_display.css"/>
+                <link rel="stylesheet" href="/despesa/static/src/css/aprovador_autorizado_faturas.css"/>
+                <link rel="stylesheet" href="/despesa/static/src/css/aprovador_autorizado_requisicao.css"/>
+                <link rel="stylesheet" href="/despesa/static/src/css/requisicoes_pesquisa.css"/>
+                <link rel="stylesheet" href="/despesa/static/src/css/autorizacoes_pesquisa.css"/>
+                <script type="text/javascript" src="/despesa/static/src/js/aprovador_autorizado.js"></script>
+                <script type="text/javascript" src="/despesa/static/src/js/requisicoes_pesquisa.js"></script>
+                <script type="text/javascript" src="/despesa/static/src/js/autorizacoes_pesquisa.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

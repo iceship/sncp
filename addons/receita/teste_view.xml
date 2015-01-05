@@ -1,0 +1,114 @@
+<openerp>
+    <data>
+        <!-- Vista forma Teste Condições de Pagamento-->
+        <record id="teste_cond_pagam_form" model="ir.ui.view">
+            <field name="name">Teste.Condicoes.Pagamento</field>
+            <field name="model">teste.cond.pagam</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Teste Condições de pagamento" version="7.0">
+                        <label for="name"/>
+                        <field name="name" class="oe_inline my_oe_r_space_50"
+                               required="1" options="{'no_open': True}"/>
+                        <label for="dataemissao"/>
+                        <field name="dataemissao" class="oe_inline my_oe_r_space_50"
+                                required="1"/>
+                        <label for="datavencimento"/>
+                        <field name="datavencimento" readonly="1" class="oe_inline"/>
+                    <separator/>
+                    <button name="da_data_vencimento" string="Calcular Data de Vencimento" type="object"
+                                class="oe_highlight"/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista forma Juros-->
+        <record id="teste_juros" model="ir.ui.view">
+            <field name="name">Teste.Juros</field>
+            <field name="model">teste.juros</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                 <form string="Teste Condições de pagamento" version="7.0" create="false">
+                    <group>
+                      <group>
+                            <field name="name" required="1" options="{'no_open': True}"/>
+                            <field name="valorbase" required="1" />
+                            <field name="montantedejurosapagar" readonly="1"/>
+                      </group>
+                      <group>
+                            <field name="datapagamento" required="1"/>
+                            <field name="datavencimento" required="1" />
+
+                      </group>
+                     </group>
+                    <separator/>
+                    <button name="da_valor_juros" string="Calcular montante dos juros a pagar" type="object" class="oe_highlight"/>
+                 </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="teste_action_cond_pagam_view">
+            <field name="name">Teste.Condicoes.Pagamento</field>
+            <field name="res_model">teste.cond.pagam</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <record id="board_cond_pagamento_form" model="ir.ui.view">
+            <field name="name">board.test.form</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Cálculo da data de vencimento" version="7.0">
+                    <board style="2-1" readonly="1">
+                        <column>
+                            <action name="%(teste_action_cond_pagam_view)d"  readonly="1"
+                                    string="Cálculo da data de vencimento"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_board_cond_pagamento" model="ir.actions.act_window">
+            <field name="name">Cálculo da data de vencimento</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="board_cond_pagamento_form"/>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="teste_action_juros_view">
+            <field name="name">Teste.Juros</field>
+            <field name="res_model">teste.juros</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <record id="board_teste_juros_form" model="ir.ui.view">
+            <field name="name">board.test.form</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Cálculo do montante de juros a pagar" version="7.0">
+                    <board style="2-1" readonly="1">
+                        <column>
+                            <action name="%(teste_action_juros_view)d"  readonly="1"
+                                    string="Cálculo do montante de juros a pagar"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_board_teste_juros" model="ir.actions.act_window">
+            <field name="name">Cálculo do montante de juros a pagar</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="board_teste_juros_form"/>
+        </record>
+
+        <menuitem name="Teste" parent="menu_receita" id="menu_teste" sequence="95"/>
+            <menuitem name="Teste Condições de pagamento" parent="menu_teste" id="teste_menu_cond_pagam"
+                      action="action_board_cond_pagamento" sequence="10"/>
+            <menuitem name="Teste Juros" parent="menu_teste" id="teste_menu_juros" action="action_board_teste_juros" sequence="20"/>
+    </data>
+</openerp>

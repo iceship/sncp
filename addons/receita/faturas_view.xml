@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- _________________Vistas__________________________-->
+
+        <!-- Faturas de Receita -->
+        <record id="view_sncp_receita_fatura_wizard_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.fatura.wizard.form</field>
+            <field name="model">sncp.receita.fatura.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Excepções" version="7.0" create="false" delete="false">
+                    <header>
+                        <button name="processar" type="object" string="Processar" class="oe_highlight" />
+                    </header>
+                        <group>
+                            <group>
+                                <field name="department_id" readonly="1"
+                                       on_change="on_change_department_id(department_id)"/>
+                                <field name="partner_id" required="1" options="{'no_open': True}"
+                                       on_change="on_change_partner_id(partner_id)"/>
+                                <field name="journal_id" required="1" options="{'no_open': True}"
+                                       attrs="{'readonly':[('department_id', '=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="currency_id" readonly="1"/>
+                                <field name="payment_term_id" required="1" options="{'no_open': True}"
+                                       attrs="{'readonly':[('partner_id', '=', False)]}"
+                                       on_change="on_change_payment_term_id(payment_term_id)"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+
+                        <group>
+                            <field name="linhas_ids" nolabel="1">
+                                <tree string="Linhas da fatura" editable="top">
+                                    <field name="name" invisible="1"/>
+                                    <field name="item_aut_id" options="{'no_open': True}"
+                                           required="1"
+                                           on_change="on_change_item_aut_id(item_aut_id)"/>
+                                    <field name="quantidade" required="1"/>
+                                    <field name="preco_unit"
+                                           attrs="{'readonly': [('name', '=', 0)]}"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group class="oe_subtotal_footer oe_right">
+                                <button name="atualizar" string="Atualizar" type="object"
+                                        class="oe_link oe_edit_only"/>
+                                <separator/>
+                                <field name="amount_untaxed" widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                       readonly="1"/>
+                                <field name="amount_tax" widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                        readonly="1"/>
+                                <field name="amount_total" class="oe_subtotal_footer_separator" widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                        readonly="1"/>
+                        </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_fatura_wizard_view">
+            <field name="name">Faturas de Receita</field>
+            <field name="res_model">sncp.receita.fatura.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <menuitem name="Receita" parent="comum.menu_sncp" id="menu_receita" sequence="50"/>
+            <menuitem name="Faturas de Receita" parent="menu_receita" id="menu_sncp_receita_fatura_wizard_view"
+                      action="action_sncp_receita_fatura_wizard_view" sequence="10"/>
+
+        <!-- modelos de faturas -->
+        <record id="view_sncp_receita_fatura_modelo_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.fatura.modelo.tree</field>
+            <field name="model">sncp.receita.fatura.modelo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Faturação Recorrente" version="7.0" >
+                    <field name="name"/>
+                    <field name="journal_id"/>
+                    <field name="currency_id"/>
+                    <field name="origem"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_fatura_modelo_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.fatura.modelo.form</field>
+            <field name="model">sncp.receita.fatura.modelo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Faturação Recorrente" version="7.0">
+                    <header>
+                        <button name="artigos" type="object" string="Inserir Artigos" class="oe_highlight"
+                                attrs="{'invisible': [('estado', '=', 1)]}"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="estado" invisible="1"/>
+                            <field name="name" required="1"/>
+                            <field name="origem"/>
+                            <button name="atualiza_preco_estado" type="object"
+                                    string="Atualiza Preço"/>
+                            <field name="atualiza_preco" nolabel="1" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="journal_id" required="1" options="{'no_open': True}"/>
+                            <field name="currency_id" required="1" options="{'no_open': True}"/>
+                            <field name="payment_term_id" required="1" options="{'no_open': True}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="note"/>
+                    </group>
+                    <field name="linha_ids" attrs="{'invisible': [('estado', '=', 0)]}">
+                        <tree string="Linhas" version="7.0" editable="top">
+                            <field name="fatura_id" invisible="1"/>
+                            <field name="estado" invisible="1"/>
+                            <field name="name" readonly="1"/>
+                            <field name="item_id" invisible="1"/>
+                            <field name="cod_contab_id" options="{'no_open': True}" required="1"
+                                   on_change="on_change_cod_contab_id(cod_contab_id, parent.id)"/>
+                            <field name="quantidade"/>
+                            <field name="preco_unit"
+                                    attrs="{'readonly':[('estado', '=', 0)]}"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_fatura_modelo_view">
+            <field name="name">Modelos de Faturas</field>
+            <field name="res_model">sncp.receita.fatura.modelo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Faturação Recorrente" parent="menu_receita" id="menu_receita_recorrente"
+                      sequence="20"/>
+            <menuitem name="Modelos de Faturas" parent="menu_receita_recorrente"
+                          id="menu_sncp_receita_fatura_modelo_view"
+                          action="action_sncp_receita_fatura_modelo_view" sequence="10"/>
+
+        <!-- Agendamentos-->
+        <record id="view_sncp_receita_recorrente_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.recorrente.tree</field>
+            <field name="model">sncp.receita.recorrente</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="Agendamentos" version="7.0" >
+                    <field name="name"/>
+                    <field name="iteracoes"/>
+                    <field name="intervalo_num"/>
+                    <field name="intervalo_tipo"/>
+                    <field name="data_inicial"/>
+                    <field name="execucoes"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_recorrente_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.recorrente.form</field>
+            <field name="model">sncp.receita.recorrente</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Agendamentos" version="7.0" create="false">
+                    <header>
+                        <div class="oe_inline">
+                            <button name="parceiros" type="object" string="Inserir Parceiros" class="oe_highlight"
+                                    attrs="{'invisible': ['|',('state', 'not in', ['draft']), ('estado', '=', 1)]}"/>
+                            <button name="process" type="object" string="Processar" class="oe_highlight"
+                                    attrs="{'invisible': ['|',('state', 'not in', ['draft']), ('estado', '=', 0)]}"/>
+                            <button name="stop_running" type="object" string="Parar" class="oe_highlight" states="running"/>
+
+                        </div>
+                        <field name="state" widget="statusbar" nolabel="1"/>
+                    </header>
+                    <group>
+                        <field name="id" invisible="1"/>
+                        <field name="estado" invisible="1"/>
+                        <group>
+                            <field name="name" attrs="{'readonly': [('estado', '=', 1)]}"/>
+                            <field name="data_inicial" required="1" attrs="{'readonly': [('estado', '=', 1)]}"/>
+                            <field name="iteracoes" attrs="{'readonly': [('estado', '=', 1)]}"/>
+                            <field name="execucoes" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="fatura_mod_id" attrs="{'readonly': [('estado', '=', 1)]}"
+                                   options="{'no_open': True}"/>
+                            <field name="intervalo_num" required="1" attrs="{'readonly': [('estado', '=', 1)]}"/>
+                            <field name="intervalo_tipo" required="1" attrs="{'readonly': [('estado', '=', 1)]}"/>
+                            <field name="dias_descanso" required="1" attrs="{'readonly': [('estado', '=', 1)]}"/>
+                        </group>
+                    </group>
+                    <field name="parceiros_ids" attrs="{'invisible': [('estado', '=', 0)],
+                                                        'readonly': [('state', 'not in', ['draft'])]}">
+                        <tree editable="top">
+                            <field name="name" invisible="1"/>
+                            <field name="partner_id" required="1" options="{'no_open': True}"
+                                   on_change="on_change_partner_id(parent.data_inicial,
+                                                                   parent.iteracoes,
+                                                                   parent.dias_descanso)"/>
+                            <field name="iteracoes"
+                                   on_change="on_change_iteracoes(iteracoes, parent.iteracoes, data_inicial,
+                                              parent.data_inicial,parent.intervalo_num, parent.intervalo_tipo,
+                                              parent.dias_descanso)"/>
+                            <button name="step_back" type="object" icon="gtk-go-back"
+                                    attrs="{'invisible': [('name', 'in', ['0', '3'])]}"/>
+                            <field name="data_inicial" invisible="1"/>
+                            <field name="data_real" readonly="1"/>
+                            <button name="step_forward" type="object" icon="gtk-go-forward"
+                                    attrs="{'invisible': [('name', 'in', ['2', '3'])]}"/>
+                            <field name="execucoes" readonly="1"/>
+                            <field name="activo" readonly="1"/>
+                            <button name="parar" type="object" string="Parar" icon="gtk-media-pause"
+                                attrs="{'invisible': [('activo', 'in', [False])]}"/>
+                            <button name="continuar" type="object" string="Reactivar" icon="gtk-media-play"
+                                attrs="{'invisible': [('activo', 'in', [True])]}"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_recorrente_view">
+            <field name="name">Agendamentos</field>
+            <field name="res_model">sncp.receita.recorrente</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Agendamentos" parent="menu_receita_recorrente" id="menu_sncp_receita_recorrente_view"
+                          action="action_sncp_receita_recorrente_view" sequence="20"/>
+
+    </data>
+</openerp>
+
+
+
+
+
+
+
+
+
+
+

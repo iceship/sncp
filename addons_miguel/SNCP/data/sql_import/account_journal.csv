@@ -1,0 +1,20 @@
+id,default_debit_account_id/id,default_credit_account_id/id,code,company_id/id,currency/id,name,type,sequence_id/id
+2,,,VND,1,,Diário de Vendas,sale,31
+3,,,CMP,1,,Diário de Compra,purchase,32
+4,,,NCV,1,,Diário de notas de crédito de vendas,sale_refund,33
+5,,,DVC,1,,Diário de retorno de compras,purchase_refund,34
+6,,,DIV,1,,Diário Diverso,general,35
+8,789,789,CX0,1,,Caixa,cash,36
+7,,,ABE,1,,Diário de Abertura,situation,37
+10,756,757,CAB,1,,Cabimentos,general,38
+9,752,751,ORC,1,,Operações Orçamentais,general,39
+11,757,758,COM,1,,Compromissos,general,40
+12,1186,1186,LIQ,1,,Liquidações da despesa,general,41
+13,,,PAG,1,,Pagamentos,general,42
+14,1184,1184,GRC,1,,Guias de Receita,general,43
+15,,,REC,1,,Recebimentos,general,44
+16,,,OTS,1,,Operações de Tesouraria,general,45
+17,,,FMN,1,,Fundos de Maneio,general,46
+18,789,789,MCX,1,,Movimentos de caixa,cash,47
+19,229,229,BNC,1,,Banco,bank,48
+20,,,COF,1,,Compromissos Futuros,general,49

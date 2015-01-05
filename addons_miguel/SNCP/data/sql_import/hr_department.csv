@@ -1,0 +1,7 @@
+"id","name","company_id/id","parent_id/id","manager_id/id"
+"1","Departamento Financeiro","1",,"1"
+"2","Tesouraria","1",,
+"3","Secção da receita","1","1",
+"4","Departamento da Cultura","1",,"3"
+"5","Departamento de Obras","1",,"6"
+"6","Divisão de Aprovisionamento","1","5","2"

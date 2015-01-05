@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Parâmetros -->
+        <record id="view_sncp_comum_param_tree" model="ir.ui.view">
+            <field name="name">view.sncp.comum.param.tree</field>
+            <field name="model">sncp.comum.param</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Parâmetros" create="false" delete="false">
+                    <field name="datahora"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_comum_param_form" model="ir.ui.view">
+            <field name="name">view.sncp.comum.param.form</field>
+            <field name="model">sncp.comum.param</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Parâmetros" version="7.0" create="false">
+                    <sheet>
+                        <field name="state" invisible="1"/>
+                        <group colspan="4" cols="2">
+                            <group>
+                                <field name="datahora" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="name" required="1"
+                                   attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Responsáveis">
+                                <field name="emp_info_cab" required="1" options="{'no_open': True}"
+                                       attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                                <field name="emp_info_com" required="1" options="{'no_open': True}"
+                                       attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                                <field name="emp_tesoureiro" required="1" options="{'no_open': True}"
+                                       attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+
+                            </group>
+                            <group>
+                                <group string="Diários">
+                                    <field name="diario_fat_juros" required="1" options="{'no_open': True}"
+                                           attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                                    <field name="ri_diario_id" required="1" options="{'no_open': True}"
+                                           attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                                    <field name="diario_liq_id" required="1" options="{'no_open': True}"
+                                           attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                                    <field name="diario_liq_rec_id" required="1" options="{'no_open': True}"
+                                           attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                                    <field name="diario_cob_rec_id" required="1" options="{'no_open': True}"
+                                           attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                                </group>
+                            </group>
+                        </group>
+                        <group>
+                                <group string="Controlo de receitas Renováveis">
+                                    <field name="crr_printer_id" options="{'no_open': True}"
+                                           attrs="{'required': [('crr_notifica', '=', True)],
+                                                   'readonly': [('state', 'in', ['fechado'])]}"/>
+                                    <field name="crr_notifica"
+                                           attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                                </group>
+                        </group>
+                        <group>
+                            <group string="Sequências">
+                                <field name="ri_sequence_id" required="1" options="{'no_open': True}"
+                                   attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                                <field name="an_sequence_id" required="1" options="{'no_open': True}"
+                                   attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                                <field name="aquis_sequence_id" required="1" options="{'no_open': True}"
+                                   attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                                <field name="alien_sequence_id" required="1" options="{'no_open': True}"
+                                   attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                            </group>
+                            <group string="Outros">
+                                <field name="otes_mpag" required="1" options="{'no_open': True}"
+                                   attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                                <field name="desp_mpag" required="1" options="{'no_open': True}"
+                                   attrs="{'readonly': [('state', 'in', ['fechado'])]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_comum_param_view">
+            <field name="name">Parâmetros</field>
+            <field name="res_model">sncp.comum.param</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Parâmetros" parent="menu_comum"
+                  id="menu_sncp_comum_param_view"
+                  action="action_sncp_comum_param_view" sequence="70"/>
+
+    </data>
+</openerp>

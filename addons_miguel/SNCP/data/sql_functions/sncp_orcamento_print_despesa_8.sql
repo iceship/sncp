@@ -1,0 +1,1 @@
+﻿UPDATE sncp_orcamento_imprimir_despesa SET linha='artigo' WHERE linha=''

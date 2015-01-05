@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record model="ir.ui.view" id="formulario_sncp_despesa_pagamentos_ordem_view">
+            <field name="model">formulario.sncp.despesa.pagamentos.ordem.diario</field>
+            <field name="arch" type="xml">
+                <form string="Diário" version="7.0">
+                    <div style="width:500px;">
+                    <group colspan="4">
+
+                        <field name="diario_liq" required="1" options="{'no_open': True}" />
+                        <field name="diario_pag" required="1" options="{'no_open': True}" />
+
+                        #invisivel se estado em 0
+                        <field name="diario_liq_guia_rec" options="{'no_open': True}"
+                             attrs="{'invisible':[('estado','in',[0])],
+                                     'required':[('estado','not in',[0])]}"/>
+                        <field name="departamento_id" options="{'no_open': True}"
+                             attrs="{'invisible':[('estado','in',[0])],
+                                     'required':[('estado','not in',[0])]}"/>
+                        #invisivel se estado em 0
+                        <field name="diario_pag_guia_rec" options="{'no_open': True}"
+                             attrs="{'invisible':[('estado','in',[0])],
+                                     'required':[('estado','not in',[0])]}"/>
+
+                        <field name="estado" invisible="1" />
+                        <field name="name" required="1"/>
+
+                    </group>
+                    <footer>
+                        <div align="left" style="width:500px">
+                            <button name="end" type="object" string="Liquidar" />
+                            <button name="descartar" type="object" string="Descartar"/>
+                        </div>
+                    </footer></div>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

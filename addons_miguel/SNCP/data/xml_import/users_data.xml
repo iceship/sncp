@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- __________________________________RESOURCE___________________________-->
+        <record id="resource_2" model="resource.resource">
+            <field name="create_uid">1</field>
+            <field name="write_uid">1</field>
+            <field name="name">Funcionário da DV Aprovisionamento</field>
+            <field name="company_id">1</field>
+            <field name="active">TRUE</field>
+            <field name="resource_type">user</field>
+        </record>
+        <record id="resource_3" model="resource.resource">
+            <field name="create_uid">1</field>
+            <field name="write_uid">1</field>
+            <field name="name">Director do Depto da Cultura</field>
+            <field name="company_id">1</field>
+            <field name="active">TRUE</field>
+            <field name="resource_type">user</field>
+        </record>
+        <record id="resource_4" model="resource.resource">
+            <field name="create_uid">1</field>
+            <field name="write_uid">1</field>
+            <field name="name">António Passos Dias Aguiar Mota</field>
+            <field name="company_id">1</field>
+            <field name="active">TRUE</field>
+            <field name="resource_type">user</field>
+        </record>
+        <record id="resource_5" model="resource.resource">
+            <field name="create_uid">1</field>
+            <field name="write_uid">1</field>
+            <field name="name">Francisco Fogueteiro Canas e Palma</field>
+            <field name="company_id">1</field>
+            <field name="active">TRUE</field>
+            <field name="resource_type">user</field>
+        </record>
+        <record id="resource_6" model="resource.resource">
+            <field name="create_uid">1</field>
+            <field name="write_uid">1</field>
+            <field name="name">Manuel António Dias de Boavida</field>
+            <field name="company_id">1</field>
+            <field name="active">TRUE</field>
+            <field name="resource_type">user</field>
+        </record>
+        <record id="resource_7" model="resource.resource">
+            <field name="create_uid">1</field>
+            <field name="write_uid">1</field>
+            <field name="name">Hermenegilda Bonina Vaz do Carvalho</field>
+            <field name="company_id">1</field>
+            <field name="active">TRUE</field>
+            <field name="resource_type">user</field>
+        </record>
+        <!-- __________________________________EMPLOYEE___________________________-->
+        <record id="employee_2" model="hr.employee">
+            <field name="create_uid">1</field>
+            <field name="write_uid">1</field>
+            <field name="address_id">1</field>
+            <field name="resource_id" ref="resource_2"/>
+            <field name="color">0</field>
+            <field name="name_related">Funcionário da DV Aprovisionamento</field>
+        </record>
+        <record id="employee_3" model="hr.employee">
+            <field name="create_uid">1</field>
+            <field name="write_uid">1</field>
+            <field name="address_id">1</field>
+            <field name="resource_id" ref="resource_3"/>
+            <field name="color">0</field>
+            <field name="name_related">Director do Depto da Cultura</field>
+        </record>
+        <record id="employee_4" model="hr.employee">
+            <field name="create_uid">1</field>
+            <field name="write_uid">1</field>
+            <field name="address_id">1</field>
+            <field name="resource_id" ref="resource_4"/>
+            <field name="color">0</field>
+            <field name="name_related">António Passos Dias Aguiar Mota</field>
+        </record>
+        <record id="employee_5" model="hr.employee">
+            <field name="create_uid">1</field>
+            <field name="write_uid">1</field>
+            <field name="address_id">1</field>
+            <field name="resource_id" ref="resource_5"/>
+            <field name="color">0</field>
+            <field name="name_related">Francisco Fogueteiro  Canas e Palma</field>
+        </record>
+        <record id="employee_6" model="hr.employee">
+            <field name="create_uid">1</field>
+            <field name="write_uid">1</field>
+            <field name="address_id">1</field>
+            <field name="resource_id" ref="resource_6"/>
+            <field name="color">0</field>
+            <field name="name_related">Manuel António Dias de Boavida</field>
+        </record>
+        <record id="employee_7" model="hr.employee">
+            <field name="create_uid">1</field>
+            <field name="write_uid">1</field>
+            <field name="address_id">1</field>
+            <field name="resource_id" ref="resource_7"/>
+            <field name="color">0</field>
+            <field name="name_related">Hermenegilda Bonina Vaz do Carvalho</field>
+        </record>
+
+    </data>
+</openerp>

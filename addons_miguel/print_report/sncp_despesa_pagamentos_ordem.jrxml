@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ordem_de_pagamento" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="336"/>
+	<parameter name="IDS" class="java.lang.Object">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PIDS" class="java.util.List">
+		<defaultValueExpression><![CDATA[$P{IDS}.toList()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT (SELECT COALESCE(name,'') FROM res_company WHERE id=1) AS nome_companhia,
+(SELECT COALESCE(vat,'') FROM res_partner WHERE id=(SELECT partner_id FROM res_company WHERE id=1)) AS nif_empresa,
+ORD.autorizada_data::DATE AS data_pagamento,ORD.autorizada_data,COALESCE(ORD.name,'') AS name,
+EXTRACT(YEAR FROM ORD.autorizada_data)::INT AS ano,
+COALESCE(PART.street||' ','') || COALESCE(PART.street2,'') AS morada_parceiro,
+COALESCE(PART.zip||' ','') || COALESCE(PART.city,'') AS codigo_postal_parceiro,
+COALESCE(PART.vat,'') AS nif_parceiro,
+COALESCE((SELECT code FROM account_account WHERE id=LINHA_IMP.conta_contabil_id),'') AS codigo_conta,
+COALESCE((SELECT code FROM account_analytic_account WHERE id=LINHA_IMP.organica_id),'') AS codigo_dimensao_organica,COALESCE((SELECT code FROM account_analytic_account WHERE id=LINHA_IMP.economica_id),'') AS codigo_dimensao_economica,
+COALESCE((SELECT name FROM account_account WHERE id=LINHA_IMP.conta_contabil_id),'') AS nome_conta,
+COALESCE((SELECT name FROM account_analytic_account WHERE id=LINHA_IMP.organica_id),'') AS  nome_dimensao_organica,COALESCE((SELECT name FROM account_analytic_account WHERE id=LINHA_IMP.economica_id),'') AS nome_dimensao_economica,COALESCE(LINHA_IMP.num_fat_parceiro,'') AS nr_fatura,
+COALESCE(LINHA_IMP.montante,0.0) AS montante,COALESCE(ORD.montante_iliq,0.0) AS montante_iliq,COALESCE(ORD.montante_ret,0.0) AS montante_ret,COALESCE(ORD.montante_desc,0.0) AS montante_desc,
+ORD.conferida_data,COALESCE(ORD.montante_iliq,0.0)-COALESCE(ORD.montante_ret,0.0)-
+COALESCE(ORD.montante_desc,0.0) AS montante_liquido,
+COALESCE((
+ SELECT HE.name_related
+ FROM hr_employee AS HE
+ WHERE resource_id IN (SELECT id FROM resource_resource  AS RR
+  			  WHERE RR.user_id = ORD.conferida_user_id
+ 		   LIMIT 1)
+),'') AS empregado_conf,
+COALESCE((
+SELECT HE.name_related
+FROM hr_employee AS HE
+WHERE resource_id IN (SELECT id FROM resource_resource  AS RR
+ 			  WHERE RR.user_id = ORD.autorizada_user_id
+		   LIMIT 1)
+),'')
+AS empregado_aut,
+(CASE WHEN COALESCE(ORD.montante_iliq-ORD.montante_ret-ORD.montante_desc,0.0)-1000 BETWEEN  0 AND 999
+       THEN concat('',overlay(fu_extenso_euro(ORD.montante_iliq-ORD.montante_ret-ORD.montante_desc) placing '' from 1 for 3))
+       ELSE  concat('',fu_extenso_euro(ORD.montante_iliq-ORD.montante_ret-ORD.montante_desc))
+END) AS val_extenso,
+CONCAT(COALESCE(MP.name,''),
+(CASE
+ WHEN MP.echeque = True
+     THEN CONCAT(' ',(SELECT numero FROM sncp_tesouraria_cheques AS STC WHERE STC.serie_id = ORD.serie_id
+	AND STC.state = 'nutl'
+	ORDER BY STC.numero
+	LIMIT 1))
+     ELSE ''
+END
+),
+' | ',
+(CASE
+ WHEN MP.meio = 'bk' THEN CONCAT('banco: ',
+		     (SELECT name FROM sncp_tesouraria_contas_bancarias WHERE id=ORD.banco_id))
+ WHEN MP.meio = 'cx' THEN CONCAT('caixa: ',
+		     (SELECT name FROM sncp_tesouraria_caixas WHERE id=ORD.caixa_id))
+ WHEN MP.meio = 'fm' THEN CONCAT('fundo de maneio: ',
+		     (SELECT name FROM sncp_tesouraria_fundos_maneio WHERE id=ORD.fundo_id))
+ END
+),
+(CASE
+ WHEN MP.meio = 'bk' THEN CONCAT(' | conta: ',
+		     (SELECT conta FROM sncp_tesouraria_contas_bancarias WHERE id=ORD.banco_id))
+ ELSE ''
+ END
+)
+) AS meio_pagamento_d_bfc_c,COALESCE(ORD.observ,'') AS observ
+FROM sncp_despesa_pagamentos_ordem AS ORD
+LEFT OUTER JOIN sncp_despesa_pagamentos_ordem_linhas_imprimir AS LINHA_IMP ON LINHA_IMP.opag_id=ORD.id
+LEFT OUTER JOIN res_partner AS PART ON PART.id = ORD.partner_id
+LEFT OUTER JOIN sncp_comum_meios_pagamento AS MP ON MP.id=ORD.meio_pag_id
+WHERE $X{IN,ORD.id,PIDS}]]>
+	</queryString>
+	<field name="nome_companhia" class="java.lang.String"/>
+	<field name="nif_empresa" class="java.lang.String"/>
+	<field name="data_pagamento" class="java.sql.Date"/>
+	<field name="autorizada_data" class="java.sql.Timestamp"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="ano" class="java.lang.Integer"/>
+	<field name="morada_parceiro" class="java.lang.String"/>
+	<field name="codigo_postal_parceiro" class="java.lang.String"/>
+	<field name="nif_parceiro" class="java.lang.String"/>
+	<field name="codigo_conta" class="java.lang.String"/>
+	<field name="codigo_dimensao_organica" class="java.lang.String"/>
+	<field name="codigo_dimensao_economica" class="java.lang.String"/>
+	<field name="nome_conta" class="java.lang.String"/>
+	<field name="nome_dimensao_organica" class="java.lang.String"/>
+	<field name="nome_dimensao_economica" class="java.lang.String"/>
+	<field name="nr_fatura" class="java.lang.String"/>
+	<field name="montante" class="java.math.BigDecimal"/>
+	<field name="montante_iliq" class="java.math.BigDecimal"/>
+	<field name="montante_ret" class="java.math.BigDecimal"/>
+	<field name="montante_desc" class="java.math.BigDecimal"/>
+	<field name="conferida_data" class="java.sql.Timestamp"/>
+	<field name="montante_liquido" class="java.math.BigDecimal"/>
+	<field name="empregado_conf" class="java.lang.String"/>
+	<field name="empregado_aut" class="java.lang.String"/>
+	<field name="val_extenso" class="java.lang.String"/>
+	<field name="meio_pagamento_d_bfc_c" class="java.lang.String"/>
+	<field name="observ" class="java.lang.String"/>
+	<title>
+		<band height="301" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome_companhia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="41" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Ordem de Pagamento]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="81" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="61" width="100" height="20" backcolor="#404040"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="10" y="81" width="90" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nif_empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="61" width="90" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contribuinte]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="372" y="81" width="60" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="514" y="61" width="40" height="20" backcolor="#404040"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="514" y="61" width="40" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ano]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="514" y="81" width="40" height="20"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="372" y="81" width="60" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{data_pagamento}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="432" y="81" width="82" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="372" y="61" width="60" height="20" backcolor="#404040"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="432" y="61" width="82" height="20" backcolor="#404040"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="442" y="61" width="72" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="61" width="60" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="514" y="81" width="40" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ano}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="442" y="81" width="72" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="136" width="554" height="92"/>
+			</rectangle>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="387" y="216" width="69" height="12"/>
+				<textElement/>
+				<text><![CDATA[Contribuinte]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="456" y="216" width="100" height="12"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nif_parceiro}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="1" y="116" width="141" height="20" backcolor="#404040"/>
+			</rectangle>
+			<line>
+				<reportElement x="373" y="204" width="1" height="24"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="23" y="162" width="344" height="31"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{morada_parceiro}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="23" y="181" width="344" height="37"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigo_postal_parceiro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="116" width="131" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parceiro de Negócios]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="88" y="261" width="286" height="40" backcolor="#404040"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="100" y="261" width="274" height="40"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="-1" y="261" width="89" height="40" backcolor="#404040"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="374" y="261" width="100" height="40" backcolor="#404040"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="474" y="261" width="82" height="40" backcolor="#404040"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="387" y="261" width="89" height="40"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="261" width="77" height="40"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código SNCP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="476" y="261" width="68" height="40"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="60" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="88" height="60"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="88" y="0" width="286" height="60"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="374" y="0" width="100" height="60"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="474" y="0" width="81" height="60"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="11" y="40" width="77" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigo_dimensao_economica}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="11" y="20" width="77" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigo_dimensao_organica}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="11" y="0" width="77" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigo_conta}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="273" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome_conta}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="20" width="273" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome_dimensao_organica}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="40" width="273" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome_dimensao_economica}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="386" y="0" width="87" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nr_fatura}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="473" y="0" width="81" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{montante}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="516" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="101" width="556" height="20" backcolor="#404040"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="121" width="556" height="33"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="8" y="121" width="547" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{val_extenso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="101" width="554" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Extenso]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="177" width="556" height="20" backcolor="#404040"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="197" width="556" height="33"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="2" y="177" width="554" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Meio de Pagamento]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="10" y="197" width="548" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{meio_pagamento_d_bfc_c}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="257" width="556" height="20" backcolor="#404040"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="277" width="556" height="33"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="7" y="277" width="551" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{observ}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="257" width="557" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observações]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="357" width="270" height="43"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="270" y="357" width="286" height="43"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="337" width="270" height="20" backcolor="#404040"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="270" y="337" width="286" height="20" backcolor="#404040"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="336" width="270" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tesouraria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="337" width="286" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Presidência]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="380" width="130" height="20"/>
+				<textElement/>
+				<text><![CDATA[em ______/______/______]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="380" width="130" height="20"/>
+				<textElement/>
+				<text><![CDATA[em ______/______/______]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="442" width="556" height="33"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="422" width="556" height="20" backcolor="#404040"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="422" width="557" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recibo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="455" width="130" height="20"/>
+				<textElement/>
+				<text><![CDATA[em ______/______/______]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="374" y="20" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="474" y="20" width="82" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="387" y="20" width="87" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Descontos]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="485" y="20" width="70" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{montante_desc}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="374" y="40" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="474" y="40" width="82" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="387" y="40" width="87" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Retenções]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="485" y="40" width="70" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{montante_ret}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="374" y="60" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="474" y="60" width="82" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="387" y="60" width="87" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[TOTAL LÍQUIDO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="485" y="60" width="70" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{montante_liquido}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="190" y="20" width="154" height="20" backcolor="#404040"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="190" y="20" width="154" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Autorizada]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="190" y="40" width="154" height="40"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="203" y="60" width="141" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{empregado_aut}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="203" y="40" width="141" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{autorizada_data}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="374" y="0" width="100" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="474" y="0" width="82" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="387" y="0" width="87" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Total Ilíquido]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="485" y="0" width="70" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{montante_iliq}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="13" y="20" width="177" height="20" backcolor="#404040"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="13" y="20" width="177" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Conferida]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="13" y="40" width="177" height="40"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="24" y="60" width="166" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{empregado_conf}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="24" y="40" width="166" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{conferida_data}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

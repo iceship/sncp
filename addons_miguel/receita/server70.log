@@ -1,0 +1,188 @@
+2014-03-12 13:38:27,351 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:27] "POST /web/action/load HTTP/1.1" 200 -
+2014-03-12 13:38:27,365 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:27] "POST /web/menu/load_needaction HTTP/1.1" 200 -
+2014-03-12 13:38:27,508 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:27] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:27,525 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:27] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:27,553 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:27] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:27,567 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:27] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:27,575 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:27] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:27,636 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:27] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:27,711 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:27] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 13:38:30,131 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:30] "POST /web/menu/load_needaction HTTP/1.1" 200 -
+2014-03-12 13:38:30,282 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:30] "POST /web/action/load HTTP/1.1" 200 -
+2014-03-12 13:38:30,357 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:30] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:30,374 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:30] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:30,431 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:30] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:30,433 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:30] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:30,449 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:30] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:30,510 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:30] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:30,560 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:30] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 13:38:32,735 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:32] "POST /web/action/load HTTP/1.1" 200 -
+2014-03-12 13:38:32,833 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:32] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:32,855 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:32] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:32,873 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:32] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:32,895 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:32] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:32,901 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:32] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:32,979 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:32] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:33,108 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:33] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 13:38:34,523 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:34] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:34,870 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:34] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:34,969 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:34] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:34,983 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:34] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:34,985 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:34] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:35,011 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:35] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 13:38:35,033 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:35] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:35,065 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:35] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:35,067 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:35] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:35,081 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:35] "GET /web/binary/image?model=res.partner&field=image_small&id=3&resize=&session_id=8e57b66427c349309f5da2cc501ab389 HTTP/1.1" 304 -
+2014-03-12 13:38:35,092 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:35] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:35,104 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:35] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:36,568 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:36,601 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:36,642 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:36,648 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:44,224 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:44] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:38:44,344 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:38:44] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:41:57,536 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:41:57] "POST /web/action/load HTTP/1.1" 200 -
+2014-03-12 13:41:57,556 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:41:57] "POST /web/menu/load_needaction HTTP/1.1" 200 -
+2014-03-12 13:41:57,717 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:41:57] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:41:57,742 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:41:57] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:41:57,806 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:41:57] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:41:57,808 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:41:57] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:41:57,821 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:41:57] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:41:57,886 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:41:57] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:41:57,962 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:41:57] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 13:42:05,907 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:05] "POST /web/action/load HTTP/1.1" 200 -
+2014-03-12 13:42:06,056 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:06] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:06,126 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:06] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:06,156 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:06] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:06,219 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:06] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:06,275 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:06] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:07,246 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:07] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:07,339 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:07] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 13:42:08,845 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:08] "POST /web/action/load HTTP/1.1" 200 -
+2014-03-12 13:42:08,920 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:08] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:08,940 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:08] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:08,984 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:08] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:08,998 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:08] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:09,015 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:09] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:09,077 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:09] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:09,139 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:09] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 13:42:35,432 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:35] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:35,773 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:35] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:35,849 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:35] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 13:42:35,853 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:35] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 13:42:35,859 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:35] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 13:42:35,861 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:35] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 13:42:35,862 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:35] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:35,880 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:35] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:35,916 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:35] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 13:42:35,947 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:35] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:35,988 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:35] "GET /web/binary/image?model=res.partner&field=image_small&id=12&resize=&session_id=8e57b66427c349309f5da2cc501ab389 HTTP/1.1" 304 -
+2014-03-12 13:42:36,001 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:36,004 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:36,005 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:36] "GET /web/binary/image?model=res.partner&field=image_small&id=3&resize=&session_id=8e57b66427c349309f5da2cc501ab389 HTTP/1.1" 304 -
+2014-03-12 13:42:36,040 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:36,067 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:36,076 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:36,101 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:36,104 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:36,136 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:42:36,139 27701 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 13:42:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 13:56:20,589 27701 INFO ? openerp.service: Initiating shutdown
+2014-03-12 13:56:20,589 27701 INFO ? openerp.service: Hit CTRL-C again or send a second signal to force the shutdown.
+2014-03-12 13:56:24,589 18425 INFO ? openerp: OpenERP version 7.0-20130918-231035
+2014-03-12 13:56:24,589 18425 INFO ? openerp: addons paths: /opt/openerp/addons
+2014-03-12 13:56:24,590 18425 INFO ? openerp: database hostname: 127.0.0.1
+2014-03-12 13:56:24,590 18425 INFO ? openerp: database port: 5432
+2014-03-12 13:56:24,590 18425 INFO ? openerp: database user: openerp
+2014-03-12 13:56:25,289 18425 INFO ? openerp.addons.google_docs.google_docs: GData lib version `%s GData-Python/2.0.14` detected
+2014-03-12 13:56:25,672 18425 INFO ? openerp.service.netrpc_server: starting NET-RPC service on 0.0.0.0:8070
+2014-03-12 13:56:25,681 18425 INFO ? openerp.service.wsgi_server: HTTP service (werkzeug) running on 0.0.0.0:8069
+2014-03-12 13:56:25,684 18425 INFO ? openerp: OpenERP server is running, waiting for connections...
+2014-03-12 14:01:28,475 18425 INFO EXEQ openerp.modules.loading: loading 1 modules...
+2014-03-12 14:01:28,535 18425 INFO EXEQ openerp.modules.loading: loading 45 modules...
+2014-03-12 14:01:28,881 18425 INFO EXEQ openerp.modules.loading: Modules loaded.
+2014-03-12 14:01:28,924 18425 ERROR EXEQ openerp.netsvc: Database not ready
+Currently, this database is not fully loaded and can not be used.
+Traceback (most recent call last):
+  File "/opt/openerp/server70/openerp/netsvc.py", line 292, in dispatch_rpc
+    result = ExportService.getService(service_name).dispatch(method, params)
+  File "/opt/openerp/server70/openerp/service/web_services.py", line 626, in dispatch
+    res = fn(db, uid, *params)
+  File "/opt/openerp/server70/openerp/osv/osv.py", line 188, in execute_kw
+    return self.execute(db, uid, obj, method, *args, **kw or {})
+  File "/opt/openerp/server70/openerp/osv/osv.py", line 130, in wrapper
+    raise except_osv('Database not ready', 'Currently, this database is not fully loaded and can not be used.')
+except_osv: ('Database not ready', 'Currently, this database is not fully loaded and can not be used.')
+2014-03-12 14:01:28,929 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:28] "POST /web/menu/load_needaction HTTP/1.1" 200 -
+2014-03-12 14:01:28,938 18425 INFO EXEQ openerp.modules.loading: loading 1 modules...
+2014-03-12 14:01:28,955 18425 INFO ? werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:28] "GET /web/static/src/img/warning.png HTTP/1.1" 200 -
+2014-03-12 14:01:29,005 18425 INFO EXEQ openerp.modules.loading: loading 45 modules...
+2014-03-12 14:01:29,190 18425 INFO EXEQ openerp.modules.loading: Modules loaded.
+2014-03-12 14:01:29,217 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:29] "POST /web/action/load HTTP/1.1" 200 -
+2014-03-12 14:01:29,311 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:29] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 14:01:31,557 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:31] "POST /web/webclient/version_info HTTP/1.1" 200 -
+2014-03-12 14:01:31,826 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:31] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 14:01:32,142 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:32] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 14:01:34,088 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:34] "POST /web/action/load HTTP/1.1" 200 -
+2014-03-12 14:01:34,166 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:34] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 14:01:34,185 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:34] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 14:01:34,215 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:34] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 14:01:34,224 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:34] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 14:01:34,247 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:34] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 14:01:34,364 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:34] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 14:01:36,099 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 14:01:36,324 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 14:01:36,406 18425 INFO ? werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:36] "GET /usr/share/docutils/writers/html4css1/html4css1.css HTTP/1.1" 404 -
+2014-03-12 14:01:36,432 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:36] "POST /web/dataset/search_read HTTP/1.1" 200 -
+2014-03-12 14:01:36,548 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:36] "POST /web/dataset/call_kw HTTP/1.1" 200 -
+2014-03-12 14:01:38,582 18425 INFO EXEQ openerp.modules.loading: loading 1 modules...
+2014-03-12 14:01:38,667 18425 INFO EXEQ openerp.modules.loading: loading 45 modules...
+2014-03-12 14:01:38,831 18425 INFO EXEQ openerp.modules.module: module comum: creating or updating database tables
+2014-03-12 14:01:39,128 18425 INFO EXEQ openerp.modules.loading: module comum: loading herancas_view.xml
+2014-03-12 14:01:39,334 18425 INFO EXEQ openerp.modules.loading: module comum: loading geral_view.xml
+2014-03-12 14:01:39,420 18425 WARNING EXEQ openerp.addons.base.ir.ir_ui_view: Setting the `type` field is deprecated in the `ir.ui.view` model.
+2014-03-12 14:01:39,424 18425 ERROR EXEQ openerp.addons.base.ir.ir_ui_view: Can't render view  for model: sncp.comum.param
+Traceback (most recent call last):
+  File "/opt/openerp/server70/openerp/addons/base/ir/ir_ui_view.py", line 126, in _check_render_view
+    fvg = self.pool.get(view.model).fields_view_get(cr, uid, view_id=view.id, view_type=view.type, context=context)
+AttributeError: 'NoneType' object has no attribute 'fields_view_get'
+2014-03-12 14:01:39,439 18425 ERROR EXEQ openerp.tools.convert: Parse error in /opt/openerp/addons/comum/geral_view.xml:209: 
+<record id="cod_param_tree" model="ir.ui.view">
+            <field name="name">Par&#226;metros</field>
+            <field name="model">sncp.comum.param</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Par&#226;metros" create="false">
+                    <field name="datahora"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+Traceback (most recent call last):
+  File "/opt/openerp/server70/openerp/tools/convert.py", line 847, in parse
+    self._tags[rec.tag](self.cr, rec, n)
+  File "/opt/openerp/server70/openerp/tools/convert.py", line 814, in _tag_record
+    id = self.pool.get('ir.model.data')._update(cr, self.uid, rec_model, self.module, res, rec_id or False, not self.isnoupdate(data_node), noupdate=self.isnoupdate(data_node), mode=self.mode, context=rec_context )
+  File "/opt/openerp/server70/openerp/addons/base/ir/ir_model.py", line 964, in _update
+    res_id = model_obj.create(cr, uid, values, context=context)
+  File "/opt/openerp/server70/openerp/addons/base/ir/ir_ui_view.py", line 103, in create
+    return super(view, self).create(cr, uid, values, context)
+  File "/opt/openerp/server70/openerp/osv/orm.py", line 4472, in create
+    self._validate(cr, user, [id_new], context)
+  File "/opt/openerp/server70/openerp/osv/orm.py", line 1546, in _validate
+    raise except_orm('ValidateError', '\n'.join(error_msgs))
+except_orm: ('ValidateError', u'Ocorreu um erro ao validar o campo(s) arch: Invalid XML for View Architecture!')
+2014-03-12 14:01:39,446 18425 ERROR EXEQ openerp.netsvc: ValidateError
+Ocorreu um erro ao validar o campo(s) arch: Invalid XML for View Architecture!
+Traceback (most recent call last):
+  File "/opt/openerp/server70/openerp/netsvc.py", line 292, in dispatch_rpc
+    result = ExportService.getService(service_name).dispatch(method, params)
+  File "/opt/openerp/server70/openerp/service/web_services.py", line 626, in dispatch
+    res = fn(db, uid, *params)
+  File "/opt/openerp/server70/openerp/osv/osv.py", line 188, in execute_kw
+    return self.execute(db, uid, obj, method, *args, **kw or {})
+  File "/opt/openerp/server70/openerp/osv/osv.py", line 144, in wrapper
+    raise except_osv(inst.name, inst.value)
+except_osv: ('ValidateError', u'Ocorreu um erro ao validar o campo(s) arch: Invalid XML for View Architecture!')
+2014-03-12 14:01:39,448 18425 INFO EXEQ werkzeug: 192.168.1.135 - - [12/Mar/2014 14:01:39] "POST /web/dataset/call_button HTTP/1.1" 200 -

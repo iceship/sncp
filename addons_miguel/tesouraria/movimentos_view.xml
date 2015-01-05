@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <!--Movimentos Internos-->
+        <record id="view_sncp_tesouraria_movim_internos_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.movim.internos.tree</field>
+            <field name="model">sncp.tesouraria.movim.internos</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Movimentos Internos" delete="false">
+                    <!-- Campos de controlo -->
+                    <field name="processar" invisible="1"/>
+                    <!-- END -->
+                    <field name="datahora"/>
+                    <field name="name"/>
+                    <field name="tipo_mov_id" />
+                    <field name="origem"/>
+                    <field name="destino"/>
+                    <field name="montante"/>
+                    <button name="unlink" string="Apagar" type="object" icon="gtk-cancel"
+                            attrs="{'invisible': [('processar', 'in', [3])]}"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_tesouraria_movim_internos_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.movim.internos.form</field>
+            <field name="model">sncp.tesouraria.movim.internos</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Movimentos Internos" version="7.0" create="false" delete="false">
+                    <sheet>
+                        <header>
+                            <button name="prosseguir" string="Prosseguir" type="object" states="draft"/>
+                            <button name="continuar" string="Continuar" type="object"
+                                    attrs="{'invisible': [('processar', 'not in', [1])]}"/>
+                            <button name="processar" string="Processar Movimento Interno" type="object"
+                                    attrs="{'invisible': [('processar', 'not in', [2])]}"/>
+                        </header>
+
+                        <!-- Campos de controlo-->
+                        <field name="processar" invisible="1"/>
+                        <field name="de" invisible="1"/>
+                        <field name="para" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                        <field name="dest_codigo" invisible="1"/>
+                        <!-- END -->
+
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="tipo_mov_id" required="1" options="{'no_open': True}"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            </group>
+                            <group>
+                                <group><field name="datahora" readonly="1"/></group>
+                                <newline/>
+                                <group colspan="4" cols="2">
+                                    <group>
+                                        <field name="montante"
+                                            attrs="{'invisible': [('state', 'in', ['draft'])],
+                                                    'required': [('state','in',['fromto'])],
+                                                    'readonly': [('processar','not in',[0,1])]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="em_cheque"
+                                               attrs="{'invisible': [('state', 'in', ['draft'])],
+                                                       'required': [('state','in',['fromto'])],
+                                                       'readonly': [('processar','not in',[0,1])]}"/>
+                                    </group>
+                                </group>
+                            </group>
+                        </group>
+                        <group attrs="{'invisible': [('state', 'in', ['draft'])]}">
+                            <group string="Origem">
+                                <field name="orig_caixa_id" options="{'no_open': True}"
+                                       on_change="on_change_de_para('origem', 'Caixa - ', orig_caixa_id)"
+                                       attrs="{'invisible':[('de', 'not in', ['cx'])],
+                                               'required': [('de','in',['cx'])],
+                                               'readonly': [('processar','not in',[0,1])]}"/>
+                                <field name="orig_banco_id" options="{'no_open': True}"
+                                       on_change="on_change_de_para('origem', 'Banco - ', orig_banco_id)"
+                                       attrs="{'invisible':[('de', 'not in', ['bk'])],
+                                               'required': [('de','in',['bk'])],
+                                               'readonly': [('processar','not in',[0,1])]}"/>
+                                <field name="orig_fmaneio_id" options="{'no_open': True}"
+                                       on_change="on_change_de_para('origem', 'Fundo Maneio - ', orig_fmaneio_id)"
+                                       attrs="{'invisible':[('de', 'not in', ['fm'])],
+                                               'required': [('de','in',['fm'])],
+                                               'readonly': [('processar','not in',[0,1])]}"/>
+                                <field name="orig_codigo" invisible="1"/>
+                                <field name="ref_lanc"
+                                       attrs="{'readonly': [('processar','not in',[0,1])]}"/>
+                            </group>
+                            <group string="Destino">
+                                <field name="dest_caixa_id" options="{'no_open': True}"
+                                       on_change="on_change_de_para('destino', 'Caixa - ', dest_caixa_id)"
+                                       attrs="{'invisible':[('para', 'not in', ['cx'])],
+                                               'required': [('para','in',['cx'])],
+                                               'readonly': [('processar','not in',[0,1])]}"/>
+                                <field name="dest_banco_id" options="{'no_open': True}"
+                                       on_change="on_change_de_para('destino', 'Banco - ', dest_banco_id)"
+                                       attrs="{'invisible':[('para', 'not in', ['bk'])],
+                                               'required': [('para','in',['bk'])],
+                                               'readonly': [('processar','not in',[0,1])]}"/>
+                                <field name="dest_fmaneio_id" options="{'no_open': True}"
+                                       on_change="on_change_de_para('destino', 'Fundo Maneio - ', dest_fmaneio_id)"
+                                       attrs="{'invisible':[('para', 'not in', ['fm'])],
+                                               'required': [('para','in',['fm'])],
+                                               'readonly': [('processar','not in',[0,1])]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_movim_internos_view">
+            <field name="name">Movimentos Internos</field>
+            <field name="res_model">sncp.tesouraria.movim.internos</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Movimentos" parent="menu_tesouraria" id="menu_tesouraria_movimentos" sequence="40"/>
+        <menuitem name="Movimentos Internos" parent="menu_tesouraria_movimentos"
+                  id="menu_sncp_tesouraria_movim_internos_view"
+                  action="action_sncp_tesouraria_movim_internos_view" sequence="10"/>
+
+        <!-- Movimento Fundos de Maneio -->
+        <record id="view_sncp_tesouraria_movim_fundos_maneio_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.movim.fundos.maneio.tree</field>
+            <field name="model">sncp.tesouraria.movim.fundos.maneio</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Movimento FM" delete="false">
+                    <field name="estado" invisible="1"/>
+                    <field name="codigo"/>
+                    <field name="desc"/>
+                    <field name="empregado_id" options="{'no_open': True}"/>
+                    <field name="data_mov"/>
+                    <field name="tipo_mov_fm"/>
+                    <field name="montante"/>
+                    <button name="imprimir" string="Imprimir" icon="gtk-print" type="object"/>
+                    <button name="eliminar" string="Eliminar" icon="gtk-cut" type="object"
+                            attrs="{'invisible': [('estado','in',[6])]}"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_tesouraria_movim_fundos_maneio_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.movim.fundos.maneio.form</field>
+            <field name="model">sncp.tesouraria.movim.fundos.maneio</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Movimento FM" version="7.0" create="false" delete="false">
+                    <header>
+                        <button name="select_op" string="Seleccionar Ordens de Pagamento" type="object"
+                                attrs="{'invisible': ['|',('estado', 'not in', [2]),
+                                                          ('tipo_mov_fm', 'not in', ['rec'])]}"/>
+                        <button name="processa_fundo_maneio" string="Processar" type="object"
+                                attrs="{'invisible': [('estado', 'not in', [3,4])]}"/>
+                    </header>
+                    <!-- Variaveis do estado -->
+                    <field name="estado" invisible="1"/>
+                    <field name="tipo_mov_fm" invisible="1"/>
+                    <!-- END -->
+                    <group>
+                        <group>
+                            <field name="name" required="1" options="{'no_open': True}"
+                                   attrs="{'readonly': [('estado', 'not in', [0])]}"/>
+                            <field name="caixa_id" required="1" options="{'no_open': True}"
+                                   attrs="{'readonly': [('estado', 'not in', [0])]}"/>
+                        </group>
+                        <group>
+                            <field name="empregado_id" readonly="1" options="{'no_open': True}"/>
+                            <field name="data_mov" readonly="1"/>
+                        </group>
+                    </group>
+                    <separator/>
+                    <button name="prosseguir" string="Prosseguir" type="object"
+                                attrs="{'invisible': [('estado', 'not in', [0])]}"/>
+                    <separator/>
+                    <group>
+                        <group>
+                            <field name="montante"
+                               attrs="{'readonly': ['|',('tipo_mov_fm', 'not in', ['con']),
+                                                        ('estado', 'not in', [3])],
+                                       'invisible': [('estado', 'in', [0])]}"/>
+                        </group>
+                        <group>
+                            <field name="tipo_mov_tes_id" options="{'no_open': True}"
+                                   on_change="on_change_tipo_mov_tes_id(tipo_mov_tes_id)"
+                                   attrs="{'readonly': [('estado', 'not in', [1])],
+                                           'invisible': [('estado', 'in', [0])],
+                                           'required': [('estado', 'in', [1])]}"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_movim_fundos_maneio_view">
+            <field name="name">Movimentos de Fundos de Maneio</field>
+            <field name="res_model">sncp.tesouraria.movim.fundos.maneio</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Movimentos de Fundos de Maneio" parent="menu_tesouraria_movimentos"
+                  id="menu_sncp_tesouraria_movim_fundos_maneio_view"
+                  action="action_sncp_tesouraria_movim_fundos_maneio_view" sequence="20"/>
+
+        <!-- Movimentos-->
+        <record id="view_sncp_tesouraria_movimentos_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.movimentos.tree</field>
+            <field name="model">sncp.tesouraria.movimentos</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Movimentos" create="false" edit="false" delete="false">
+                    <field name="hora"/>
+                    <field name="name"/>
+                    <field name="montante"/>
+                    <field name="meio"/>
+                    <field name="codigo"/>
+                    <field name="natureza"/>
+                    <field name="coluna"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_movimentos_view">
+            <field name="name">Movimentos</field>
+            <field name="res_model">sncp.tesouraria.movimentos</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Movimentos" parent="menu_tesouraria_movimentos"
+                  id="menu_sncp_tesouraria_movimentos_view"
+                  action="action_sncp_tesouraria_movimentos_view" sequence="30"/>
+
+    </data>
+</openerp>

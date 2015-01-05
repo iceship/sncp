@@ -1,0 +1,8 @@
+id,conta_id/id,name,codigo,mov_interno,destino_tipo,origem_tipo
+1,853,Transferência entre caixas,TRC,TRUE,cx,cx
+2,853,Depósito Bancário,DEP,FALSE,bk,cx
+3,,Constituição de Fundo de Maneio,CFM,FALSE,fm,cx
+4,,Reposição de Fundo de Maneio,RFM,FALSE,cx,fm
+5,,Reconstituição de Fundo de Maneio,XFM,FALSE,fm,cx
+6,853,Depósitos a Prazo (constituição),DPC,FALSE,bk,bk
+7,853,Transferência interbancária,TRB,FALSE,bk,bk

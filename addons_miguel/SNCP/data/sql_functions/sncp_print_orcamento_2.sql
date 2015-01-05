@@ -1,0 +1,1 @@
+﻿ALTER TABLE sncp_print_orcamento ADD PRIMARY KEY(codigo);

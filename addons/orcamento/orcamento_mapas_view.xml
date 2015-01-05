@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Configuração do Resumo-->
+        <record id="view_sncp_orcamento_resumo_config_tree" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.resumo.config.tree</field>
+            <field name="model">sncp.orcamento.resumo.config</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Orçamento Resumo Configuração" version="7.0">
+                    <field name="coluna"/>
+                    <field name="ordem"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_orcamento_resumo_config_form" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.resumo.config.form</field>
+            <field name="model">sncp.orcamento.resumo.config</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Orçamento Resumo Configuração" version="7.0">
+                   <label for="coluna" class="my_oe_r_space_20"/>
+                   <field name="coluna" required="1" class="oe_inline my_oe_r_space_20"/>
+                   <label for="ordem" class="my_oe_r_space_20"/>
+                   <field name="ordem" required="1" class="oe_inline my_oe_r_space_20"/>
+                   <label for="align" class="oe_inline"/>
+                   <field name="align" required="1" class="oe_inline"/>
+                   <separator/>
+                   <label for="name"/>
+                   <field name="name"/>
+                   <label for="valor"/>
+                   <field name="valor"/>
+                   <label for="bold"/>
+                   <field name="bold"/>
+                   <label for="depend"/>
+                   <field name="depend"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_orcamento_resumo_config_view" >
+            <field name="name">Resumo do Orçamento</field>
+            <field name="res_model">sncp.orcamento.resumo.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Mapas" parent="menu_orcamento" sequence="20" id="menu_orcamento_mapas"/>
+        <menuitem name="Configurações" parent="menu_orcamento" id="menu_orcamento_config"
+                        sequence="60"/>
+        <menuitem name="Resumo do Orçamento" sequence="10" parent="menu_orcamento_config"
+                            id="menu_sncp_orcamento_resumo_config"
+                            action="action_sncp_orcamento_resumo_config_view"/>
+
+
+        <!-- Imprimir Resumo do orçamento -->
+        <record id="view_sncp_orcamento_imprimir_resumo_config_form" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.imprimir.resumo.config.form</field>
+            <field name="model">sncp.orcamento.imprimir.resumo.config</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Imprimir Resumo" version="7.0" create="false">
+                   <div class="oe_inline">
+                        <label for="name"/>
+                        <field name="name" required="1" class="oe_inline"/>
+                        <separator/>
+                        <button name="imprimir_report" string="Imprimir Relatório do Resumo" type="object"/>
+                   </div>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_orcamento_imprimir_resumo_config_view" >
+            <field name="name">Resumo do Orçamento</field>
+            <field name="res_model">sncp.orcamento.imprimir.resumo.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record id="view_sncp_orcamento_imprimir_resumo_config_board" model="ir.ui.view">
+            <field name="name">board.test_orcamento_res_config.form</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Resumo do Orçamento" version="7.0">
+                    <board style="2-1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_orcamento_imprimir_resumo_config_view)d"  readonly="1"
+                                    string="Resumo do Orçamento"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_orcamento_imprimir_resumo_config_board" model="ir.actions.act_window">
+            <field name="name">Resumo do Orçamento</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_orcamento_imprimir_resumo_config_board"/>
+        </record>
+        <menuitem name="Resumo do Orçamento" sequence="10" parent="menu_orcamento_mapas"
+                            id="menu_sncp_orcamento_imprimir_resumo_config_board"
+                            action="action_sncp_orcamento_imprimir_resumo_config_board"/>
+
+
+        <!-- Orçamento Receita-->
+        <record id="view_sncp_orcamento_imprimir_ano_receita_form" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.imprimir.ano.receita.form</field>
+            <field name="model">sncp.orcamento.imprimir.ano.receita</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Imprimir Receita" version="7.0" create="false">
+                   <div class="oe_inline">
+                        <label for="name"/>
+                        <field name="name" required="1" class="oe_inline"/>
+                        <separator/>
+                        <button name="imprimir_report" string="Imprimir Relatório da Receita" type="object"/>
+                   </div>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_orcamento_imprimir_ano_receita_view" >
+            <field name="name">Orçamento da Receita</field>
+            <field name="res_model">sncp.orcamento.imprimir.ano.receita</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record id="view_sncp_orcamento_imprimir_ano_receita_board" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.imprimir.ano.receita.board</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Orçamento da Receita" version="7.0">
+                    <board style="2-1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_orcamento_imprimir_ano_receita_view)d"  readonly="1"
+                                    string="Orçamento da Receita"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_orcamento_imprimir_ano_receita_board" model="ir.actions.act_window">
+            <field name="name">Orçamento da Receita</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_orcamento_imprimir_ano_receita_board"/>
+        </record>
+        <menuitem name="Orçamento da Receita" sequence="20" parent="menu_orcamento_mapas"
+                            id="menu_sncp_orcamento_imprimir_ano_receita_board"
+                            action="action_sncp_orcamento_imprimir_ano_receita_board"/>
+
+        <!-- Vista forma orçamento despesa-->
+        <record id="view_sncp_orcamento_imprimir_ano_despesa_form" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.imprimir.ano.despesa.form</field>
+            <field name="model">sncp.orcamento.imprimir.ano.despesa</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Imprimir Despesa" version="7.0" create="false">
+                   <div class="oe_inline">
+                        <label for="name"/>
+                        <field name="name" required="1" class="oe_inline"/>
+                        <separator/>
+                        <button name="imprimir_report" string="Imprimir Relatório da Despesa" type="object"/>
+                   </div>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_orcamento_imprimir_ano_despesa_view" >
+            <field name="name">Orçamento da Despesa</field>
+            <field name="res_model">sncp.orcamento.imprimir.ano.despesa</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record id="view_sncp_orcamento_imprimir_ano_despesa_board" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.imprimir.ano.despesa.board</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Orçamento da Receita" version="7.0">
+                    <board style="2-1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_orcamento_imprimir_ano_despesa_view)d"  readonly="1"
+                                    string="Orçamento da Despesa"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_orcamento_imprimir_ano_despesa_board" model="ir.actions.act_window">
+            <field name="name">Orçamento da Despesa</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_orcamento_imprimir_ano_despesa_board"/>
+        </record>
+        <menuitem name="Orçamento da Despesa" sequence="30" parent="menu_orcamento_mapas"
+                            id="menu_sncp_orcamento_imprimir_ano_despesa_board"
+                            action="action_sncp_orcamento_imprimir_ano_despesa_board"/>
+
+        <!-- Modificacão da Receita-->
+        <record id="view_sncp_modificacao_imprimir_ano_receita_form" model="ir.ui.view">
+            <field name="name">view.sncp.modificacao.imprimir.ano.receita.form</field>
+            <field name="model">sncp.modificacao.imprimir.ano.receita</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Imprimir Receita" version="7.0" create="false">
+                   <div class="oe_inline">
+                        <label for="tipo_mod" />
+                        <field name="tipo_mod" required="1" class="oe_inline"/>
+                        <separator/>
+                        <label for="name"/>
+                        <field name="name" required="1" class="oe_inline"/>
+                        <separator/>
+                        <label for="numero" />
+                        <field name="numero" required="1" class="oe_inline"/>
+                        <separator/>
+                        <button name="imprimir_report" string="Imprimir Relatório da Modificação da Receita" type="object"/>
+                   </div>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_modificacao_imprimir_ano_receita_view" >
+            <field name="name">Modificação da Receita</field>
+            <field name="res_model">sncp.modificacao.imprimir.ano.receita</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record id="view_sncp_modificacao_imprimir_ano_receita_board" model="ir.ui.view">
+            <field name="name">view.sncp.modificacao.imprimir.ano.receita.board</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Modificação da Receita" version="7.0">
+                    <board style="2-1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_modificacao_imprimir_ano_receita_view)d"  readonly="1"
+                                    string="Modificação da Receita"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_modificacao_imprimir_ano_receita_board" model="ir.actions.act_window">
+            <field name="name">Modificação da Receita</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_modificacao_imprimir_ano_receita_board"/>
+        </record>
+        <menuitem name="Modificação da Receita" sequence="40" parent="menu_orcamento_mapas"
+                              action="action_sncp_modificacao_imprimir_ano_receita_board"
+                              id="menu_sncp_modificacao_imprimir_ano_receita_board"/>
+
+        <!-- Modificacão da Despesa-->
+        <record id="view_sncp_modificacao_imprimir_ano_despesa_form" model="ir.ui.view">
+            <field name="name">view.sncp.modificacao.imprimir.ano.despesa.form</field>
+            <field name="model">sncp.modificacao.imprimir.ano.despesa</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Imprimir Despesa" version="7.0" create="false">
+                   <div class="oe_inline">
+                        <label for="tipo_mod" />
+                        <field name="tipo_mod" required="1" class="oe_inline"/>
+                        <separator/>
+                        <label for="name"/>
+                        <field name="name" required="1" class="oe_inline"/>
+                        <separator/>
+                        <label for="numero" />
+                        <field name="numero" required="1" class="oe_inline"/>
+                        <separator/>
+                        <button name="imprimir_report" string="Imprimir Relatório da Modificação da Despesa" type="object"/>
+                   </div>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_modificacao_imprimir_ano_despesa_view" >
+            <field name="name">Modificação da Despesa</field>
+            <field name="res_model">sncp.modificacao.imprimir.ano.despesa</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record id="view_sncp_modificacao_imprimir_ano_despesa_board" model="ir.ui.view">
+            <field name="name">view.sncp.modificacao.imprimir.ano.despesa.board</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Modificação da Despesa" version="7.0">
+                    <board style="2-1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_modificacao_imprimir_ano_despesa_view)d"  readonly="1"
+                                    string="Modificação da Despesa"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_modificacao_imprimir_ano_despesa_board" model="ir.actions.act_window">
+            <field name="name">Modificação da Despesa</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_modificacao_imprimir_ano_despesa_board"/>
+        </record>
+        <menuitem name="Modificação da Despesa" sequence="50" parent="menu_orcamento_mapas"
+                  action="action_sncp_modificacao_imprimir_ano_despesa_board"
+                  id="menu_sncp_modificacao_imprimir_ano_despesa_board"/>
+
+        <!-- Ver Histórico-->
+        <record id="view_sncp_orcamento_historico_cabecalho_form" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.historico.cabecalho.form</field>
+            <field name="model">sncp.orcamento.historico.cabecalho</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Histórico" version="7.0" create="false">
+                   <group>
+                   <field name="name" required="1" style="width:120px" on_change="onchange_name(name)"/>
+                   </group>
+                   <group colspan="2">
+                       <group string="De:">
+                           <!-- Comum aos dois-->
+                           <field name="ano_ini"/>
+                           <field name="data_ini"/>
+                           <!-- Receita-->
+                           <field name="categoria_rece_code_ini"
+                            attrs="{'invisible': [('name','not in',['rece'])],
+                                    'required': [('name','in',['rece'])]}"
+                           />
+                           <field name="categoria_desp_code_ini"
+                                   attrs="{'invisible': [('name','not in',['desp'])]}"
+                           />
+                           <!-- Despesa -->
+                           <field name="organica_code_ini"
+                                  attrs="{'invisible': [('name','not in',['desp'])]}"
+                                   />
+                           <!-- Comum aos dois-->
+                           <field name="economica_code_ini"/>
+                           <!-- Despesa -->
+                           <field name="funcional_code_ini"
+                                   attrs="{'invisible': [('name','not in',['desp'])]}"
+                                   />
+                           <!-- Comum aos dois-->
+                           <field name="documento_code_ini"/>
+                           <!-- Despesa -->
+                           <field name="cabimento_code_ini"
+                                   attrs="{'invisible': [('name','not in',['desp'])]}"
+                                   />
+                           <field name="compromisso_code_ini"
+                                   attrs="{'invisible': [('name','not in',['desp'])]}"
+                                   />
+                       </group>
+                       <group string="Até:">
+                            <!-- Comum aos dois-->
+                           <field name="ano_fim"/>
+                           <field name="data_fim"/>
+                           <!-- Receita-->
+                           <field name="categoria_rece_code_fim"
+                                  attrs="{'invisible': [('name','not in',['rece'])]}"
+                                   />
+                           <field name="categoria_desp_code_fim"
+                                  attrs="{'invisible': [('name','not in',['desp'])],
+                                          'required': [('name','in',['desp'])]}"
+                                   />
+                           <!-- Despesa -->
+                           <field name="organica_code_fim"
+                                   attrs="{'invisible': [('name','not in',['desp'])]}"
+                                   />
+                           <!-- Comum aos dois-->
+                           <field name="economica_code_fim"/>
+                           <!-- Despesa -->
+                           <field name="funcional_code_fim"
+                                   attrs="{'invisible': [('name','not in',['desp'])]}"
+                                   />
+                           <!-- Comum aos dois-->
+                           <field name="documento_code_fim"/>
+                           <!-- Despesa -->
+                           <field name="cabimento_code_fim"
+                                   attrs="{'invisible': [('name','not in',['desp'])]}"
+                                   />
+                           <field name="compromisso_code_fim"
+                                   attrs="{'invisible': [('name','not in',['desp'])]}"
+                                   />
+                       </group>
+                   </group>
+                   <group string="Ordenar por:">
+                           <field name="ord_rece_1" class="oe_inline my_oe_r_space_20"
+                                      attrs="{'invisible': [('name','not in',['rece'])]}"/>
+                           <field name="ord_desp_1" class="oe_inline my_oe_r_space_20"
+                                      attrs="{'invisible': [('name','not in',['desp'])]}"/>
+                           <field name="ord_rece_2" class="oe_inline my_oe_r_space_20"
+                                      attrs="{'invisible': [('name','not in',['rece'])]}"/>
+                           <field name="ord_desp_2" class="oe_inline my_oe_r_space_20"
+                                      attrs="{'invisible': [('name','not in',['desp'])]}"/>
+                           <field name="ord_rece_3" class="oe_inline"
+                                  attrs="{'invisible': [('name','not in',['rece'])]}"/>
+                           <field name="ord_desp_3" class="oe_inline"
+                                  attrs="{'invisible': [('name','not in',['desp'])]}"/>
+                   </group>
+                   <button name="pesquisar" string="Pesquisar" type="object"/>
+                   <button name="imprimir_report" string="Imprimir" type="object"/>
+                   <notebook>
+                       <page>
+                           <field name="orc_hist_rodape_id" readonly="1" delete="false">
+                               <tree>
+                                    <field name="name"/>
+                                    <field name="categoria"/>
+                                    <field name="datahora"/>
+                                    <field name="organica_id"/>
+                                    <field name="economica_id"/>
+                                    <field name="funcional_id"/>
+                                    <field name="cabimento_id"/>
+                                    <field name="compromisso_id"/>
+                                    <field name="doc_contab_name"/>
+                                    <field name="montante"/>
+                               </tree>
+                           </field>
+                       </page>
+                  </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_orcamento_historico_cabecalho_view" >
+            <field name="name">Imprimir Histórico</field>
+            <field name="res_model">sncp.orcamento.historico.cabecalho</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record id="view_sncp_orcamento_historico_cabecalho_board" model="ir.ui.view">
+            <field name="name">view.sncp_orcamento_historico_cabecalho.board</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Imprimir Histórico" version="7.0">
+                    <board style="1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_orcamento_historico_cabecalho_view)d"  readonly="1"
+                                    string="Imprimir Histórico"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_orcamento_historico_cabecalho_board" model="ir.actions.act_window">
+            <field name="name">Imprimir Histórico</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_orcamento_historico_cabecalho_board"/>
+        </record>
+        <menuitem name="Imprimir Histórico" sequence="60" parent="menu_orcamento_mapas"
+                              action="action_sncp_orcamento_historico_cabecalho_board"
+                              id="menu_sncp_orcamento_historico_cabecalho_board"/>
+
+        <!-- Ver Acumulados-->
+        <record id="view_sncp_orcamento_acumulados_cabecalho_form" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.acumulados.cabecalho.form</field>
+            <field name="model">sncp.orcamento.acumulados.cabecalho</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Acumulados" version="7.0" create="false">
+                   <group>
+                   <field name="name" required="1" style="width:120px" on_change="onchange_name(name)"/>
+                   </group>
+                   <group colspan="2">
+                       <group string="De:">
+                           <!-- Comum aos dois-->
+                           <field name="ano_ini"/>
+                           <!-- Receita-->
+                           <field name="categoria_rece_code_ini"
+                            attrs="{'invisible': [('name','not in',['rece'])],
+                                    'required': [('name','in',['rece'])]}"
+                           />
+                           <field name="categoria_desp_code_ini"
+                                   attrs="{'invisible': [('name','not in',['desp'])]}"
+                           />
+                           <!-- Despesa -->
+                           <field name="organica_code_ini"
+                                  attrs="{'invisible': [('name','not in',['desp'])]}"
+                                   />
+                           <!-- Comum aos dois-->
+                           <field name="economica_code_ini"/>
+                           <!-- Despesa -->
+                           <field name="funcional_code_ini"
+                                   attrs="{'invisible': [('name','not in',['desp'])]}"
+                                   />
+                       </group>
+                       <group string="Até:">
+                            <!-- Comum aos dois-->
+                           <field name="ano_fim"/>
+                           <!-- Receita-->
+                           <field name="categoria_rece_code_fim"
+                                  attrs="{'invisible': [('name','not in',['rece'])]}"
+                                   />
+                           <field name="categoria_desp_code_fim"
+                                  attrs="{'invisible': [('name','not in',['desp'])],
+                                          'required': [('name','in',['desp'])]}"
+                                   />
+                           <!-- Despesa -->
+                           <field name="organica_code_fim"
+                                   attrs="{'invisible': [('name','not in',['desp'])]}"
+                                   />
+                           <!-- Comum aos dois-->
+                           <field name="economica_code_fim"/>
+                           <!-- Despesa -->
+                           <field name="funcional_code_fim"
+                                   attrs="{'invisible': [('name','not in',['desp'])]}"
+                                   />
+                       </group>
+                   </group>
+                   <group string="Ordenar por:">
+                           <field name="ord_rece_1" class="oe_inline my_oe_r_space_20"
+                                      attrs="{'invisible': [('name','not in',['rece'])]}"/>
+                           <field name="ord_desp_1" class="oe_inline my_oe_r_space_20"
+                                      attrs="{'invisible': [('name','not in',['desp'])]}"/>
+                           <field name="ord_rece_2" class="oe_inline my_oe_r_space_20"
+                                      attrs="{'invisible': [('name','not in',['rece'])]}"/>
+                           <field name="ord_desp_2" class="oe_inline my_oe_r_space_20"
+                                      attrs="{'invisible': [('name','not in',['desp'])]}"/>
+                           <field name="ord_desp_3" class="oe_inline"
+                                  attrs="{'invisible': [('name','not in',['desp'])]}"/>
+                   </group>
+                   <button name="pesquisar" string="Pesquisar" type="object"/>
+                   <button name="imprimir_report" string="Imprimir" type="object"/>
+                   <notebook>
+                       <page>
+                           <field name="orc_acum_rodape_id" readonly="1" delete="false">
+                               <tree>
+                                    <field name="name"/>
+                                    <field name="categoria"/>
+                                    <field name="organica_id"/>
+                                    <field name="economica_id"/>
+                                    <field name="funcional_id"/>
+                                    <field name="montante"/>
+                               </tree>
+                           </field>
+                       </page>
+                  </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_orcamento_acumulados_cabecalho_view" >
+            <field name="name">Imprimir Acumulado</field>
+            <field name="res_model">sncp.orcamento.acumulados.cabecalho</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record id="view_sncp_orcamento_acumulados_cabecalho_board" model="ir.ui.view">
+            <field name="name">view.sncp.orcamento.acumulados.cabecalho.board</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Imprimir Acumulado" version="7.0">
+                    <board style="1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_orcamento_acumulados_cabecalho_view)d"  readonly="1"
+                                    string="Imprimir Acumulados"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_orcamento_acumulados_cabecalho_board" model="ir.actions.act_window">
+            <field name="name">Imprimir Acumulados</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_orcamento_acumulados_cabecalho_board"/>
+        </record>
+        <menuitem name="Imprimir Acumulados" sequence="70" parent="menu_orcamento_mapas"
+                  action="action_sncp_orcamento_acumulados_cabecalho_board"
+                  id="menu_sncp_orcamento_acumulados_cabecalho_board"/>
+
+    </data>
+</openerp>

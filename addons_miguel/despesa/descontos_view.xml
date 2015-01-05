@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Descontos e retençoes -->
+        <record id="view_sncp_despesa_descontos_retencoes_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.descontos.retencoes</field>
+            <field name="model">sncp.despesa.descontos.retencoes</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Descontos e Retencoes" >
+                    <field name="codigo"/>
+                    <field name="name"/>
+                    <field name="natureza"/>
+                    <field name="perc"/>
+                    <field name="montante_min"/>
+                    <field name="montante_max"/>
+                    <field name="montante_fix"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_despesa_descontos_retencoes_form" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.descontos.retencoes.form</field>
+            <field name="model">sncp.despesa.descontos.retencoes</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Descontos e Retencoes" version="7.0">
+                    <group>
+                        <group>
+                            <field name="codigo"
+                                   required="1"
+                                   on_change="on_change_codigo(codigo)"/>
+                            <field name="cod_contab_id" required="1" options="{'no_open': True}"/>
+                        </group>
+                        <group >
+                            <div>
+                                <label for="ean" class="my_oe_r_space_50"/>
+                                    <field name="ean" class="oe_inline" readonly="1"/><br/>
+
+                                <label for="conta_code" class="my_oe_r_space_20"/>
+                                    <field name="conta_code" class="oe_inline" readonly="1"/>-
+                                    <field name="conta_name" class="oe_inline" readonly="1"/><br/>
+
+                                <label for="organica_code" class="my_oe_r_space_50"/>
+                                    <field name="organica_code" class="oe_inline" readonly="1"/>-
+                                    <field name="organica_name" class="oe_inline" readonly="1"/><br/>
+
+                                <label for="economica_code" class="my_oe_r_space_50"/>
+                                    <field name="economica_code" class="oe_inline" readonly="1"/>
+                                    <field name="economica_name" class="oe_inline" readonly="1"/>
+                            </div>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="natureza" required="1"/>
+                            <field name="partner_id" required="1" options="{'no_open': True}"/>
+                            <field name="name" required="1"/>
+                            <field name="opag_imediata"/>
+                        </group>
+                        <group>
+                            <field name="perc"
+                                   attrs="{'readonly':[('montante_fix','!=',0)]}"/>
+                            <field name="montante_min"
+                                     attrs="{'readonly':[('montante_fix','!=',0)]}"/>
+                            <field name="montante_max"
+                                    attrs="{'readonly':[('montante_fix','!=',0)]}"/>
+                            <field name="montante_fix"
+                                    attrs="{'readonly':[('perc','!=',0)]}"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window"  id="action_sncp_despesa_descontos_retencoes_view" >
+            <field name="name">Descontos e Retenções</field>
+            <field name="res_model">sncp.despesa.descontos.retencoes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem name="Descontos e Retenções" parent="menu_despesa_dados_gerais"
+                  id="menu_sncp_despesa_descontos_retencoes_view"
+                  action="action_sncp_despesa_descontos_retencoes_view" sequence="50"/>
+
+    </data>
+</openerp>

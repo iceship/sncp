@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Caixas-->
+        <record id="view_sncp_tesouraria_caixas_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.caixas.tree</field>
+            <field name="model">sncp.tesouraria.caixas</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Caixas">
+                    <field name="codigo"/>
+                    <field name="name"/>
+                    <field name="conta_id"/>
+                    <field name="diario_id"/>
+                    <field name="saldo"/>
+                    <button name="unlink" string="Apagar" type="object" icon="gtk-cancel"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_tesouraria_caixas_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.caixas.form</field>
+            <field name="model">sncp.tesouraria.caixas</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Caixas" version="7.0" create="false" delete="false">
+                    <group>
+                        <group>
+                            <field name="codigo" required="1" on_change="on_change_codigo(codigo)"/>
+                            <field name="name" required="1"/>
+                            <field name="conta_id" required="1" options="{'no_open': True}"/>
+                            <field name="diario_id" required="1" options="{'no_open': True}"/>
+                            <field name="saldo" readonly="1"/>
+                        </group>
+                        <group/>
+                    </group>
+
+                    <notebook>
+                        <page>
+                            <field name="caixa_user" nolabel="1" widget="one2many_list">
+                                <tree editable="top">
+                                    <field name="name" required="1" options="{'no_open': True}"/>
+                                    <field name="default"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_caixas_view">
+            <field name="name">Caixas</field>
+            <field name="res_model">sncp.tesouraria.caixas</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Configurações" parent="menu_tesouraria" id="menu_tesouraria_config" sequence="70"/>
+            <menuitem name="Caixas" parent="menu_tesouraria_config"
+                      id="menu_sncp_tesouraria_caixas_view"
+                      action="action_sncp_tesouraria_caixas_view" sequence="10"/>
+
+        <!-- Contas Bancárias-->
+        <record id="view_sncp_tesouraria_contas_bancarias_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.contas.bancarias.tree</field>
+            <field name="model">sncp.tesouraria.contas.bancarias</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Contas Bancarias" delete="false">
+                    <field name="state" invisible="1"/>
+                    <field name="codigo"/>
+                    <field name="name"/>
+                    <field name="conta"/>
+                    <field name="moeda_id"/>
+                    <button name="unlink" string="Apagar" states="blq,enc" type="object" icon="gtk-cancel"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_tesouraria_contas_bancarias_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.contas.bancarias.form</field>
+            <field name="model">sncp.tesouraria.contas.bancarias</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Contas Bancarias" version="7.0" create="false" delete="false">
+                        <header>
+                            <div class="oe_inline">
+                            <button name="conta_bancaria_ativa" type="object" string="Ativar"
+                                   states="blq" class="oe_highlight"/>
+                            <button string="Bloquear" type="object" name="conta_bancaria_bloqueada"
+                                   states="act" class="oe_highlight"/>
+                            <button name="conta_bancaria_encerrada" type="object" string="Encerrar"
+                                    states="act,blq" class="oe_highlight"/>
+
+                        </div>
+                            <field name="state" widget="statusbar" nolabel="1" readonly="1"/>
+                        </header>
+                        <!-- ___________________________CONTAS____________________________________-->
+                        <group>
+                            <group>
+                                <field name="codigo" required="1" on_change="on_change_codigo(codigo)"
+                                       attrs="{'readonly':[('state', 'in', ['blq','enc'])]}"/>
+                                <field name="name" required="1"
+                                       attrs="{'readonly':[('state', 'in', ['blq','enc'])]}"/>
+                                <field name="diario_id"  required="1" options="{'no_open': True}"
+                                       attrs="{'readonly':[('state', 'in', ['blq','enc'])]}"/>
+                                <field name="conta_id" required="1" options="{'no_open': True}"
+                                       attrs="{'readonly':[('state', 'in', ['blq','enc'])]}"/>
+                                <field name="swift" required="1" on_change="on_change_swift(swift)"
+                                       attrs="{'readonly':[('state', 'in', ['blq','enc'])]}"/>
+                                <button name="serie" string="Serie" type="object"
+                                    attrs="{'invisible':[('state', 'in', ['blq','enc'])]}"/>
+
+                            </group>
+                            <group>
+                                <field name="conta" required="1"
+                                       attrs="{'readonly':[('state', 'in', ['blq','enc'])]}"/>
+                                <field name="iban" required="1"
+                                       attrs="{'readonly':[('state', 'in', ['blq','enc'])]}"/>
+                                <field name="tipo" required="1" attrs="{'readonly':[('state', 'in', ['blq','enc'])]}"/>
+                                <field name="moeda_id" class="oe_inline" required="1" options="{'no_open': True}"
+                                       attrs="{'readonly':[('state', 'in', ['blq','enc'])]}"/>
+                                <field name="saldo" readonly="1"/>
+
+                            </group>
+                        </group>
+                        <field name="series_id" nolabel="1" attrs="{'readonly':[('state', 'in', ['blq','enc'])]}">
+
+                            <tree string="Series" create="false" delete="false">
+                                <field name="name" readonly="1"/>
+                                <field name="banco_id" invisible="1"/>
+                                <field name="cheques_id" invisible="1"/>
+                                <button name="unlink" string="Apagar" type="object" icon="gtk-cancel"/>
+                            </tree>
+                            <!-- ___________________________SERIES____________________________________-->
+                            <form string="Series" version="7.0">
+                                <group>
+                                    <field name="name" readonly="1"/>
+                                    <button name="serie_de_cheques" string="Serie de cheques" type="object"
+                                            attrs="{'invisible':[('estado','in',[2])]}"/>
+                                </group>
+                                <field name="banco_id" invisible="1"/>
+                                <field name="estado" invisible="1"/>
+                                <field name="cheques_id" nolabel="1" attrs="{'readonly':[('estado','not in',[0,1])]}" >
+                                    <tree string="Cheques" create="false" delete="false">
+                                        <field name="estado" invisible="1"/>
+                                        <field name="numero" readonly="1"/>
+                                        <field name="partner_id" readonly="1" />
+                                        <field name="montante" readonly="1"/>
+                                        <field name="data_emissao" readonly="1"/>
+                                        <field name="opag_id" readonly="1"/>
+                                        <field name="data_reconcil" readonly="1"/>
+                                        <field name="state" readonly="1"/>
+                                        <button string="Danificado" type="object" name="cheque_danificado" icon="gtk-delete"
+                                                attrs="{'invisible':['|',('estado','in',[1]),('state','not in',['nutl'])]}"/>
+                                        <button string="Anulado" type="object" name="cheque_anulado" icon="gtk-cancel"
+                                                attrs="{'invisible':['|',('estado','in',[1]),('state','not in',['nutl'])]}"/>
+                                        <button string="Rejeitado" type="object" name="cheque_rejeitado" icon="stock_log"
+                                                attrs="{'invisible':['|',('estado','in',[1]),('state','not in',['nutl'])]}"/>
+                                    </tree>
+                                </field>
+                            </form>
+                        </field>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_contas_bancarias_view">
+            <field name="name">Contas Bancárias</field>
+            <field name="res_model">sncp.tesouraria.contas.bancarias</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Contas Bancárias" parent="menu_tesouraria_config"
+                  id="menu_sncp_tesouraria_contas_bancarias_view"
+                  action="action_sncp_tesouraria_contas_bancarias_view" sequence="20"/>
+
+        <!-- Fundos Maneio-->
+        <record id="view_sncp_tesouraria_fundos_maneio_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.fundos.maneio.tree</field>
+            <field name="model">sncp.tesouraria.fundos.maneio</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Fundos Maneio" editable="top">
+                    <field name="codigo"  required="1" on_change="on_change_codigo(codigo)"/>
+                    <field name="name" required="1"/>
+                    <field name="empregado_id" required="1" options="{'no_open': True}"/>
+                    <field name="conta_id" required="1" options="{'no_open': True}"/>
+                    <field name="diario_id" required="1" options="{'no_open': True}"/>
+                    <field name="ativo"/>
+                    <field name="saldo" readonly="1"/>
+                    <button name="unlink" string="Apagar" attrs="{'invisible': [('ativo','in',[True])]}"
+                            type="object" icon="gtk-cancel"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_fundos_maneio_view">
+            <field name="name">Fundos de Maneio</field>
+            <field name="res_model">sncp.tesouraria.fundos.maneio</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Fundos de Maneio" parent="menu_tesouraria_config"
+                  id="menu_sncp_tesouraria_fundos_maneio_view"
+                  action="action_sncp_tesouraria_fundos_maneio_view" sequence="30"/>
+
+        <!-- Tipos movimento-->
+        <record id="view_sncp_tesouraria_tipo_mov_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.tipo.mov.tree</field>
+            <field name="model">sncp.tesouraria.tipo.mov</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Tipos de movimento" editable="top">
+                    <field name="codigo"  required="1" on_change="on_change_codigo(codigo)"/>
+                    <field name="name" required="1"/>
+                    <field name="conta_id" options="{'no_open': True}"/>
+                    <field name="origem_tipo" required="1"/>
+                    <field name="destino_tipo" required="1"/>
+                    <field name="mov_interno"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_tipo_mov_view">
+            <field name="name">Tipos de Movimentos de Tesouraria</field>
+            <field name="res_model">sncp.tesouraria.tipo.mov</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Tipos de movimentos" parent="menu_tesouraria_config"
+                  id="menu_sncp_tesouraria_tipo_mov_view"
+                  action="action_sncp_tesouraria_tipo_mov_view" sequence="40"/>
+
+        <!-- Fundos de Maneio Rel-->
+        <record id="view_sncp_tesouraria_fundos_maneio_rel_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.fundos.maneio.rel.tree</field>
+            <field name="model">sncp.tesouraria.fundos.maneio.rel</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Fundos de Maneio -- Movimento de tesouraria" editable="top">
+                    <field name="name" required="1" options="{'no_open': True}"/>
+                    <field name="tipo_mov_fm" required="1"/>
+                    <field name="campo" readonly="1"/><field name="campo" readonly="1"/>
+                    <field name="campo" readonly="1"/><field name="campo" readonly="1"/>
+                    <field name="campo" readonly="1"/><field name="campo" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_fundos_maneio_rel_view">
+            <field name="name">Fundos de Maneio -- Movimento de tesouraria</field>
+            <field name="res_model">sncp.tesouraria.fundos.maneio.rel</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Tipos de Movimento FM" parent="menu_tesouraria_config"
+                  id="menu_sncp_tesouraria_fundos_maneio_rel_view"
+                  action="action_sncp_tesouraria_fundos_maneio_rel_view" sequence="50"/>
+
+        <!-- Mapas-->
+        <record id="view_sncp_tesouraria_config_mapas_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.config.mapas.tree</field>
+            <field name="model">sncp.tesouraria.config.mapas</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Mapas">
+                    <field name="origem"/>
+                    <field name="meio_pag_id"/>
+                    <field name="tipo_mov_id"/>
+                    <field name="name"/>
+                    <field name="natureza"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_tesouraria_config_mapas_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.config.mapas.form</field>
+            <field name="model">sncp.tesouraria.config.mapas</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Mapas" version="7.0" create="false" delete="false">
+                    <sheet>
+                        <group cols="2">
+                            <group>
+                                <field name="origem" required="1" on_change="on_change_origem(origem)"/>
+                                <field name="meio_pag_id" options="{'no_open': True}"
+                                       attrs="{'readonly': [('origem', 'in', ['movtes'])],
+                                               'required': [('origem', 'not in', ['movtes'])] }"/>
+                                <field name="tipo_mov_id" options="{'no_open': True}"
+                                       attrs="{'readonly': [('origem', 'in', ['recpag'])],
+                                               'required': [('origem', 'not in', ['recpag'])] }"/>
+                            </group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="natureza" required="1"/>
+                                <field name="meio" required="1"/>
+                                <field name="coluna" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_config_mapas_view">
+            <field name="name">Configuração de Mapas</field>
+            <field name="res_model">sncp.tesouraria.config.mapas</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Mapas" parent="menu_tesouraria_config"
+                  id="menu_sncp_tesouraria_config_mapas_view"
+                  action="action_sncp_tesouraria_config_mapas_view" sequence="60"/>
+
+        <!--Contas OTS-->
+        <record id="view_sncp_tesouraria_contas_ots_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.contas.ots.tree</field>
+            <field name="model">sncp.tesouraria.contas.ots</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Contas Op. Tes." editable="top">
+                    <field name="conta_id" required="1" options="{'no_open': True}" on_change="on_change_conta(conta_id)"/>
+                    <field name="name"/>
+                    <field name="destaque"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_contas_ots_view">
+            <field name="name">Contas de Operação de Tesouraria</field>
+            <field name="res_model">sncp.tesouraria.contas.ots</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_sncp_tesouraria_contas_ots_tree"/>
+        </record>
+            <record id="action_sncp_tesouraria_contas_ots_view1" model="ir.actions.act_window.view">
+              <field eval="1" name="sequence"/>
+              <field name="view_mode">tree</field>
+              <field name="view_id" ref="view_sncp_tesouraria_contas_ots_tree"/>
+              <field name="act_window_id" ref="action_sncp_tesouraria_contas_ots_view"/>
+            </record>
+         <menuitem name="Contas OTS" parent="menu_tesouraria_config"
+                   id="menu_sncp_tesouraria_contas_ots_view"
+                   action="action_sncp_tesouraria_contas_ots_view" sequence="70"/>
+
+    </data>
+</openerp>

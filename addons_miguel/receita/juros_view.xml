@@ -1,0 +1,92 @@
+<openerp>
+    <data>
+
+        <!-- Juros -->
+        <record id="view_sncp_receita_juros_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.juros.tree</field>
+            <field name="model">sncp.receita.juros</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Juros">
+                    <field name="name"/>
+                    <field name="descricao"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_juros_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.juros.form</field>
+            <field name="model">sncp.receita.juros</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <!-- ______________________VISTA JUROS_________________________________-->
+                <form string="Juros" version="7.0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="id" invisible="1"/>
+                                <field name="name" required="1"/>
+                                <field name="descricao"/>
+                                <field name="periodo" required="1"/>
+                                <field name="item_id" required="1" options="{'no_open': True}"/>
+                            </group>
+                            <group>
+                                <field name="ignora" />
+                                <field name="aviso"/>
+                                <field name="mensagem" attrs="{'invisible': [('aviso','=',False)],
+                                                               'required':  [('aviso','=',True)] }"/>
+                                <field name="contagem" required="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group style="width: 600px;">
+                                <field name="periodo_id" nolabel="1">
+                                    <tree create="false" delete="false" string="Periodos">
+                                        <field name="name"/>
+                                        <field name="data_ini"/>
+                                        <field name="data_fim"/>
+                                    </tree>
+                                    <!-- ______________________VISTA JUROS PERIODOS__________________________-->
+                                    <form string="Periodos" version="7.0">
+                                        <group>
+                                            <field name="name" readonly="1"/>
+                                            <field name="data_ini" on_change="atualiza_data_final(parent.id, name, data_ini)"
+                                                    class="oe_inline" required="1"/>
+                                            <field name="data_fim" readonly="1"
+                                                   class="oe_inline"/>
+                                        </group>
+                                        <field name="linha_id">
+                                            <tree editable="top">
+                                                <field name="name" required="1"/>
+                                                <field name="taxa_perc" required="1"/>
+                                                <field name="taxa_tipo" required="1"/>
+                                                <field name="substitui"/>
+                                            </tree>
+                                        </field>
+                                    </form>
+                                </field>
+                            </group>
+                            <group  class="my_middle_button" >
+
+                                    <button string="Criar Novo Periodo" name="criar_novo"
+                                            type="object"/>
+
+                            </group>
+                        </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_juros_view">
+            <field name="name">Juros</field>
+            <field name="res_model">sncp.receita.juros</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Dados Gerais"  parent="menu_receita" id="menu_receita_dados_gerais"
+                      sequence="60"/>
+            <menuitem name="Juros" parent="menu_receita_dados_gerais" id="menu_sncp_receita_juros_view"
+                          action="action_sncp_receita_juros_view" sequence="20"/>
+    </data>
+</openerp>

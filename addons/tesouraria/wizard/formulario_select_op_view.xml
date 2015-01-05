@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record id="formulario_select_op_view" model="ir.ui.view">
+            <field name="model">formulario.sncp.tesouraria.movim.fm</field>
+            <field name="arch" type="xml">
+                <form string="Seleciona as OP pretendidas" version="7.0">
+                    <field name="op_ids">
+                        <tree create="false" delete="false" editable="true">
+
+                            <field name="selec"/>
+                            <field name="name" readonly="1"/>
+                            <field name="data" readonly="1"/>
+                            <field name="partner_name" readonly="1"/>
+                            <field name="montante" readonly="1"/>
+
+
+                        </tree>
+                    </field>
+                    <footer>
+                        <div align="left" style="width:500px">
+                            <button name="end" type="object" string="Continuar" />
+                            <button name="descartar" type="object" string="Descartar"/>
+                        </div>
+                    </footer>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

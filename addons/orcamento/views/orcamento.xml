@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3:
+-->
+<openerp>
+    <data>
+        <template id="assets_backend" name="orcamento assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/orcamento/static/src/css/oe_display.css"/>
+                <link rel="stylesheet" href="/orcamento/static/src/css/orcamento_historico_pesquisa.css"/>
+                <link rel="stylesheet" href="/orcamento/static/src/css/orcamento_acumulados_pesquisa.css"/>
+                <script type="text/javascript" src="/orcamento/static/src/js/orcamento_historico_pesquisa.js"></script>
+                <script type="text/javascript" src="/orcamento/static/src/js/orcamento_acumulados_pesquisa.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

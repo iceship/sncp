@@ -1,0 +1,38 @@
+@charset "utf-8";
+.openerp .my_oe_red{
+ color: #ff0000;
+}
+[data-id="codigo_120"] {
+    width: 120px;
+}
+[data-id="ano"]{
+    width: 20px;
+}
+[data-id="cabimento_id"]{
+    width: 150px;
+}
+[data-id="data"]{
+    width: 130px;
+}
+.openerp .my_oe_r_space_50{
+ margin-right: 50px;
+}
+.openerp .my_oe_r_space_20{
+ margin-right: 20px;
+}
+.openerp .my_oe_total{
+    font-size: 18px;
+    float: right;
+}
+[data-id="total_fatura"]{
+    width: 120px;
+    padding-right: 20px;
+}
+
+.openerp .oe_dashboard_links{
+    display: none !important;
+}
+
+.openerp .oe_action .oe_icon{
+    display: none !important;
+}

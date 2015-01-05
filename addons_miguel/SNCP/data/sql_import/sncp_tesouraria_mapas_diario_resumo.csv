@@ -1,0 +1,12 @@
+id,mapa_id/id,cap,art,num,codigo,desc,conta,saldo_ant,entrada,saida
+1,1,01Disp,01cx,0101num,,,,4537,8960,3785
+2,1,01Disp,01cx,0102chq,,,,8090,3554,9879
+3,1,01Disp,02fm,,F01,F01 - Divisão de Aprovisionamento,,3247,4357,3547
+4,1,01Disp,02fm,,F02,F02 - Gabinete de Presidência,,3425,5678,8945
+5,1,01Disp,02fm,,F03,F03 - Departamento da Cultura,,4534,4723,5346
+6,1,01Disp,02fm,,F04,F04 - Comissão das Comemorações,,6345,2346,3780
+7,1,01Disp,03bn,0301ord,BES01,BES01 - Banco Espírito Santo,0070000039287156723,2338,4536,4762
+8,1,01Disp,03bn,0302prz,BES02,BES02 - Banco Espírito Santo,0070000058469134510,4354,4567,8921
+9,1,01Disp,04at,0401tit,BCP01,BCP01 - Obrigações de caixa BCP 36,,4768,7869,4560
+10,1,01Disp,04at,0402out,,Obrigações do tesouro 12M,,4677,7685,2356
+11,1,02Docs,,,,Documentos,,3564,8978,5470

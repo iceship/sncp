@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+
+        <!-- Propostas -->
+        <record id="view_sncp_despesa_pagamentos_proposta_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.pagamentos.proposta.tree</field>
+            <field name="model">sncp.despesa.pagamentos.proposta</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Propostas de Pagamento"  edit="false" create="true" delete="false">
+                    <field name="name"/>
+                    <field name="data"/>
+                    <field name="res_partner_id"/>
+                    <field name="total_pagar"/>
+                    <field name="state"/>
+                    <button name="unlink" string="Apagar" states="draft" type="object" icon="gtk-cancel"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_despesa_pagamentos_proposta_form" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.pagamentos.proposta.form</field>
+            <field name="model">sncp.despesa.pagamentos.proposta</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+               <form string="Propostas de Pagamento" version="7.0" create="false" delete="false">
+                    <sheet>
+                    <header>
+                        <div class="oe_inline">
+                            <button string="Impressa/Enviada" name="proposta_imp_env" type="object"
+                                    attrs="{'invisible': ['|',('estado','=', 0), ('state', 'not in', ['draft'])]}"/>
+
+                        </div>
+                        <field name='state' widget='statusbar' nolabel="1"/>
+                    </header>
+                    <!--________________________________PROPOSTA_________________________________ -->
+                    <group colspan="4" cols="2">
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="data" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                        </group>
+                        <group>
+                            <field name="aprov_data" readonly="1" attrs="{'invisible': [('state', 'in', ['draft', 'impr'])]}"/>
+                            <field name="aprov_user" readonly="1" attrs="{'invisible': [('state', 'in', ['draft', 'impr'])]}"/>
+                        </group>
+                    </group>
+
+                    <label for="todas"/>
+                        <field name="todas"  class="oe_inline my_oe_r_space_50"
+                               attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                    <label for="montante_max" attrs="{'invisible': [('todas', 'in', [True])]}"/>
+                        <field name="montante_max" class="oe_inline my_oe_r_space_50"
+                               attrs="{'invisible': [('todas', 'in', [True])],'readonly':[('state', 'in', ['aprov', 'rejeit'])]}"/>
+                    <label for="vencimento" attrs="{'invisible': [('todas', 'in', [True])]}"/>
+                        <field name="vencimento" class="oe_inline my_oe_r_space_50"
+                               attrs="{'invisible': [('todas', 'in', [True])],'readonly':[('state', 'in', ['aprov', 'rejeit'])]}"/>
+                    <separator/>
+                    <newline/>
+                    <label for="res_partner_id"/>
+                        <field name="res_partner_id" class="oe_inline my_oe_r_space_50" options="{'no_open': True}"
+                               attrs="{'readonly': [('state', 'not in', ['draft'])]}" required="1"/>
+                    <label for="criterio"/>
+                        <field name="criterio" required="1"
+                               class="oe_inline my_oe_r_space_50"
+                               attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                    <separator/>
+                        <field name="estado" invisible="1"/>
+                        <field name="id" invisible="1"/>
+
+                    <!--________________________________BOTOES_________________________________ -->
+                    <button name="criar_linhas_proposta" type="object" string="Processar"
+                            attrs="{'invisible': [('estado','=',1)]}"/>
+                    <button name="criar_linhas_manual" type="object" string="Adicionar Linhas Manualmente"
+                            attrs="{'invisible': [('state','not in', ['draft'])]}"/>
+
+                    <!--________________________________LINHAS_________________________________ -->
+                    <field name="total_pagar" invisible="1"/>
+                    <field name="proposta_linha_id" version="7.0" nolabel="1"
+                            attrs="{'readonly':[('state','in',['aprov','rejeit'])]}">
+                        <tree create="false" editable="true">
+
+                            <field name="manual" invisible="1"/>
+
+                            <field name="name" readonly="1"/>
+                            <field name="invoice_id" options="{'no_open': True}"
+                                   attrs="{'readonly': [('manual', '=', 0)] }"
+                                   on_change="on_change_invoice_id(invoice_id,
+                                                                   parent.id,
+                                                                   parent.total_pagar)"/>
+                            <field name="supplier_invoice_number" readonly="1"/>
+                            <field name="vencimento" readonly="1"/>
+                            <field name="maturidade" readonly="1"/>
+                            <field name="montante_orig" readonly="1"/>
+                            <field name="montante_res" readonly="1"/>
+                            <field name="montante_pag"/>
+                        </tree>
+                    </field>
+
+                    <div class="my_oe_total">
+                        <label for="total_pagar"/>
+                        <field name="total_pagar" readonly="1" class="oe_inline"/>
+                        <p>€</p>
+                    </div>
+                    <separator/>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_despesa_pagamentos_proposta_view">
+            <field name="name">Propostas de Pagamento</field>
+            <field name="res_model">sncp.despesa.pagamentos.proposta</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sncp_despesa_pagamentos_proposta_tree"/>
+        </record>
+            <record id="action_sncp_despesa_pagamentos_proposta_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_despesa_pagamentos_proposta_tree"/>
+                <field name="act_window_id" ref="action_sncp_despesa_pagamentos_proposta_view"/>
+            </record>
+            <record id="action_sncp_despesa_pagamentos_proposta_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_despesa_pagamentos_proposta_form"/>
+                <field name="act_window_id" ref="action_sncp_despesa_pagamentos_proposta_view"/>
+            </record>
+
+        <menuitem name="Pagamentos" parent="menu_despesa" id="menu_despesa_pagamentos"  sequence="70"/>
+            <menuitem name="Propostas" parent="menu_despesa_pagamentos" id="menu_sncp_despesa_pagamentos_proposta_view"
+                          action="action_sncp_despesa_pagamentos_proposta_view" sequence="10"/>
+
+        <!-- Aprovar Proposta-->
+        <record id="view_sncp_despesa_pagamentos_proposta_aprovar_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.pagamentos.proposta.aprovar.tree</field>
+            <field name="model">sncp.despesa.pagamentos.proposta</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Propostas para Aprovar" create="false" delete="false" edit="true">
+                    <field name="name" readonly="1"/>
+                    <field name="data" readonly="1"/>
+                    <field name="res_partner_id" readonly="1"/>
+                    <field name="total_pagar" readonly="1"/>
+                    <field name="state" readonly="1"/>
+                    <button string="Ver Linhas" type="object" name="ver_linhas" icon="gtk-justify-fill"/>
+                    <button string="Aprovar" type="object" name="proposta_aprov" icon="gtk-apply"/>
+                    <button string="Rejeitar" type="object" name="proposta_rejeit" icon="gtk-cancel"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_despesa_pagamentos_proposta_aprovar_view">
+            <field name="name">Propostas para Aprovar</field>
+            <field name="res_model">sncp.despesa.pagamentos.proposta</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_sncp_despesa_pagamentos_proposta_aprovar_tree"/>
+            <field name="domain">[('state', '=', 'impr')]</field>
+        </record>
+            <record id="action_sncp_despesa_pagamentos_proposta_aprovar_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_despesa_pagamentos_proposta_aprovar_tree"/>
+                <field name="act_window_id" ref="action_sncp_despesa_pagamentos_proposta_aprovar_view"/>
+            </record>
+        <menuitem name="Aprovar Propostas" parent="menu_despesa_pagamentos"
+                  id="menu_sncp_despesa_pagamentos_proposta_aprovar_view"
+                  action="action_sncp_despesa_pagamentos_proposta_aprovar_view" sequence="20"/>
+
+        <!-- Pagamentos Proposta Linhas-->
+        <record id="view_sncp_despesa_pagamentos_proposta_linha_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.pagamentos.proposta.linha.tree</field>
+            <field name="model">sncp.despesa.pagamentos.proposta.linha</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <tree string="1">
+                    <field name="id" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="supplier_invoice_number"/>
+                    <field name="vencimento"/>
+                    <field name="montante_orig"/>
+                    <field name="montante_res"/>
+                    <field name="montante_pag"/>
+                </tree>
+
+            </field>
+        </record>
+
+        <!-- Propostas Aprovadas-->
+        <record id="view_sncp_despesa_pagamentos_proposta_aprovada_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.pagamentos.proposta.aprovada.tree</field>
+            <field name="model">sncp.despesa.pagamentos.proposta</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Propostas Aprovadas" create="false" delete="false" edit="true">
+                    <field name="name" readonly="1"/>
+                    <field name="data" readonly="1"/>
+                    <field name="res_partner_id" readonly="1"/>
+                    <field name="total_pagar" readonly="1"/>
+                    <field name="state" readonly="1" invisible="1"/>
+                    <field name="gera_ordem" invisible="1"/>
+                    <button string="Ordem de Pagamento" colspan="2"
+                            type="object" name="call_order" icon="terp-dolar_ok!"
+                            attrs="{'invisible': [('gera_ordem','not in',[0])]}"/>
+
+
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_despesa_pagamentos_proposta_aprovada_view">
+            <field name="name">Propostas Aprovadas</field>
+            <field name="res_model">sncp.despesa.pagamentos.proposta</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_sncp_despesa_pagamentos_proposta_aprovada_tree"/>
+            <field name="domain">[('state', '=', 'aprov')]</field>
+        </record>
+            <record id="action_sncp_despesa_pagamentos_proposta_aprovada_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_despesa_pagamentos_proposta_aprovada_tree"/>
+                <field name="act_window_id" ref="action_sncp_despesa_pagamentos_proposta_aprovada_view"/>
+            </record>
+        <menuitem name="Propostas Aprovadas" parent="menu_despesa_pagamentos"
+                  id="menu_sncp_despesa_pagamentos_proposta_aprovada_view"
+                  action="action_sncp_despesa_pagamentos_proposta_aprovada_view" sequence="30"/>
+
+        <!--Proposta Rejeitada-->
+        <record id="view_sncp_despesa_pagamentos_proposta_rejeitada_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.pagamentos.proposta.rejeitada.tree</field>
+            <field name="model">sncp.despesa.pagamentos.proposta</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Propostas para Rejeitar" create="false" delete="false" edit="true">
+                    <field name="name" readonly="1"/>
+                    <field name="data" readonly="1"/>
+                    <field name="res_partner_id" readonly="1"/>
+                    <field name="total_pagar" readonly="1"/>
+                    <field name="aprov_user"/>
+                    <field name="aprov_data"/>
+                    <field name="state" readonly="1" invisible="1"/>
+                    <button string="Ver Linhas" type="object" name="ver_linhas" icon="gtk-justify-fill"/>
+                    <button string="Recuperar" type="object" name="proposta_recuperar" icon="STOCK_UNDO"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_despesa_pagamentos_proposta_rejeitada_view">
+            <field name="name">Propostas Rejeitadas</field>
+            <field name="res_model">sncp.despesa.pagamentos.proposta</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_sncp_despesa_pagamentos_proposta_rejeitada_tree"/>
+            <field name="domain">[('state', '=', 'rejeit')]</field>
+        </record>
+            <record id="action_sncp_despesa_pagamentos_proposta_rejeitada_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_despesa_pagamentos_proposta_rejeitada_tree"/>
+                <field name="act_window_id" ref="action_sncp_despesa_pagamentos_proposta_rejeitada_view"/>
+            </record>
+        <menuitem name="Propostas Rejeitadas" parent="menu_despesa_pagamentos"
+                  id="menu_sncp_despesa_pagamentos_proposta_rejeitada_view"
+                  action="action_sncp_despesa_pagamentos_proposta_rejeitada_view" sequence="40"/>
+
+    </data>
+</openerp>

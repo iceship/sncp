@@ -1,0 +1,13 @@
+def send_email => avisos automaticos associados aos workflows
+
+sequence implementation no_gap dont work
+
+construir meios de pagamento(Carlos)
+
+metodo de preenchimento da fatura
+
+#amount_total=self.moneyfmt(Decimal(fatura.amount_total),sep='.',dp=',')
+# (fatura.amount_total).ljust(5,u'0')
+
+# MAPAS TESOURARIA LIMPAR IDS NA MUDANÇA PARA ORIGEM DO MOVIMENTO
+# SE LINHAS DOS MAPAS DIARIOS RESUMOS VAZIOS ENTÃO NÃO IMPRIMIR

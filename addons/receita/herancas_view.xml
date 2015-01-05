@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <!--  Herança de Codigos de contabilização -->
+		<record model="ir.ui.view" id="view_sncp_receita_codigos_contab_add_met_juros_form">
+		      <field name="name">view.sncp.receita.codigos.contab.add.met.juros.form</field>
+		      <field name="model">sncp.comum.codigos.contab</field>
+		      <field name="inherit_id" ref="comum.view_sncp_comum_codigos_contab_form"/>
+		      <field name="arch" type="xml">
+		          <data>
+		              <xpath expr="//field[@name='cond_pag_id']" position="after">
+
+                      <field name="met_juros_id" options="{'no_open': True}"
+                              attrs="{'invisible': [('natureza', 'in', ['des'])]}"/>
+		              </xpath>
+		          </data>
+		      </field>
+		  </record>
+
+    </data>
+</openerp>

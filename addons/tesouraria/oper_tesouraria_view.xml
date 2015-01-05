@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Criar Guia de Operações de Tesouraria-->
+        <record id="view_sncp_tesouraria_op_tes_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.op.tes.form</field>
+            <field name="model">sncp.receita.op.tes</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Guia de Operações de Tesouraria" version="7.0" create="false" delete="false" >
+
+                    <group>
+                        <field name="partner_id" required="1" options="{'no_open': True}"
+                               class="oe_inline my_oe_r_space_20"/>
+                        <field name="department_id" required="1" options="{'no_open': True}"
+                               class="oe_inline my_oe_r_space_20"/>
+                        <field name="data" required="1" class="oe_inline my_oe_r_space_20"/>
+                    </group>
+
+                    <!--  Campos invisíveis -->
+                    <field name="name" invisible="1"/>
+                    <field name="ordem" invisible="1"/>
+                    <field name="estado" invisible="1"/>
+                    <!--  Campo  de controlo -->
+
+                    <button name="preenche_linhas" type="object" string="Preencher Linhas"
+                            attrs="{'invisible': [('estado','not in',[0])]}"/>
+                    <button name="continuar" type="object" string="Prosseguir"
+                            attrs="{'invisible': [('estado','not in',[1])]}"/>
+                    <button name="criar_guia_receita" type="object" string="Criar Guia de Receita"
+                            attrs="{'invisible': [('estado','not in',[2])]}"/>
+
+                    <notebook colspan="4">
+                        <page>
+                            <field name="op_tes_linhas_id" attrs="{'invisible': [('estado','in',[0])]}">
+                                <tree editable="top">
+                                    <field name="name" readonly="1"/>
+                                    <field name="cod_contab_id" options="{'no_open': True}"
+                                           domain="[('natureza','in',['ots'])]" required="1"
+                                           on_change="on_change_cod_contab(cod_contab_id)"/>
+                                    <field name="desc"/>
+                                    <field name="montante" required="1" on_change="on_change_montante(montante,tax_rate)"/>
+                                    <field name="tax_rate" readonly="1"/>
+                                    <field name="montante_tax" readonly="1"/>
+                                    <field name="obsv"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_op_tes_view">
+            <field name="name">Criar Guia de Operações de Tesouraria</field>
+            <field name="res_model">sncp.receita.op.tes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record id="view_sncp_tesouraria_op_tes_board" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.op.tes.board</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Criar Guia de Operações de Tesouraria" version="7.0">
+                    <board style="1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_tesouraria_op_tes_view)d"  readonly="1"
+                                    string="Criar Guia de Operações de Tesouraria"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_tesouraria_op_tes_board" model="ir.actions.act_window">
+            <field name="name">Criar Guia de Receita OT</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_tesouraria_op_tes_board"/>
+        </record>
+        <menuitem name="Operações de Tesouraria" parent="menu_tesouraria" id="menu_tesouraria_op_tes"
+                      sequence="30"/>
+        <menuitem name="Criar Guia de Operações de Tesouraria" parent="menu_tesouraria_op_tes"
+                          id="menu_sncp_tesouraria_op_tes_board"
+                          action="action_sncp_tesouraria_op_tes_board" sequence="10"/>
+
+        <!-- Ordens de Pagamento OTS-->
+        <record id="view_sncp_tesouraria_ordem_pagamento_ot_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.ordem.pagamento.ot.form</field>
+            <field name="model">sncp.tesouraria.ordem.pagamento.ot</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Gerar Ordem de Pagamento OT" version="7.0" create="false" delete="false">
+                    <group>
+                        <field name="partner_ref"  options="{'no_open': True}"
+                               on_change="on_change_partner(partner_ref)"
+                               required="1" class="oe_inline my_oe_r_space_20"/>
+                        <field name="conta_id"  options="{'no_open': True}"
+                               required="1" class="oe_inline my_oe_r_space_20"/>
+                        <field name="meio_pag_id" options="{'no_open': True}"
+                               required="1" class="oe_inline my_oe_r_space_20"/>
+                        <field name="data_ini" required="1"/>
+                        <field name="data_fim" required="1"/>
+                    </group>
+                    <!-- Campo de controlo -->
+                    <field name="estado" invisible="1"/>
+
+                    <button name="calcula_valor" type="object" string="Calcular Valor"
+                            attrs="{'invisible': [('estado','not in',[1])]}"/>
+                    <button name="criar_ordem_pagamento_ot" type="object" string="Criar Ordem de Pagamento OT"
+                            attrs="{'invisible': [('estado','not in',[2])]}"/>
+                    <group>
+                        <field name="resultado" required="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_ordem_pagamento_ot_view">
+            <field name="name">Gerar Ordem de Pagamento OT</field>
+            <field name="res_model">sncp.tesouraria.ordem.pagamento.ot</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record id="view_sncp_tesouraria_ordem_pagamento_ot_board" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.ordem.pagamento.ot.board</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Gerar Ordem de Pagamento OT" version="7.0">
+                    <board style="2-1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_tesouraria_ordem_pagamento_ot_view)d"  readonly="1"
+                                    string="Gerar Ordem de Pagamento OT"/>
+                        </column>
+
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_tesouraria_ordem_pagamento_ot_board" model="ir.actions.act_window">
+            <field name="name">Gerar Ordem de Pagamento OT</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_tesouraria_ordem_pagamento_ot_board"/>
+        </record>
+        <menuitem name="Gerar Ordem de Pagamento OT" id="menu_sncp_tesouraria_ordem_pagamento_ot_board"
+                          sequence="20" parent="menu_tesouraria_op_tes"
+                          action="action_sncp_tesouraria_ordem_pagamento_ot_board"/>
+
+        <!-- Conta corrente OTS-->
+        <record id="view_sncp_tesouraria_conta_corrente_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.conta.corrente.form</field>
+            <field name="model">sncp.tesouraria.conta.corrente</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Conta Corrente de Operações de Tesouraria" version="7.0" create="false" delete="false">
+
+                    <!-- CAMPOS DE CONTROLO-->
+                    <field name="estado" invisible="1"/>
+                    <!-- ___END___-->
+
+                    <group>
+                        <group>
+                            <field name="name" invisible="1"/>
+                            <field name="partner_ref" required="1"
+                                   on_change="on_change_partner(partner_ref)"/>
+                            <field name="conta_id" required="1" options="{'no_open': True}"/>
+                            <field name="data_ini" required="1"/>
+                            <field name="data_fim" required="1"/>
+                        </group>
+                        <group >
+
+                            <button name="criar_linhas" string="Ver Extrato" type="object"/>
+
+                            <button name="imprimir" string="Imprimir" type="object"/>
+
+                        </group>
+                    </group>
+                    <field name="linhas_ids" >
+                        <tree create="false" edit="false" delete="false">
+                            <field name="conta_corr_id" invisible="1"/>
+                            <field name="data"/>
+                            <field name="name"/>
+                            <field name="debito"/>
+                            <field name="credito"/>
+                            <field name="saldo"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_conta_corrente_view">
+            <field name="name">Conta Corrente de Operações de Tesouraria</field>
+            <field name="res_model">sncp.tesouraria.conta.corrente</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sncp_tesouraria_conta_corrente_form"/>
+        </record>
+        <record id="view_sncp_tesouraria_conta_corrente_board" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.conta.corrente.board</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Conta Corrente de Operações de Tesouraria" version="7.0">
+                    <board style="1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_tesouraria_conta_corrente_view)d"  readonly="1"
+                                    string="Conta Corrente de Operações de Tesouraria"/>
+                        </column>
+
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_tesouraria_conta_corrente_board" model="ir.actions.act_window">
+            <field name="name">Conta Corrente de Operações de Tesouraria</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_tesouraria_conta_corrente_board"/>
+        </record>
+        <menuitem name="Conta Corrente de Operações de Tesouraria" parent="menu_tesouraria_op_tes"
+                                  id="menu_sncp_tesouraria_conta_corrente_board"
+                                  action="action_sncp_tesouraria_conta_corrente_board" sequence="30"/>
+
+        <!--Mapas OTS-->
+        <record id="view_sncp_tesouraria_mapa_ots_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.mapa.ots.form</field>
+            <field name="model">sncp.tesouraria.mapa.ots</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Mapa de Operações de Tesouraria" version = "7.0" create="false">
+                    <group>
+                        <group>
+                            <field name="name" on_change="on_change_ano(name)" class = "oe_inline"/>
+                        </group>
+                        <group>
+                            <button name="imprimir" string="Imprimir"
+                                    attrs="{'invisible': [('state', 'in', [0])]}" type="object"/>
+                        </group>
+                    </group>
+
+                    <field name="state" invisible="1"/>
+
+                    <field name="conta_ots_ids" attrs="{'invisible': [('state', 'in', [0])]}">
+                        <tree create="false" edit="false" delete="false">
+                            <field name="codigo"/>
+                            <field name="name"/>
+                            <field name="debito_ant" sum="Total Debit Ant"/>
+                            <field name="credito_ant" sum="Total Credit Ant"/>
+                            <field name="debito_anual" sum="Total Debit Anual"/>
+                            <field name="credito_anual" sum="Total Credit Anual"/>
+                            <field name="debito_seg" sum="Total Debit Seg"/>
+                            <field name="credito_seg" sum="Total Credit Seg"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_mapa_ots_view">
+            <field name="name">Mapa de Operações de Tesouraria</field>
+            <field name="res_model">sncp.tesouraria.mapa.ots</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','in',[0])]</field>
+            <field name="view_id" ref="view_sncp_tesouraria_mapa_ots_form"/>
+        </record>
+            <record id="view_sncp_tesouraria_mapa_ots_board" model="ir.ui.view">
+                <field name="name">view.sncp.tesouraria.mapa.ots.board</field>
+                <field name="model">board.board</field>
+                <field name="arch" type="xml">
+                    <form string="Mapa de Operações de Tesouraria" version="7.0">
+                        <board style="1" readonly="1">
+                            <column>
+                                <action name="%(action_sncp_tesouraria_mapa_ots_view)d"  readonly="1"
+                                        string="Mapa de Operações de Tesouraria"/>
+                            </column>
+
+                        </board>
+                    </form>
+                </field>
+            </record>
+            <record id="action_sncp_tesouraria_mapa_ots_board" model="ir.actions.act_window">
+                <field name="name">Mapa de Operações de Tesouraria</field>
+                <field name="res_model">board.board</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_tesouraria_mapa_ots_board"/>
+            </record>
+        <menuitem name="Mapa de Operações de Tesouraria" parent="menu_tesouraria_op_tes"
+                          id="menu_sncp_tesouraria_mapa_ots_board"
+                          action="action_sncp_tesouraria_mapa_ots_board" sequence="40"/>
+
+    </data>
+</openerp>

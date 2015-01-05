@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="0">
+        <record model="ir.sequence.type" id="proposta_code_sequence">
+            <field name="name">type_prop_name</field>
+            <field name="code">seq_prop_code</field>
+        </record>
+        <record model="ir.sequence" id="proposta_sequence">
+            <field name="name">seq_prop_name</field>
+            <field name="code">seq_prop_code</field>
+            <field name="active">TRUE</field>
+            <field name="number_increment">1</field>
+            <field name="number_next">1</field>
+            <field name="implementation">standard</field>
+        </record>
+    </data>
+</openerp>

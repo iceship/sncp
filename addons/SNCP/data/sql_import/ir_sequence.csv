@@ -1,0 +1,24 @@
+id,number_next,number_increment,implementation,company_id/id,padding,active,prefix,name
+36,1,1,no_gap,1,6,TRUE,VND%(y)s,Diário de Vendas
+37,1,1,no_gap,1,6,TRUE,CMP%(y)s,Diário de Compra
+38,1,1,no_gap,1,6,TRUE,NCV%(y)s,Diário de notas de crédito de vendas
+39,1,1,no_gap,1,6,TRUE,DVC%(y)s,Diário de retorno de compras
+40,1,1,no_gap,1,6,TRUE,DIV%(y)s,Diário Diverso
+41,1,1,no_gap,1,6,TRUE,CX0%(y)s,Caixa
+42,1,1,no_gap,1,6,TRUE,ABE%(y)s,Diário de Abertura
+43,1,1,no_gap,1,6,TRUE,CAB%(y)s,Cabimentos
+44,1,1,no_gap,1,6,TRUE,ORC%(y)s,Orçamentos
+45,1,1,no_gap,1,6,TRUE,COM%(y)s,Compromissos
+46,1,1,no_gap,1,6,TRUE,LIQ%(y)s,Liquidações da despesa
+47,1,1,no_gap,1,6,TRUE,PAG%(y)s,Pagamentos
+48,1,1,no_gap,1,6,TRUE,GRC%(y)s,Guias de Receita
+49,1,1,no_gap,1,6,TRUE,REC%(y)s,Recebimentos
+50,1,1,no_gap,1,6,TRUE,OTS%(y)s,Operações de Tesouraria
+51,1,1,no_gap,1,6,TRUE,FMN%(y)s,Fundos de Maneio
+52,1,1,no_gap,1,6,TRUE,MCX%(y)s,Movimentos de caixa
+53,1,1,no_gap,1,6,TRUE,BNC%(y)s,Banco
+54,1,1,no_gap,1,6,TRUE,COF%(y)s,Compromissos Futuros
+55,1,1,no_gap,1,6,TRUE,REQ%(y)s,Requisições Internas
+56,1,1,no_gap,1,6,TRUE,ACN%(y)s,Actos Notariais
+57,1,1,no_gap,1,6,TRUE,AQU%(y)s,Aquisições
+58,1,1,no_gap,1,6,TRUE,ALI%(y)s,Alienações

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="OrcamentoAcumuladosPesquisa">
+        <div class="ui-toolbar oe_inline text_center" style="margin-bottom:0px;">
+
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Ano:</h4>
+                <select class="oe_orcamento_acumulados_select_ano"/>
+            </div>
+
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Categoria :</h4>
+                <select class="oe_orcamento_acumulados_select_categoria"/>
+            </div>
+
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Orgânica:</h4>
+                <select class="oe_orcamento_acumulados_select_organica"/>
+            </div>
+
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Económica:</h4>
+
+                <input type="text" id="realtxt" class="realtxt"/>
+                <select class="oe_orcamento_acumulados_select_economica"
+                        id="oe_orcamento_acumulados_select_economica"/>
+            </div>
+
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50 ui-widget">
+                <h4>Funcional:</h4>
+                <select class="oe_orcamento_acumulados_select_funcional"/>
+            </div>
+
+        </div>
+
+    </t>
+
+</templates>

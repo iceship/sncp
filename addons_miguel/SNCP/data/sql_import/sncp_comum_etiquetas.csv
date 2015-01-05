@@ -1,0 +1,21 @@
+id,path,descr,name,model_id/id
+1,"partner_id.title.name","Titulo do Parceiro de Negócios","PNTITL",
+2,"partner_id.name","Nome do Parceiro de Negócios","PNNOME",
+3,"partner_id.street","Morada do Parceiro de Negócios","PNMORA",
+4,"partner_id.street2","Morada do Parceiro de Negócios","PNMOR2",
+5,"partner_id.zip","Código Postal do Parceiro de Negócios","PNCODP",
+6,"partner_id.city","Localidade do Parceiro de Negócios","PNLOCA",
+7,"partner_id.vat","Identificação fiscal do Parceiro de Negócios","PNNIFX",
+8,"arruamento_id.name","Arruamento da Licença","LCARRU",461
+9,"cod_contab_id.item_id.name","Descrição do Ítem","LCITEM",457
+10,"numero","Numero de Polícia da Licença","LCNPOL",461
+11,"andar","Andar da Licença","LCANDA",461
+12,"bairro_id.name","Bairro da Licença","LCBAIR",451
+13,"freguesia_id.name","Freguesia da Licença","LCFREG",461
+14,"zona_id.name","Zona de Venda Ambulante","LCZONA",458
+15,"mercado_id.name","Mercado/Feira","LCMERC",459
+16,"finalidade_id.name","Finalidade","LCFINA",460
+17,"num_itens","Número de Lugares","LCNLUG",461
+18,"name","Número de Série","LCSERI",461
+19,"notas","Notas","LCNOTA",461
+20,"fim","Expira em","LCEXPI",461

@@ -1,0 +1,1 @@
+﻿SELECT atualiza_print_orcamento()

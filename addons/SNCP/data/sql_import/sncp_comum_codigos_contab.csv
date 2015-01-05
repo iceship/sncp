@@ -1,0 +1,782 @@
+id,natureza,conta_id/id,economica_id/id,name,item_id/id,cond_pag_id/id,met_juros_id/id,code
+1,rec,2363,606,Art.1º Tabela Geral - Fotocópias,2,1,,101010
+2,rec,2364,433,Art.1º Tabela Geral - Concessão documentos,3,1,,101020
+3,rec,2364,433,Art.1º Tabela Geral - Certidões diversas,4,1,,101030
+4,rec,2365,606,Art nº6 Cap I Tabela Geral-Serviço digitalização,5,1,,101040
+5,rec,2362,605,"T.T.O.R.M SECÇÃOII,ARTº 2Nº1 ALINEA a) Cartografia",6,1,,101050
+6,rec,2362,605,"T.T.O.R.M SECÇÃOII, ARTº2 Nº1 ALINEA a)Cartografia",7,1,,101060
+7,rec,2362,605,"T.T.O.R.M SECÇÃOII,ARTº2Nº2 ALINEA a)Inf.Geográfic",8,1,,101070
+8,rec,2361,605,"T.T.O.R.M SECÇÃOII,ARTº 2Nº2 ALINEA a)Ortofotomapa",9,1,,101080
+9,rec,2362,605,"T.T.O.R.M SECÇÃOII,ARTº 2Nº2 ALINEAb)Planta Antiga",10,1,,101090
+10,rec,2362,605,"T.T.O.R.M.SECÇÃOII,ART.º2Nº2ALINEAc)Imagens",11,1,,101100
+11,rec,2362,605,"T.T.O.R.M.SECÇÃOII,ART.º2Nº3ALINEAa)Impressões A4",12,1,,101110
+12,rec,2362,605,"T.T.O.R.M.SECÇÃOII,ART.º2Nº3ALINEAb)Impressões A3",13,1,,101120
+13,rec,2362,605,"T.T.O.R.M.SECÇÃOII,ART.º2Nº3ALINEAc) Impressões A2",14,1,,101130
+14,rec,2362,605,"T.T.O.R.M.SECÇÃOII,ART.º2Nº3ALINEAd) Impressões A1",15,1,,101140
+15,rec,2362,605,"T.T.O.R.M.SECÇÃOII,ART.º2Nº3ALINEAe) Impressões A0",16,1,,101150
+16,rec,2362,605,"T.T.O.R.M.SECÇÃOII,ART.º2Nº3ALINEAe) Impressões A0",17,1,,101160
+17,rec,2362,605,"T.T.O.R.M.SECÇÃOII,ART.º2Nº4ALINEA a) PDM 1/10.000",18,1,,101170
+18,rec,2362,605,"T.T.O.R.M.SECÇÃOII,ART.º2Nº4ALINEA a) PDM 1/5.000",19,1,,101180
+19,rec,2362,605,"T.T.O.R.M.SECÇÃOII,ART.º2Nº5ALINEA a)Plantas",20,1,,101190
+20,rec,2362,605,"T.T.O.R.M.SECÇÃOII,ART.º2Nº5ALINEA b)Regulamento",21,1,,101200
+21,rec,2362,606,"T.T.O.R.M.SECÇÃOII,ART.º2 Nº6 Gravação CD",22,1,,101210
+22,rec,2427,371,Nº1 Art 3ºTabela Geral-Emissão Período Funciona/to,23,1,,101220
+23,rec,2427,371,Nº2 Art.3ºTabela Geral-Alteração horár.Funciona/to,24,1,,101230
+24,rec,2370,371,Nº3 Art 3º Tabela Geral - Contratos avulso,25,1,,101240
+25,rec,2369,606,Nº 4 Art 3ª Tabela Geral-Intervenões via pública,26,1,,101250
+26,rec,2369,606,Nº5 Art 3º Tabela Geral - Enchimento garrafas ar,27,1,,101260
+27,rec,2428,371,Nº1 Art 4º Tabela Geral-Averbamento clubes,28,1,,102010
+28,rec,2428,371,Nº 2 Art 4º Tabela Geral-Averbamento hipermercados,29,1,,102020
+29,rec,2428,371,Nº3 Art 4º Tabela Geral- Averbamento Suprmercados,30,1,,102030
+30,rec,2428,371,Nº4 Art 4º Tabela Geral-Averba/to Mercearia?.,31,1,,102040
+31,rec,2428,371,"Nº 5 Art 4º Tabela Geral-Averba/to Talho,peixaria",32,1,,102050
+32,rec,2428,371,Nº 6 Art 4º tabela Geral-Averbamento Cabeleireiro,33,1,,102060
+33,rec,2428,371,Nº 7 Art 4º tabela Geral-Averbamento Aviário/outro,34,1,,102070
+34,rec,2428,371,a) Nº 8 Art 4º tabela Geral-  Averba/tos 1ªClasse,35,1,,102080
+35,rec,2428,371,b) Nº 8 Art 4º tabela Geral-  Averba/tos 2ªClasse,36,1,,102090
+36,rec,2428,371,c) Nº 8 Art 4º tabela Geral-  Averba/tos 3ªClasse,37,1,,102100
+37,rec,2428,371,Art 5º Tabela Geral-Transferência Propriedade,38,1,,102110
+38,rec,2291,587,Art 6º Tabela Geral-Tarifa Recolha Lixo,39,1,,102120
+39,rec,2292,588,Nº9 Art 6º Tabela Geral- Remoção lixo hospitalar,40,2,,102130
+40,rec,2345,564,Nº 10 Art 9º Tabela Geral-Aluguer compactador,41,2,,102140
+41,rec,2345,588,Nº 11 Art 9º Tabela Geral-Transporte compactador,42,2,,102150
+42,rec,2346,588,Nº 12 Art 9º Tabela Geral-Utiliza. Auto-Varredora,43,2,,102160
+43,rec,2292,588,a) Nº13 Art.9ºTabela Geral - Remoção Lixo a pedido,44,1,,102170
+44,rec,2292,588,b) Nº13 Art.9ºTabela Geral - Remoção Lixo a pedido,45,1,,102180
+45,rec,2292,588,c) Nº13 Art.9ºTabela Geral - Remoção Lixo a pedido,46,1,,102190
+46,rec,2292,588,c) Nº13 Art.9ºTabela Geral - Remoção Lixo a pedido,47,1,,102200
+47,rec,2369,606,Nº14 Art.9ºTabela Geral - Remoção viaturas,48,1,,102210
+48,rec,2369,606,Nº15 Art.9ºTabela Geral - Pesagem na Báscula,49,2,,102220
+49,rec,2290,585,Art. 9º Tabela Geral-Ligação domiciliaria esgoto,50,2,2,102230
+50,rec,2445,425,Art. 8º Tabela Geral - Ligação colectores,51,2,2,102240
+51,rec,2445,425,Art. 8º Tabela Geral - Ligação colectores,52,2,2,102241
+52,rec,2418,359,Art. 8º Tabela Geral - Ligação colectores,53,1,,102250
+53,rec,2419,360,Art 10º Tabela Geral - Tar.Conserv.Utiliz.Esg.Empr,54,1,,102260
+54,rec,2446,426,Art 10º Tabela Geral-Tar.Conserv.Utiliz.Esg.Partic,55,1,,102270
+55,rec,2368,593,Nº 5 Art. 10º Tabela Geral -Limpeza fossa/colector,56,2,,102280
+56,rec,2368,433,Nº 6 Art. 10º Tabela Geral -Descarga de água-ETAR,57,2,,102290
+57,rec,2300,595,Nº1 Art 11º Tabela Geral-Inumação em Covais,58,2,,103010
+58,rec,2300,595,Nº1 Art 11º Tabela Geral-Inuma,59,2,,103011
+59,rec,2300,595,Nº1 Art 11º Tabela Geral-Inuma,60,2,,103012
+60,rec,2300,595,Nº1 Art 11º Tabela Geral-Inuma,61,2,,103013
+61,rec,2300,595,a) N 2 Art 11º Tabela-Inumação Corpos em capela,62,2,,103020
+62,rec,2300,595,nº2 art.11º Tabela-Inumação jazigos,63,2,,103021
+63,rec,2300,595,nº2 art.11º Tabela-Inumação jazigos,64,2,,103022
+64,rec,2300,595,nº2 art.11º Tabela-Inumação jazigos,65,2,,103023
+65,rec,2300,595,b) nº2 art.11º Tabela Geral-Inumação jazigos,66,2,,103025
+66,rec,2300,595,Nº 2 Art 11º Tabela Geral-Inumação jazigo particul,67,2,,103030
+67,rec,2300,595,Nº 2 Art 11º Tabela Geral-Inumação jazigo particul,68,2,,103031
+68,rec,2300,595,Nº 2 Art 11º Tabela Geral-Inumação jazigo particul,69,2,,103032
+69,rec,2300,595,Nº 2 Art 11º Tabela Geral-Inumação jazigo particul,70,2,,103033
+70,rec,2300,595,d) Nº 2 Art 11º Tabela Geral-Inumação jazigos,71,2,,103035
+71,rec,2300,595,Nº 3 Art 11ºTabela Geral-Inumação jazigo municipal,72,2,,103040
+72,rec,2300,595,Nº 3 Art 11ºTabela Geral-Inumação jazigo municipal,73,2,,103041
+73,rec,2300,595,Nº 3 Art 11ºTabela Geral-Inumação jazigo municipal,74,2,,103042
+74,rec,2300,595,Nº 3 Art 11ºTabela Geral-Inumação jazigo municipal,75,2,,103043
+75,rec,2300,595,Nº 3 Art 11ºTabela Geral-Inumação jazigo municipal,76,2,,103050
+76,rec,2300,595,Nº 3 Art 11ºTabela Geral-Inumação jazigo municipal,77,2,,103051
+77,rec,2300,595,Nº 3 Art 11ºTabela Geral-Inumação jazigo municipal,78,2,,103052
+78,rec,2300,595,Nº 3 Art 11ºTabela Geral-Inumação jazigo municipal,79,2,,103053
+79,rec,2301,596,Art. 12º Tabela Geral- Ocupação de ossários,80,2,,103060
+80,rec,2301,596,Art. 12º Tabela Geral- Ocupação de ossários,81,2,,103061
+81,rec,2301,596,Art. 12º Tabela Geral- Ocupação de ossários,82,2,,103062
+82,rec,2301,596,Art. 12º Tabela Geral- Ocupação de ossários,83,2,,103063
+83,rec,2301,596,nº2 Art. 12º Tabela Geral- Ossada 2º ano,84,6,,103065
+84,rec,2301,596,Art. 12º Tabela Geral- Ocupação de ossários,85,2,,103070
+85,rec,2301,596,Art. 12º Tabela Geral- Ocupação de ossários,86,2,,103071
+86,rec,2301,596,Art. 12º Tabela Geral- Ocupação de ossários,87,2,,103072
+87,rec,2301,596,Art. 12º Tabela Geral- Ocupação de ossários,88,2,,103073
+88,rec,2302,596,nº1 Art. 13º Tabela Geral- Exumação p/ossada,89,2,,103080
+89,rec,2302,596,Art. 13º Tabela Geral- Exumação p/ossada,90,2,,103081
+90,rec,2302,596,Art. 13º Tabela Geral- Exumação p/ossada,91,2,,103082
+91,rec,2302,596,Art. 13º Tabela Geral- Exumação p/ossada,92,2,,103083
+92,rec,2302,596,nº2 Art. 13º Tabela Geral- Exumação p/ossada,93,2,,103085
+93,rec,2303,596,Art. 14º Tabela Geral- Concessão terreno p/jazigo,94,1,,103090
+94,rec,2303,596,Art. 14º Tabela Geral- Concessão terreno p/jazigo,95,2,,103091
+95,rec,2303,596,Art. 14º Tabela Geral- Concessão terreno p/jazigo,96,2,,103092
+96,rec,2303,596,Art. 14º Tabela Geral- Concessão terreno p/jazigo,97,2,,103093
+97,rec,2304,596,Nº1 Art. 15º Tabela Geral - Utilização Capela,98,2,,103100
+98,rec,2304,596,Nº1 Art. 15º Tabela Geral - Utilização Capela,99,2,,103101
+99,rec,2304,596,Nº1 Art. 15º Tabela Geral - Utilização Capela,100,2,,103102
+100,rec,2304,596,Nº1 Art. 15º Tabela Geral - Utilização Capela,101,2,,103103
+101,rec,2304,596,Nº2 Art. 15º Tabela Geral - Utilização Capela,102,2,,103110
+102,rec,2304,596,Nº2 Art. 15º Tabela Geral - Utilização Capela,103,2,,103111
+103,rec,2304,596,Nº2 Art. 15º Tabela Geral - Utilização Capela,104,2,,103112
+104,rec,2304,596,Nº2 Art. 15º Tabela Geral - Utilização Capela,105,2,,103113
+105,rec,2305,596,Art 16º Tabela Geral - Averbamento transmissão,106,2,,103120
+106,rec,2305,596,Art 16º Tabela Geral - Averbamento transmissão,107,2,,103121
+107,rec,2305,596,Art 16º Tabela Geral - Averbamento transmissão,108,2,,103122
+108,rec,2305,596,Art 16º Tabela Geral - Averbamento transmissão,109,2,,103123
+109,rec,2306,596,a) Art 17º Tabela Geral -Campas rasas e gavetões,110,6,,103130
+110,rec,2306,596,Art 17º Tabela Geral - Tratamento sepulturas/sinai,111,2,,103131
+111,rec,2306,596,Art 17º Tabela Geral-Tratamento sepulturas/sinais,112,2,,103132
+112,rec,2306,596,Art 17º Tabela Geral -Tratamento sepulturas/sinais,113,2,,103133
+113,rec,2306,596,b) Art 17º Tabela Geral -Capela e até 6 gavetas,115,6,,103135
+114,rec,2306,596,c) Art 17º Tabela Geral -Capela e mais de 6 gaveta,116,6,,103136
+115,rec,2306,596,d) Art 17º Tabela Geral - com grades,117,6,,103137
+116,rec,2306,596,e) Art 17º Tabela Geral -Ornamentação,118,2,,103138
+117,rec,2307,596,Nº 1 Art 18º Tabela Geral - Transladação,119,2,,103140
+118,rec,2307,596,Nº 1 Art 18º Tabela Geral - Transladação,120,2,,103141
+119,rec,2307,596,Nº 1 Art 18º Tabela Geral - Transladação,121,2,,103142
+120,rec,2307,596,Nº 1 Art 18º Tabela Geral - Transladação,122,2,,103143
+121,rec,2307,596,Nº 2 Art 18ºTabela Geral-Abertura cemitério fora h,123,2,,103150
+122,rec,2307,596,Nº 2 Art 18ºTabela Geral-Abertura cemitério fora h,124,2,,103151
+123,rec,2307,596,Nº 2 Art 18ºTabela Geral-Abertura cemitério fora h,125,2,,103152
+124,rec,2307,596,Nº 2 Art 18ºTabela Geral-Abertura cemitério fora h,126,2,,103153
+125,rec,2320,601,Nº 1 Art 19º Tabela Geral - Estaciona/to viaturas,127,1,,104010
+126,rec,2320,601,Nº 2 Art 19º Tabela Geral - Ocupação estaciona/to,128,1,,104020
+127,rec,2308,600,a)Nº3 Art 19º Tabela Geral -Parcómetros z amarela,129,3,,104030
+128,rec,2309,600,b)Nº3 Art 19º Tabela Geral-Parcómetros z verde,130,3,,104040
+129,rec,2310,600,c)Nº3 Art 19º Tabela Geral-Parcómetros z vermelha,131,3,,104050
+130,rec,2311,600,d)Nº3 Art 19º Tabela Geral-Parcómetros z castanha,132,3,,104060
+131,rec,2314,601,a)Nº 4 Art 19º Tabela Geral-1 Cartão de Morador,133,1,,104070
+132,rec,2314,601,b)Nº 4 Art 19º Tabela Geral-1 Cartão de Morador,134,1,,104080
+133,rec,2442,433,Art. 20º Tabela Geral - Circulação viaturas,135,1,,104090
+134,rec,2331,576,Nº 1 Art 21º Tabela Geral-Entradas museus adulto,136,1,,104100
+135,rec,2332,577,Nº 1 Art 21º Tabela Geral-Entradas museus adulto,137,1,,104110
+136,rec,2333,578,Nº 1 Art 21º Tabela Geral-Entradas museus adulto,138,1,,104120
+137,rec,2331,576,Nº 2 Art 21º Tabela Geral-Entradas museus jovens,139,1,,104130
+138,rec,2332,577,Nº 2 Art 21º Tabela Geral-Entradas museus jovens,140,1,,104140
+139,rec,2333,578,Nº 2 Art 21º Tabela Geral-Entradas museus jovens,141,1,,104150
+140,rec,2331,576,Nº 3 Art 21º Tabela Geral-Entradas museus 3ªidade,142,1,,104160
+141,rec,2332,577,Nº 3 Art 21º Tabela Geral-Entradas museus 3ªidade,143,1,,104170
+142,rec,2333,578,Nº 3 Art 21º Tabela Geral-Entradas museus 3ªidade,144,1,,104180
+143,rec,2342,564,Nº1 Art 22º Tabela Geral-Diária investigadores,145,2,,104190
+144,rec,2342,612,Nº2 Art22º Tabela Geral-Aluguer espaço laboratório,146,2,,104200
+145,rec,2342,612,Nº3 Art22º Tabela Geral-Aluguer laboratório,147,2,,104210
+146,rec,2398,355,Nº1 Art 23º Tabela Geral - Antenas via pública,148,6,2,105010
+147,rec,2398,355,"Nº2 Art 23º Tabela Geral - Fios,cabos telefónicos?",149,6,2,105020
+148,rec,2398,355,Nº3 Art 23º Tabela Geral-Guindastes e semelhantes,150,6,2,105030
+149,rec,2390,355,a)Nº4 Art 23º Tabela Geral-Alpendres até 1m,151,6,2,105040
+150,rec,2390,355,b)Nº4 Art 23º Tabela Geral-Alpendres c/mais de 1m,152,6,2,105050
+151,rec,2391,355,a)Nº5 Art 23º Tabela Geral-Toldos até 1m,153,6,2,105060
+152,rec,2391,355,b)Nº5 Art 23º Tabela Geral-Toldos c/mais de 1m,154,2,2,105070
+153,rec,2417,357,Obs nº12 Art35º Reg.Geral Taxas-Pub com ocup.via,155,2,2,105071
+154,rec,2398,355,Nº6 Art 23º Tabela Geral-Sanefas,156,6,2,105080
+155,rec,2398,355,Nº7 Art 23º Tabela Geral-Fita anunciadora,157,6,2,105090
+156,rec,2398,355,"Nº8 Art 23º Tabela Geral-Passarela,varanda,escadas",158,2,,105100
+157,rec,2398,355,a)Nº1 Art 24º Tabela Geral-Construções provisórias,159,2,,105110
+158,rec,2398,355,b)Nº1 Art 24º Tabela Geral-Construções provisórias,160,2,,105120
+159,rec,2398,355,c)Nº1 Art 24º Tabela Geral-Construções provisórias,161,2,,105130
+160,rec,2398,355,Nº2 Art 24º Tabela Geral-Cabine /Posto telefónico,162,6,2,105140
+161,rec,2398,355,a)Nº3 Art 24º Tabela Geral-Posto transformação 3m3,163,6,2,105150
+162,rec,2398,355,b)Nº3 Art24º Tabela Geral-Posto transformação,164,6,2,105160
+163,rec,2398,355,Nº4 Art 24º Tabela Geral-Depósitos subterrâneos,165,6,2,105170
+164,rec,2396,355,"Nº5 Art24º Tabela Geral-Pavilhões,quiosques,outros",166,2,,105180
+165,rec,2397,355,Nº6 Art 24º Tabela Geral-Venda Ambulante,167,1,,105190
+166,rec,2394,355,a)Nº1 Art 25º Tabela Geral-Postos e marcos,168,6,2,105200
+167,rec,2394,355,b)Nº1 Art 25º Tabela Geral-Postos e marcos,169,6,2,105210
+168,rec,2394,355,c)Nº1 Art 25º Tabela Geral-Postos e marcos,170,6,2,105220
+169,rec,2392,355,Nº2 Art 25º Tabela Geral-Esplanadas Fechadas,171,6,2,105230
+170,rec,2393,355,"Nº3 Art 25º Tabela Geral-Mesas, cadeiras",172,6,2,105240
+171,rec,2395,355,"Nº4 Art 25º Tabela Geral-Tubos,condutas,cabos?",173,6,2,105250
+172,rec,2398,355,Nº5 Art 25º Tabela Geral-Antenas p/emissões,174,6,2,105260
+173,rec,2398,355,a)Nº8 Art 25ºTabela Geral-Circo p/dia,175,1,,105270
+174,rec,2398,355,b)Nº8 Art 25ºTabela Geral-Circo p/semana,176,1,,105280
+175,rec,2398,355,a)Nº8 Art 25ºTabela Geral-Circo p/mês,177,1,,105290
+176,rec,2398,355,Nº9 Art 25º Tabela Geral-Expositores,178,6,2,105300
+177,rec,2442,419,Nº10 Art 25º Tabela Geral-Tapumes,179,1,,105310
+178,rec,2389,355,Nº10 Art 25º Tabela Geral-Tapumes,180,1,,105320
+179,rec,2389,355,Nº11 Art 25º Tabela Geral-Andaimes,181,1,,105330
+180,rec,2442,419,Nº11 Art 25º Tabela Geral-Andaimes,182,1,,105340
+181,rec,2389,355,Nº12 Art 25º Tabela Geral-Auto-bombas,183,1,,105350
+182,rec,2442,419,Nº12 Art 25º Tabela Geral-Auto-bombas,184,1,,105360
+183,rec,2389,355,"Nº13 Art 25º Tabela Geral-Gruas,guindaste",185,1,,105370
+184,rec,2442,419,"Nº13 Art 25º Tabela Geral-Gruas,guindaste",186,1,,105380
+185,rec,2389,355,Nº15 Art 25º Tabela Geral-Interrupções Trânsito,187,1,,105390
+186,rec,2398,419,Nº15 Art 25º Tabela Geral-Interrupções Trânsito,188,1,,105400
+187,rec,2389,355,Nº14 Art 25º Tabela Geral-Condicionamento,189,1,,105410
+188,rec,2442,419,Nº14 Art 25º Tabela Geral-Condicionamento,190,1,,105420
+189,rec,2398,355,Nº16 Art 25º Tabela Geral-Abertura Vala,191,1,,105430
+190,rec,2442,419,Nº16 Art 25º Tabela Geral-Abertura Vala,192,1,,105440
+191,rec,2398,355,Nº 17 Art 25º Tabela Geral - Outras ocupações,193,1,,105450
+192,rec,2398,411,Nº 17 Art 25º Tabela Geral - Ocupações floristas,194,3,2,105460
+193,rec,2398,355,Nº1 Art 26º Tabela Geral-Bombas carburantes,195,6,2,106010
+194,rec,2398,355,Nº2 Art 26º Tabela Geral-Bombas carburantes,196,6,2,106020
+195,rec,2398,355,Nº3 Art 26º Tabela Geral-Bombas carburantes,197,6,2,106030
+196,rec,2398,355,Nº4 Art 26º Tabela Geral-Bombas carburantes,198,6,2,106040
+197,rec,2398,355,Nº1 Art 27º Tabela Geral-Bombas ar e água,199,6,2,106050
+198,rec,2398,355,Nº2 Art 27º Tabela Geral-Bombas ar e água,200,6,2,106060
+199,rec,2398,355,Nº3 Art 27º Tabela Geral-Bombas ar e água,201,6,2,106070
+200,rec,2398,355,Nº4 Art 27º Tabela Geral-Bombas ar e água,202,6,2,106080
+201,rec,2454,433,Nº1 Art 28º Tabela Geral-Licença ciclomotores,203,1,,107010
+202,rec,2454,433,Nº2 Art 28º Tabela Geral-Licença veículos/tractor,204,1,,107020
+203,rec,2454,433,Nº1 Art 29º Tabela Geral-Emissão 2ª via licença,205,1,,107030
+204,rec,2454,433,Nº2 Art 29º Tabela Geral-Emissão 2ª via chapa,206,1,,107040
+205,rec,2400,357,Nº1 Art 31º Tabela Geral-Anúncios Luminosos 1ºano,207,2,,108010
+206,rec,2400,357,Nº2 Art31º Tabela Geral-Anúncios Luminosos renov,208,6,2,108020
+207,rec,2401,357,Nº1 Art32º Tabela Geral-Anúncios N Luminosos 1ºano,209,2,,108030
+208,rec,2401,357,Nº2 Art32º Tabela Geral-Anúncios N Luminosos renov,210,6,2,108040
+209,rec,2402,357,Nº1 Art33º Tabela Geral-Publicidade Corrida 1ºano,211,2,,108050
+210,rec,2402,357,Nº2 Art33º Tabela Geral-Anúncios Corrida renov,212,6,2,108060
+211,rec,2403,357,Art 34º Tabela Geral-Frisos luminosos compl.,213,6,2,108070
+212,rec,2404,357,Art 35º Tabela Geral-Bandeiras,214,6,2,108080
+213,rec,2405,357,"Nº1 Art36º Tabela Geral-Vitrines, mostradores?",215,6,2,108090
+214,rec,2406,357,Nº2 Art36º Tabela Geral-Exposição no exterior,216,6,2,108100
+215,rec,2407,357,"Nº1 Art37º Tabela Geral-Decalcomanias,distintivos?",217,6,2,108110
+216,rec,2407,357,"Nº2 Art37º Tabela Geral-Decalcomanias,distintivos?",218,6,2,108120
+217,rec,2408,357,Nº1 Art38ºTabela Geral-Publici. transp.colectivo,219,6,2,108130
+218,rec,2408,357,a)Nº2 Art 38ºTabela Geral-Publici.viaturas alusiva,220,6,2,108140
+219,rec,2408,357,b) Nº2 Art38ºTabela Geral-Publici.viaturas-outras,221,6,2,108150
+220,rec,2409,357,Art 39º Tabela Geral - Publicidade Sonora,222,2,,108160
+221,rec,2410,357,"Art 40º Tabela Geral - Publicidade Vedação,painel?",223,6,2,108170
+222,rec,2411,357,Nº1 Art 41º Tabela Geral-Publici.transitória aérea,224,2,,108180
+223,rec,2411,357,Nº2 Art 41º Tabela Geral-Publici.transitória outra,225,2,,108190
+224,rec,2412,357,Art 42º Tabela Geral-Anúncios/cartazes afixados,226,2,,108200
+225,rec,2413,371,Nº1 Art 43º Tabela Geral-Distribuição Panfletos,227,2,,108210
+226,rec,2413,371,Nº2 Art 43º Tabela Geral-Distribuição Produtos,228,2,,108220
+227,rec,2413,371,Nº3 Art 43º Tabela Geral-Provas degustação,229,2,,108230
+228,rec,2413,371,Nº4 Art 43º Tabela Geral-Outras campanhas,230,2,,108240
+229,rec,2414,357,Nº1 Art 44º Tabela Geral-Publici.Espectáculos,231,2,,108250
+230,rec,2414,357,Nº2 Art 44º Tabela Geral-Publici.Espectáculos,232,2,,108260
+231,rec,2415,357,Art 45º Tabela Geral - Placas direccionais,233,6,2,108270
+232,rec,2433,411,Nº1 Art 46º Tabela Geral -Bancada Peixe,234,2,2,109010
+233,rec,2432,411,Nº2 Art 46º  Tabela Geral -Lugares Terrado,235,2,2,109020
+234,rec,2432,411,Nº2 Art 46º Tabela Geral -Lugares Terrado,236,2,2,109030
+235,rec,2432,411,Lugares do Terrado,237,4,2,109040
+236,rec,2434,433,Nº1 Art 47º Tabela Geral -Emissão cartão vendedor,238,1,,109050
+237,rec,2434,433,Nº2 Art 47º Tabela Geral-Renovação cartão vendedor,239,1,,109060
+238,rec,2435,433,a) Nº1 Art48º Tabela Geral-Utilização frigorífico,240,2,2,109070
+239,rec,2435,433,b) Nº1 Art48º Tabela Geral-Utilização frigorífico,241,2,2,109080
+240,rec,2435,433,Nº2 Art48º Tabela Geral-Armazenamento horto-frutíc,242,2,2,109090
+241,rec,2435,433,Nº2 Art48º Tabela Geral-Armazenamento horto-frutíc,243,2,2,109100
+242,rec,2324,564,Nº3 Art48º Tabela Geral-Venda de gelo,244,2,2,109110
+243,rec,2435,433,Nº1 Art 49º Tabela Geral -Local depósito,245,2,2,109120
+244,rec,2435,433,Nº1 Art 49º Tabela Geral -Local depósito,246,2,2,109130
+245,rec,2433,411,Nº2 Art 49º Tabela Geral -Ocupação terrado eventos,247,1,,109140
+246,rec,2433,411,Nº3 Art 49º Tabela Geral-Ocupação mesas e cadeiras,248,1,,109150
+247,rec,2293,604,a) Nº 1 Art.50º Tabela Geral - Ambulância Tipo B,249,2,,110010
+248,rec,2355,604,b) Nº1 Art.50ºTabela Geral-Viatura desencarcera/to,250,2,,110020
+249,rec,2354,604,c) Nº1 Art.50º Tabela Geral -Minuto espera além 10,251,2,,110030
+250,rec,2354,604,d) Nº1 Art. 50º Tabela Geral-Aplicação de Oxigénio,252,2,,110040
+251,rec,2354,604,e) Nº1 Art. 50º Tabela Geral-Aplicação eléctrodos,253,2,,110050
+252,rec,2354,604,f) Nº1 Art. 50º Tabela Geral-Matareial desinfecção,254,2,,110060
+253,rec,2354,604,g) Nº1 Art.50º Tabela Geral - Kit Parto,255,2,,110070
+254,rec,2354,604,h) Nº 1 Art.50º Tabela Geral - Medição glicémia,256,2,,110080
+255,rec,2354,604,i) Nº1 Art.50º Tabela Geral - Lençol queimado,257,2,,110090
+256,rec,2354,604,j) Nº1 Art.50º Tabela Geral - Kit Protecção,258,2,,110100
+257,rec,2354,604,k) Nº1 Art.50º Tabela Geral - Frio Instantâneo,259,2,,110110
+258,rec,2354,604,l) Nº1 Art. 50º Tabela Geral - Soro,260,2,,110120
+259,rec,2356,604,a) Nº2 Art.50º Tabela Geral-Ambulância B Prevenção,261,2,,110130
+260,rec,2356,604,b) Nº 2 Art.50º Tabela Geral - Auto-escada,262,2,,110140
+261,rec,2356,604,c) Nº2 Ar.50º Tabela Geral-Viatura desencarcera/to,263,2,,110150
+262,rec,2356,604,d) Nº2 Art.50º Tabela Geral - Auto-tanque pesado,264,2,,110160
+263,rec,2356,604,e) Nº2 Art. 50º Tabela Geral - Auto-tanque táctico,265,2,,110170
+264,rec,2356,604,f) Nº2 Art.50º Tabela Geral Auto-tanque s-reboque,266,2,,110180
+265,rec,2356,604,g) Nº2 Art.50º Tabela Geral-Pronto Socorro Pesado,267,2,,110190
+266,rec,2356,604,h) Nº2 Art.50º Tabela Geral Pronto Socorro Médio,268,2,,110200
+267,rec,2356,604,i) Nº2 Art.50º Tabela Geral Pronto socorro ligeiro,269,2,,110210
+268,rec,2356,604,j) Nº2 Art.50º Tabela Geral - Auto apoio-AA/TG/AC,270,2,,110220
+269,rec,2360,604,a) Nº3 Art.50º Tabela Geral-Elaboração relatório,271,2,,110230
+270,rec,2357,604,b) Nº3 Art.50º Tabela Geral - Abertura Portas,272,2,,110240
+271,rec,2357,604,c) Nº3 Art.50º Tabela Geral Moto-serra,273,2,,110250
+272,rec,2357,604,d) Nº3 Art.50º Tabela Geral - Moto-bomba pesada,274,2,,110260
+273,rec,2357,604,e) Nº3 Art. 50º Tabela Geral - Electro-bomba,275,2,,110270
+274,rec,2357,604,f) Nº3 Art.50º Tabela Geral - Gerador eléctrico,276,2,,110280
+275,rec,2357,604,g) Nº3 Art.50º Tabela Geral -Escada alumínio p/h,277,2,,110290
+276,rec,2357,604,h) Nº3 Art.50º Tabela Geral - Escada telescópica,278,2,,110300
+277,rec,2357,604,i) Nº3 Art.50º Tabela Geral - Máquina fumos,279,2,,110310
+278,rec,2357,564,j) Nº3 Art.50º Tabela Geral - Arrendamento Salas,280,2,,110320
+279,rec,2357,564,k) Nº3 Art.50º Tabela Geral -Video-projector,281,2,,110330
+280,rec,2357,564,l) Nº3 Art.50º Tabela Geral - Utiliz.simulador,282,2,,110340
+281,rec,2357,604,m) Nº 3 Art. 50º Tabela Geral Formação,283,2,,110350
+282,rec,2357,604,n) Nº 3 Art.50º Tabela Geral Manequim,284,2,,110360
+283,rec,2357,604,o) Nº3 Art.50º Tabela Geral Plano Duro,285,2,,110370
+284,rec,2357,604,p) Nº3 Art.50º Tabela Geral - Macas pluma,286,2,,110380
+285,rec,2357,604,q) Nº3 Art.50º Tabela Geral - Colete extracção,287,2,,110390
+286,rec,2358,604,a) Nº4 Art.50º Tabela Geral-Lig. Sistema incêndios,288,2,,110400
+287,rec,2358,604,b) Nº4 Art.50º Tabela Geral - Taxa anual ligação,289,2,,110410
+288,rec,2358,604,c) Nº4 Art50º Tabela Geral-Deslocação falso alarme,290,2,,110420
+289,rec,2359,604,a) Nº5 Art.50º Tabela Geral-Vistorias segurança,291,2,,110430
+290,rec,2424,371,a) Nº1 Art.51º Tabela Geral-Licença ruído Obras,292,1,,111010
+291,rec,2450,433,a) Nº1 Art.51º Tabela Geral-Licença ruído Obras,293,1,,111020
+292,rec,2424,371,b) Nº1 Art 51ºTabela Geral-Lic ruído Obras sup 30d,294,1,,111030
+293,rec,2450,433,b) Nº1 Art 51ºTabela Geral-Lic ruído Obras sup 30d,295,1,,111040
+294,rec,2424,371,b) Nº1 Art 51ºTabela Geral-Lic ruído Obras sup 30d,296,1,,111050
+295,rec,2450,433,b) Nº1 Art 51ºTabela Geral-Lic ruído Obras sup 30d,297,1,,111060
+296,rec,2424,371,a) Nº2 Art.51º Tabela Geral-Lic ruído Desporto,298,1,,111070
+297,rec,2450,433,a) Nº2 Art.51º Tabela Geral-Lic ruído Desporto,299,1,,111080
+298,rec,2424,371,a) Nº2 Art.51º Tabela Geral-Lic ruído Desporto,300,1,,111090
+299,rec,2450,433,a) Nº2 Art.51º Tabela Geral-Lic ruído Desporto,301,1,,111100
+300,rec,2424,371,b) Nº2 Art.51º Tabela Geral-Lic ruído Desporto,302,1,,111110
+301,rec,2450,433,b) Nº2 Art.51º Tabela Geral-Lic ruído Desporto,303,1,,111120
+302,rec,2424,371,b) Nº2 Art.51º Tabela Geral-Lic ruído Desporto,304,1,,111130
+303,rec,2450,433,b) Nº2 Art.51º Tabela Geral-Lic ruído Desporto,305,1,,111140
+304,rec,2424,371,Nº3 Art.51º Tabela Geral-Lic ruído Feiras/Mercados,306,1,,111150
+305,rec,2450,433,Nº3 Art.51º Tabela Geral-Lic ruído Feiras/Mercados,307,1,,111160
+306,rec,2424,371,Nº4 Art.51º Tabela Geral-Lic ruído Festas R.Aberto,308,1,,111170
+307,rec,2450,433,Nº4 Art.51º Tabela Geral-Lic ruído Festas R.Aberto,309,1,,111180
+308,rec,2424,371,Nº4 Art.51º Tabela Geral-Lic ruído Festas R.Aberto,310,1,,111190
+309,rec,2450,433,Nº4 Art.51º Tabela Geral-Lic ruído Festas R.Aberto,311,1,,111200
+310,rec,2424,371,Nº4 Art.51ºTabela Geral-Lic ruído Festas R.Fechado,312,1,,111210
+311,rec,2450,433,Nº4 Art.51ºTabela Geral-Lic ruído Festas R.Fechado,313,1,,111220
+312,rec,2424,371,Nº4 Art.51ºTabela Geral-Lic ruído Festas R.Fechado,314,1,,111230
+313,rec,2450,433,Nº4 Art.51ºTabela Geral-Lic ruído Festas R.Fechado,315,1,,111240
+314,rec,2424,371,Nº5 Art.51º Tabela Geral-Lic ruído Festas R.Aberto,316,1,,111250
+315,rec,2450,433,Nº5 Art.51º Tabela Geral-Lic ruído Festas R.Aberto,317,1,,111260
+316,rec,2424,371,Nº5 Art.51º Tabela Geral-Lic ruído Festas R.Aberto,318,1,,111270
+317,rec,2450,433,Nº5 Art.51º Tabela Geral-Lic ruído Festas R.Aberto,319,1,,111280
+318,rec,2424,371,Nº5 Art.51ºTabela Geral-Lic ruído Festas R.Fechado,320,1,,111290
+319,rec,2450,433,Nº5 Art.51ºTabela Geral-Lic ruído Festas R.Fechado,321,1,,111300
+320,rec,2424,371,Nº5 Art.51ºTabela Geral-Lic ruído Festas R.Fechado,322,1,,111310
+321,rec,2450,433,Nº5 Art.51ºTabela Geral-Lic ruído Festas R.Fechado,323,1,,111320
+322,rec,2424,371,Nº6 Art.51ºTabela Geral-Lic ruído Festas,324,1,,111330
+323,rec,2450,433,Nº6 Art.51ºTabela Geral-Lic ruído Festas,325,1,,111340
+324,rec,2424,371,Nº6 Art.51ºTabela Geral-Lic ruído Festas,326,1,,111350
+325,rec,2450,433,Nº6 Art.51ºTabela Geral-Lic ruído Festas,327,1,,111360
+326,rec,2424,371,Nº7 Art.51 Tabela Geral - Outras Licença ruído,328,1,,111370
+327,rec,2450,433,Nº7 Art.51 Tabela Geral - Outras Licença ruído,329,1,,111380
+328,rec,2397,433,Nº1 Art.52ºTabela Geral- Licença Venda Ambulante,330,1,,111390
+329,rec,2397,433,Nº2 Art.52ºTabela Geral-Renovação Lic V. Ambulante,331,1,,111400
+330,rec,2397,433,Nº3 ART52º Tabela Geral -V.ambulante lotarias,332,1,,111410
+331,rec,2397,355,Nº4 ART52º Tabela Geral -V.ambu terreno particular,333,1,,111420
+332,rec,2429,371,Nº1 Art.53º Tabela Geral-Lic Recintos improvisados,334,1,,111430
+333,rec,2453,433,Nº1 Art.53º Tabela Geral-Lic Recintos improvisados,335,1,,111440
+334,rec,2429,371,Nº2 Art.53º Tabela Geral-Lic Recintos improvisados,336,1,,111450
+335,rec,2453,433,Nº2 Art.53º Tabela Geral-Lic Recintos improvisados,337,1,,111460
+336,rec,2454,433,Nº1 Art. 54º Tabela Geral-Licença expl.máquinas,338,1,,111470
+337,rec,2454,433,Nº2 Art.54º Tabela Geral - Registo máquinas,339,1,,111480
+338,rec,2454,433,Nº 3 Art. 54º Tabela Geral - Averbamento máquinas,340,1,,111490
+339,rec,2454,433,Nº4 Art. 54º Tabela Geral - 2ª Via Registo máquina,341,1,,111500
+340,rec,2454,433,Art. 55º Tabela Geral-Licença Venda Bilhetes,342,1,,111510
+341,rec,2265,549,Art. 56º Tabela Geral - Fornecimento água,343,1,,113010
+342,rec,2265,549,Art. 56º Tabela Geral - Fornecimento água,344,1,,113020
+343,rec,2430,433,Nº5 Art.56º Tabela Geral - Bocas Incêndio,345,2,2,113030
+344,rec,2347,611,Art.57º Tabela Geral -Tarifa disponibilidade serv,346,1,,113040
+345,rec,2297,592,Nº1 Art.58º Tabela Geral- Ramais Ligação água,347,2,2,113050
+346,rec,2297,596,Alteração nome contrato água,348,1,,113051
+347,rec,2297,592,Nº1 Art.58º Tabela Geral- Ramais Ligação água,349,2,2,113060
+348,rec,2297,593,Nº 1 Art.58º Tabela Geral - Restabelecimento água,350,2,2,113070
+349,rec,2366,573,Art. 61º Tabela Geral - Acesso Internet-EspaçoNET,351,1,,115010
+350,rec,2366,606,Art. 62º Tabela Geral - Impressões-EspaçoNET,352,1,,115020
+351,rec,2385,350,Alvará licença-Nº1 ARTº1 I CAPI,353,1,,201010
+352,rec,2438,415,Alvará licença-Nº1 ARTº1 I CAPI,354,1,,201020
+353,rec,2385,350,P/Lote alvará lic-ALI.a) Nº1 ARTº1 I CAPI,355,1,,201030
+354,rec,2438,415,P/Lote alvará lic-ALI.a) Nº1 ARTº1 I CAPI,356,1,,201040
+355,rec,2385,350,P/Fogo alvará lic-ALI.a) Nº1 ARTº1 II CAPI,357,1,,201050
+356,rec,2438,415,P/Fogo alvará lic-ALI.a) Nº1 ARTº1 II CAPI,358,1,,201060
+357,rec,2385,350,Acre.p/utilização alv-ALINEAa)III Nº1 ARTº1º CAP I,359,1,,201070
+358,rec,2438,415,Acre.p/utilização alv-ALINEAa)III Nº1 ARTº1º CAP I,360,1,,201080
+359,rec,2385,350,P/Fogo aumento auto.-ALI.a) Nº1 ARTº1 IV CAPI,361,1,,201090
+360,rec,2438,415,P/Fogo aumento auto.-ALI.a) Nº1 ARTº1 IV CAPI,362,1,,201100
+361,rec,2385,350,Acrece prazo mes/frac.-ALI.b) Nº1 ARTº1 I CAP I,363,1,,201110
+362,rec,2438,415,Acrece prazo mes/frac.-ALI.b) Nº1 ARTº1 I CAP I,364,1,,201120
+363,rec,2385,350,Aditamento alvará - ALI.b) Nº1 ARTº1 II CAP I,365,1,,201130
+364,rec,2438,415,Aditamento alvará - ALI.b) Nº1 ARTº1 II CAP I,366,1,,201140
+365,rec,2385,350,Emissão do alvará licença-Nº1 ARTº2º CAP I,367,1,,201150
+366,rec,2438,415,Emissão do alvará licença-Nº1 ARTº2º CAP I,368,1,,201160
+367,rec,2385,350,Acre.p/lote alvará-ALINEA a) I Nº1 ARTº2º CAP I,369,1,,201170
+368,rec,2438,415,Acre.p/lote alvará-ALINEA a) I Nº1 ARTº2º CAP I,370,1,,201180
+369,rec,2385,350,Acre.p/ fogo alv.-ALINEA a) II Nº1 ARTº2º CAP I,371,1,,201190
+370,rec,2438,415,Acre.p/ fogo alv.-ALINEA a) II Nº1 ARTº2º CAP I,372,1,,201200
+371,rec,2385,350,Acre.p/uti.alv.-ALINEA a) III Nº1 ARTº2º CAP I,373,1,,201210
+372,rec,2438,415,Acre.p/uti.alv.-ALINEA a) III Nº1 ARTº2º CAP I,374,1,,201220
+373,rec,2385,350,Alvará Licença Lote ALINEA a) IV ART 2º CAP I,375,1,,201230
+374,rec,2438,415,Alvará Licença Lote ALINEA a) IV ART 2º CAP I,376,1,,201240
+375,rec,2385,350,Aditamentos-Nº2 ARTº2º CAP I,377,1,,201250
+376,rec,2438,415,Aditamentos-Nº2 ARTº2º CAP I,378,1,,201260
+377,rec,2383,348,Emissão de alvará licença-Nº1 ARTº 3º CAPI,379,1,,201270
+378,rec,2436,413,Emissão de alvará licença-Nº1 ARTº 3º CAPI,380,1,,201280
+379,rec,2383,348,Acresce por mês-ALINEA a) Nº1 I ARTº3º CAP I,381,1,,201290
+380,rec,2436,413,Acresce por mês-ALINEA a) Nº1 I ARTº3º CAP I,382,1,,201300
+381,rec,2383,348,Acresce p/rede esgo.ALINEA b) Nº1 I ARTº3º CAP I,383,1,,201310
+382,rec,2436,413,Acresce p/rede esgo.ALINEA b) Nº1 I ARTº3º CAP I,384,1,,201320
+383,rec,2383,348,Acresce p/rede agua ALINEAb) Nº1 II ARTº3º CAP I,385,1,,201330
+384,rec,2436,413,Acresce p/rede agua ALINEAb) Nº1 II ARTº3º CAP I,386,1,,201340
+385,rec,2383,348,Acresce Outras ALINEA b) Nº1 III ART.3º CAP I,387,1,,201350
+386,rec,2436,413,Acresce Outras ALINEA b) Nº1 III ART.3º CAP I,388,1,,201360
+387,rec,2383,348,Aditamento ao alvará de licença-Nº2 ARTº3º CAP I,389,1,,201370
+388,rec,2436,413,Aditamento ao alvará de licença-Nº2 ARTº3º CAP I,390,1,,201380
+389,rec,2383,348,Acresce por mês-ALINEA a) Nº2 I ARTº3º CAP I,391,1,,201390
+390,rec,2436,413,Acresce por mês-ALINEA a) Nº2 I ARTº3º CAP I,392,1,,201400
+391,rec,2383,348,Acresce p/rede esgo.ALINEA b) Nº2 I ARTº3º CAP I,393,1,,201410
+392,rec,2436,413,Acresce p/rede esgo.ALINEA b) Nº2 I ARTº3º CAP I,394,1,,201420
+393,rec,2383,348,Acresce p/rede agua ALINEA b) Nº2 II ARTº3º CAP I,395,1,,201430
+394,rec,2436,413,Acresce p/rede agua ALINEA b) Nº2 II ARTº3º CAP I,396,1,,201440
+395,rec,2383,348,Acresce Outras ALINEA b) Nº2 III ART.3º CAP I,397,1,,201450
+396,rec,2436,413,Acresce Outras ALINEA b) Nº2 III ART.3º CAP I,398,1,,201460
+397,rec,2383,348,Alvará terreno-Nº1 ARTº4º CAP I,399,1,,201470
+398,rec,2436,413,Alvará terreno-Nº1 ARTº4º CAP I,400,1,,201480
+399,rec,2383,348,Alv.ter.até1000-ALINEA a) Nº1 ARTº4º CAP I,401,1,,201490
+400,rec,2436,413,Alv.ter.até1000-ALINEA a) Nº1 ARTº4º CAP I,402,1,,201500
+401,rec,2383,348,Alv.ter.1001-5000m-ALINEA b) Nº1 ARTº4º CAP I,403,1,,201510
+402,rec,2436,413,Alv.ter.1001-5000m-ALINEA b) Nº1 ARTº4º CAP I,404,1,,201520
+403,rec,2383,348,Alv.ter.maisde5001-ALINEA c) Nº1 ARTº4º CAP I,405,1,,201530
+404,rec,2436,413,Alv.ter.maisde5001-ALINEA c) Nº1 ARTº4º CAP I,406,1,,201540
+405,rec,2383,348,P/cada mês ALINEA d) Nº1 ARTº4º CAP I,407,1,,201550
+406,rec,2436,413,P/cada mês ALINEA d) Nº1 ARTº4º CAP I,408,1,,201560
+407,rec,2383,348,Emissão de alvará-Nº1 ARTº5 CAP I,409,1,,201570
+408,rec,2383,348,Emissão de alvará-Nº1 ARTº5 CAP I,410,1,,201580
+409,rec,2383,348,Lobras hab.até 200m2 ALINEA a) I Nº1 ARTº5 CAP I,411,1,,201590
+410,rec,2436,413,Lobras hab.até 200m2 ALINEA a) I Nº1 ARTº5 CAP I,412,1,,201600
+411,rec,2383,348,Lob.hab.201-500 m2 ALINEA a) I.II Nº1 ARTº5 CAP I,413,1,,201610
+412,rec,2436,413,Lob.hab.201-500 m2 ALINEA a) I.II Nº1 ARTº5 CAP I,414,1,,201620
+413,rec,2383,348,Lob hab.501-3000 m2 ALINEA a)I.III Nº1 ARTº5 CAP I,415,1,,201630
+414,rec,2436,413,Lob hab.501-3000 m2 ALINEA a)I.III Nº1 ARTº5 CAP I,416,1,,201640
+415,rec,2383,348,Lob hab.mais 3001 m2 ALINEA a)I.IV Nº1 ARTº5 CAP I,417,1,,201650
+416,rec,2436,413,Lob hab.mais 3001 m2 ALINEA a)I.IV Nº1 ARTº5 CAP I,418,1,,201660
+417,rec,2383,348,Comer./servi./indus.-ALINEA a) II Nº1 ARTº5 CAP I,419,1,,201670
+418,rec,2436,413,Comer./servi./indus.-ALINEA a) II Nº1 ARTº5 CAP I,420,1,,201680
+419,rec,2383,348,Prazo p/mês ou fracçao ALINEA b) I Nº1 ARTº5 CAP I,421,1,,201690
+420,rec,2436,413,Prazo p/mês ou fracçao ALINEA b) I Nº1 ARTº5 CAP I,422,1,,201700
+421,rec,2383,348,Corpos Sali.sob via pub ALINEA c)Nº1 ARTº5 CAP I,423,1,,201705
+422,rec,2436,413,Corpos Sali.sob via pub ALINEA c)Nº1 ARTº5 CAP I,424,1,,201710
+423,rec,2383,348,Marcação de alinhamentos ALINEA d) Nº1 ARTº5 CAP I,425,1,,201715
+424,rec,2436,413,Marcação de alinhamentos ALINEA d) Nº1 ARTº5 CAP I,426,1,,201720
+425,rec,2383,348,Emissão de alvará-Nº1 ARTº6º CAP I,427,1,,201725
+426,rec,2383,348,Emissão de alvará-Nº1 ARTº6º CAP I,428,1,,201730
+427,rec,2383,348,Outra sconstr.p/m2 ALINEA a) I Nº1 ART6º CAP I,429,1,,201735
+428,rec,2436,413,Outra sconstr.p/m2 ALINEA a) I Nº1 ART6º CAP I,430,1,,201740
+429,rec,2383,348,Outras constr.p/mês ALINEA a) II Nº1 ART6º CAP I,431,1,,201745
+430,rec,2436,413,Outras constr.p/mês ALINEA a) II Nº1 ART6º CAP I,432,1,,201750
+431,rec,2383,348,Demolição p/piso-ALINEA b) I Nº1 ART6º CAP I,433,1,,201755
+432,rec,2436,413,Demolição p/piso-ALINEA b) I Nº1 ART6º CAP I,434,1,,201760
+433,rec,2383,348,Demolição p/mês-ALINEA b) II Nº1 ART6º CAP I,435,1,,201765
+434,rec,2436,413,Demolição p/mês-ALINEA b) II Nº1 ART6º CAP I,436,1,,201770
+435,rec,2387,352,Emissão de alvará de autorização Nº1 ART 7º CAP I,437,1,,201775
+436,rec,2436,413,Emissão de alvará de autorização Nº1 ART 7º CAP I,438,1,,201780
+437,rec,2387,352,Autori.uti.p/fogo-ALINEA a) I Nº1 ART 7º CAP I,439,1,,201785
+438,rec,2440,417,Autori.uti.p/fogo-ALINEA a) I Nº1 ART 7º CAP I,440,1,,201790
+439,rec,2387,352,Alv.Autorização Outras-ALINEA a)II Nº1 ART 7º CAPI,441,1,,201795
+440,rec,2440,417,Alv.Autorização Outras-ALINEA a)II Nº1 ART 7º CAPI,442,1,,201800
+441,rec,2387,352,Acresce por cada 50m2-Nº2 ART 7º CAP I,443,1,,201805
+442,rec,2440,417,Acresce por cada 50m2-Nº2 ART 7º CAP I,444,1,,201810
+443,rec,2387,351,Aut.Utiliz.bebidas-ALINEA a) Nº 1 ART 8º CAP I,445,1,,201815
+444,rec,2439,416,Aut.Utiliz.bebidas-ALINEA a) Nº 1 ART 8º CAP I,446,1,,201820
+445,rec,2387,351,Aut.Utiliz.Restau.-ALINEA b) Nº1 ART8º CAP I,447,1,,201825
+446,rec,2439,416,Aut.Utiliz.Restau.-ALINEA b) Nº1 ART8º CAP I,448,1,,201830
+447,rec,2387,351,Aut.Utiliz.Rest/beb-ALINEA c) Nº1 ART8º CAP I,449,1,,201835
+448,rec,2439,416,Aut.Utiliz.Rest/beb-ALINEA c) Nº1 ART8º CAP I,450,1,,201840
+449,rec,2387,351,Aut.Uti.Rest/beb/danç ALINEA d) Nº1 ART 8º CAP I,451,1,,201845
+450,rec,2439,416,Aut.Uti.Rest/beb/danç ALINEA d) Nº1 ART 8º CAP I,452,1,,201850
+451,rec,2387,351,Lest.alimentar/nalimentar e servi Nº2 ART 8º CAPI,453,1,,201855
+452,rec,2439,416,Lest.alimentar/nalimentar e servi Nº2 ART 8º CAPI,454,1,,201860
+453,rec,2387,351,L.utili.estabele.hoteleiro-Nº3 ART 8º CAP I,455,1,,201865
+454,rec,2439,416,L.utili.estabele.hoteleiro-Nº3 ART 8º CAP I,456,1,,201870
+455,rec,2387,351,Acresce por cada 50m2-Nº4 ART 8º CAP I,457,1,,201875
+456,rec,2439,416,Acresce por cada 50m2-Nº4 ART 8º CAP I,458,1,,201880
+457,rec,2383,348,Emissão de alvará parcial-Nº1 ARTº 9º CAP I,459,1,,201885
+458,rec,2436,413,Emissão de alvará parcial-Nº1 ARTº 9º CAP I,460,1,,201890
+459,rec,2383,348,Prorrogação prazo obras urb.-Nº1 ART 10º CAPI,461,1,,201895
+460,rec,2436,413,Prorrogação prazo obras urb.-Nº1 ART 10º CAPI,462,1,,201900
+461,rec,2383,348,Prorrogação prazo obras comu.pre.-Nº2 ART 10º CAPI,463,1,,201905
+462,rec,2436,413,Prorrogação prazo obras comu.pre.-Nº2 ART 10º CAPI,464,1,,201910
+463,rec,2383,348,Lic.especial obra inacabada-Nº1 ART 11º CAP I,465,1,,201915
+464,rec,2436,413,Lic.especial obra inacabada-Nº1 ART 11º CAP I,466,1,,201920
+465,rec,2383,348,Acresce mês obra inacabada-Nº1 ART 11º CAP I,467,1,,201925
+466,rec,2436,413,Acresce mês obra inacabada-Nº1 ART 11º CAP I,468,1,,201930
+467,rec,2364,606,LOT.DOTERR.ate 1000 m2-Nº1 ARTº12º CAP II,469,1,,202010
+468,rec,2364,606,LOT.DO TERR.1001 a 5000m2-Nº2 ARTº 12º CAP II,470,1,,202020
+469,rec,2364,606,LOT.DO TERR.supera 5001 m2-Nº3 ARTº12º CAP II,471,1,,202030
+470,rec,2364,606,INF.OBRA  CONST ate 200-ALINEA a)Nº4 ART12º CAPII,472,1,,202040
+471,rec,2364,606,INF.OBRA CONST 201a500-ALINEA b)Nº4 ART12º CAPII,473,1,,202050
+472,rec,2364,606,INF.OBRA CONST 501a3000-ALINEA c)Nº4 ART12º CAPII,474,1,,202060
+473,rec,2364,606,INF.OBRA CONST mais 3001-ALINEAd) Nº4 ART12º CAPII,475,1,,202070
+474,rec,2349,566,VISTORIA P/UNIDADE-ALINEA a)Nº1 ART13º CAPIII,476,1,,203010
+475,rec,2349,566,VISTORIA ARMAZE/IND.ALINEA b)Nº1 ART13º CAPIII,477,1,,203020
+476,rec,2349,566,VIST.REST./SAL.JO.-ALINEA c) Nº1 ARTº13 CAPIII,478,1,,203030
+477,rec,2349,566,VIST.ESTAB.ALIMEN.-ALINEA d)Nº1 ARTº13 CAPIII,479,1,,203040
+478,rec,2349,566,VISTORIA UNI.HOTE.-ALINEA e)Nº1 ARTº13 CAPIII,480,1,,203050
+479,rec,2349,566,"QUARTO/COMER./RESTI,ALINEA e)Nº1 ARTº13 CAPIII",481,1,,203060
+480,rec,2349,566,VISTORIA RECEP.PROV./DEF.-Nº2 ARTº13º CAPIII,482,1,,203070
+481,rec,2349,566,VISTORIAS C/PERITOS-Nº3 ARTº13º CAPIII,483,1,,203080
+482,rec,2349,566,OUTRAS VISTORIAS-Nº4 ARTº13º CAP III,484,1,,203090
+483,rec,2385,350,Recepção provisoria obras empr Nº1 ART14º CAPIII,485,1,,203100
+484,rec,2438,415,Recepção provisoria obras empr Nº1 ART14º CAPIII,486,1,,203110
+485,rec,2385,350,Rec.prov.p/lote-ALINEA a)Nº1 ART14º CAP III,487,1,,203120
+486,rec,2438,415,Rec.prov.p/lote-ALINEA a)Nº1 ART14º CAPIII,488,1,,203130
+487,rec,2385,350,Recepção definitiva obras-Nº2 ART14º CAP III,489,1,,203140
+488,rec,2438,415,Recepção definitiva obras-Nº2 ART14º CAP III,490,1,,203150
+489,rec,2385,350,Rec.defi.p/lote-ALINEA a)Nº2 ART14º CAP III,491,1,,203160
+490,rec,2438,415,Rec.defi.p/lote-ALINEA a)Nº2 ART14º CAP III,492,1,,203170
+491,rec,2364,606,DESTAQUE-PEDIDO OU REPR.-Nº1 ARTº15 CAP IV,493,1,,204010
+492,rec,2364,606,DESTAQUE-P/EMISSAO CERTIDAO-Nº1 ARTº15 CAP IV,494,1,,204020
+493,rec,2364,606,Averbamentos licenciamento-Nº1 ART16º CAP V,495,1,,205010
+494,rec,2364,606,Averbamentos licenciamento-Nº1 ART16º CAP V,496,1,,205020
+495,rec,2364,606,Emissão Certidão da Aprovação-Nº2 ART16º CAP V,497,1,,205030
+496,rec,2364,606,Acrescep/fração-ALINEA a)Nº2 I ART16º CAP V,498,1,,205040
+497,rec,2364,606,Acrescep/Estacio-ALINEA a)Nº2 II ART16º CAP V,499,1,,205050
+498,rec,2364,606,Acrescep/outras-ALINEA a)Nº2 III ART16º CAP V,500,1,,205060
+499,rec,2364,606,Acrescep/rectifi-ALINEA a)Nº2 IV ART16º CAP V,501,1,,205070
+500,rec,2364,606,Outras certidões-Nº3 I ART16º CAP V,502,1,,205080
+501,rec,2364,606,Outrascerti.p/folha-ALINEAa)Nº3ART16ºCAPV,503,1,,205090
+502,rec,2364,606,Fotocópia simples,504,1,,205100
+503,rec,2364,606,Autenticação peças escritas-Nº8 ART16º CAP V,505,1,,205110
+504,rec,2364,606,Fotocópia autenticada,506,1,,205120
+505,rec,2364,606,Averba.morad.uni.-ALINEA a)Nº9 ART16º CAP V,507,1,,205130
+506,rec,2364,606,Averba.morad.uni.-ALINEA a) Nº9 ART16º CAP V,508,1,,205140
+507,rec,2364,606,Averba.morad.col.-ALINEA b)Nº9 ART16º CAP V,509,1,,205150
+508,rec,2364,606,Averba.morad.col.-ALINEA b)Nº9 ART16º CAP V,510,1,,205160
+509,rec,2364,606,REAPRE.HABIT.UNI.-ALINEA a)Nº10 ART16º CAP V,511,1,,205170
+510,rec,2364,606,REAPRE.OUTROS-ALINEA b)Nº10 ART16º CAP V,512,1,,205180
+511,rec,2364,606,INF.S/INSTRU.EPLANE.-Nº11 ART16º CAP V,513,1,,205190
+512,rec,2364,606,Fornecimento de Livro de obra-Nº12 ART16º CAP V,514,1,,205200
+513,rec,2441,433,Ficha Técnica Habitação Nº13 ART.16º CAP V,515,1,,205210
+514,rec,2431,371,Registode Alojamento local Nº14 ART.16º CAP V,516,1,,205220
+515,rec,2384,349,Taxa Urbanismo Art.43º Regulamento Urbanismo,517,1,,205230
+516,rec,2437,414,Taxa Urbanismo Art.43º Regulamento Urbanismo,518,1,,205240
+517,rec,2342,564,Rendas e Aluguer Outros Bens,519,1,,300010
+518,rec,2330,575,Teatro Municipal Bilhetes,520,1,,300020
+519,des,966,1045,I.R.S.-Aposentados,521,1,,800010
+520,des,1293,1119,Contas bancárias encerradas,522,1,,800020
+521,des,1210,1098,C.Cult.DesportivodaC.M.F.,523,1,,800030
+522,des,1177,1055,DRSF-CustodeCartões,524,1,,800040
+523,des,1228,1113,Recenseamento Eleitoral,525,1,,800050
+524,des,1299,1107,Censos,526,1,,800060
+525,des,1286,1116,Caixa Geral de Depósitos,527,1,,800070
+526,des,1165,1049,Caixa Geral de Aposentações,528,1,,800080
+527,des,1291,1119,Cheques sem provisão,529,1,,800090
+528,des,1311,1051,Cofre Previd.Minist. Finanças,530,1,,800100
+529,des,1292,1119,Conta bancária sem provisão,531,1,,800110
+530,des,1204,1111,Desconto Facultativo Ordenados,532,1,,800120
+531,des,879,1119,Depósito Garantia de Água,533,1,,800130
+532,des,1203,1088,Descontos Judiciais,534,1,,800140
+533,des,1172,1078,Centro Segurança Social,535,1,,800150
+534,des,1164,1049,"CGA 0,5% Desc.Empreitadas Factoring",536,1,,800160
+535,des,1163,1049,"CGA 0,5% Desc.Empreitadas",537,1,,800170
+536,des,880,1114,Depósito Garantia Vendedor Ambulante,538,1,,800180
+537,des,971,1044,I.R.C.-15%,539,1,,800190
+538,des,1179,1064,Imp.AlvarásLic.Abertura-DRAPL,540,1,,800200
+539,des,968,1042,I.R.S.-Trabalho Independente,541,1,,800210
+540,des,1308,1059,I.P.Q. - Instituto Português da Qualidade,542,1,,800220
+541,des,964,1041,I.R.S.-Funcionários,543,1,,800230
+542,des,1178,1063,Di.Reg.P.Coord.Licen.Policiais,544,1,,800240
+543,des,1295,1119,Notas falsas,545,1,,800250
+544,des,1297,1048,Notário Privado da Câmara,546,1,,800260
+545,des,882,1119,Outras garantias e cauções,547,1,,800270
+546,des,1294,1119,Anulações de cheques,548,1,,800280
+547,des,1307,1119,Operações de Tesouraria Teatro,549,1,,800290
+548,des,1288,1112,Pagamentos em Duplicado água,550,1,,800300
+549,des,1180,1079,Penhoras Finanças,551,1,,800310
+550,des,970,1043,I.R.S.-Prediais(Red.Escolas),552,1,,800320
+551,des,1304,1119,Publicações P/Conta terceiros,553,1,,800330
+552,des,1217,1100,Sind.Trab.Função Pública RAM,554,1,,800340
+553,des,1305,1119,Regularizações Factoring,555,1,,800350
+554,des,1313,1119,Recebimentos não identificados,556,1,,800360
+555,des,1181,1080,Retenção 25% Finanças,557,1,,800370
+556,des,970,1043,I.R.S.-15%-Rendas de edificios,558,1,,800380
+557,des,1211,1060,SAMS-Serv.Assist.Médico Social,559,1,,800390
+558,des,1216,1097,SINTAP-Sind.Trab.Adm.Pública,560,1,,800400
+559,des,1219,1102,Sind.Bancários Sul e Ilhas,561,1,,800410
+560,des,1212,1091,SNBP-Sind.Nac.Bombeiros Profissionais,562,1,,800420
+561,des,1221,1108,SETAA-Sind.Emp.TécnicosAgrícolas,563,1,,800430
+562,des,1207,1093,Seguro de Grupo (Império),564,1,,800440
+563,des,1206,1086,Serviços Sociais,565,1,,800450
+564,des,1169,1078,Segurança social funcionários,566,1,,800460
+565,des,1214,1094,Sind.Trab.Administração Local,567,1,,800470
+566,des,1208,1092,ATAM,568,1,,800480
+567,des,1302,1119,Inscrições Universidade Sénior,569,1,,800490
+568,des,1176,1053,DRSP-Taxas por Vistoria,570,1,,800500
+569,des,1290,1119,Sobras de Caixa de Tesouraria,571,1,,800510
+570,des,1162,1050,ADSE,572,1,,800520
+571,des,1297,1058,Emolumentos Devido Registo de Escrituras,573,1,,800530
+572,des,1297,1118,Fundo Comum de Emolumentos Notariais,574,1,,800540
+573,des,1148,1065,Imp.Selo-Aquisição Imóveis,575,1,,800550
+574,des,1149,1065,Imp.Selo-Arrendamento,576,1,,800560
+575,des,1296,1117,Fundo Comum Execução Fiscal,577,1,,800570
+576,des,1314,1119,Outras Operações Tesouraria,578,1,,800580
+577,des,1300,1115,Taxa de justiça-Op Tesouraria,579,1,,800590
+578,des,1306,1119,"PORT.Nº1637/2006,17Out.Art.º3",580,1,,800600
+579,des,1286,1116,CAIXA GERAL DE DEPÓSITOS 10%,581,1,,800610
+580,des,1286,1116,CAIXA GERAL DE DEPÓSITOS 5%,582,1,,800620
+581,des,1164,,"CGA 0,5% EMPR FACTORING",583,1,,800630
+582,des,1163,,"CAIXA GERAL DE APOSENT. 0,5%",584,1,,800640
+583,des,1165,1049,CGA FUNCIONÁRIOS,585,1,,800650
+584,des,1172,1076,RETENÇÃO INST GEST SEG S 25%,586,1,,800660
+585,des,1172,1078,SEGURANÇA SOCIAL RET 25%,587,1,,800670
+586,des,1172,1078,SEGURANÇA SOCIAL RET VARIÁVEL,588,1,,800680
+587,des,1169,1052,SEGURANÇA SOCIAL FUNCIONÁRIOS,589,1,,800690
+588,des,968,1042,"IRS - RET.NÃO RESIDENTES - 21,5%",590,1,,800700
+589,des,968,1042,"IRS 11,5%",591,1,,800710
+590,des,968,1042,"IRS 21,5%",592,1,,800720
+591,des,964,1041,IRS - FUNCIONARIOS,593,1,,800730
+592,des,966,1045,IRS - APOSENTADOS,594,1,,800740
+593,des,970,1043,"IRS RENDAS 16,50%",595,1,,800750
+594,des,971,1044,"IRC RENDAS 16,50%",596,1,,800760
+595,des,1151,,"IS 11.2.2 JOGO, SORTEIOS CONCU",597,1,,800770
+596,des,1180,1079,PENHORAS-FINANÇAS,598,1,,800780
+597,des,1181,1080,RETENÇÕES - FINANÇAS 25%,599,1,,800790
+598,des,1182,1080,RETENÇÃO FINANÇAS VARIÁVEL,600,1,,800800
+599,des,1285,,RETENÇÕES PENHORAS SOLICITAD.,601,1,,800810
+600,des,1307,1119,Operações de Tesouraria Teatro,602,1,,800820
+601,des,1287,1119,RETENÇÕES A FAVOR DA CMF,603,1,,800830
+602,des,1212,1091,SNBP-SIND.NAC.BOMBEIROS PROFIS,604,1,,800840
+603,des,1214,1094,SIND.TRAB. ADMINISTRAÇÃO LOCAL,605,1,,800850
+604,des,1215,1095,SIND.AGRIC.ALIMENT. E FLORESTA,606,1,,800860
+605,des,1220,1099,SIND.QUADROS TECNICOS ESTADO,607,1,,800870
+606,des,1217,1100,SIND.TRAB.FUNÇÃO PUBLICA - RAM,608,1,,800880
+607,des,1218,1101,SIND. PROFESSORES DA MADEIRA,609,1,,800890
+608,des,1216,1097,SINTAP-SIND.TRAB.ADM.PUBLICA,610,1,,800900
+609,des,1221,1108,SETAA - SIND. EMP. TÉCNICOS,611,1,,800910
+610,des,1213,1110,SINDICATO DOS ENFERMEIROS RAM,612,1,,800920
+611,des,1208,1092,ATAM,613,1,,800930
+612,des,1312,1081,ASSISTÊNCIA SAD/PSP,614,1,,800940
+613,des,1209,1096,ADICAA-ASS.DIPL.C.ADM.AUTARQ.,615,1,,800950
+614,des,1207,1093,SEGURO DE GRUPO - IMPERIO,616,1,,800960
+615,des,1296,1117,FUNDO COMUM EXECUÇÃO FISCAL,617,1,,800970
+616,des,1210,1098,C.CULT. E DESPORTIVO DA C.M.F.,618,1,,800980
+617,des,1297,1118,FUNDO COMUM DE EMOL. NOTARIAIS,619,1,,800990
+618,des,1204,1111,DESC.FACULTATIVO DE ORDENADOS,620,1,,801000
+619,des,1205,1119,RECEITA DA CAMARA (REPOSICOES),621,1,,801010
+620,des,1162,1050,ADSE,622,1,,801020
+621,des,1311,1051,COFRE PREV. MINIST FINANCAS,623,1,,801030
+622,des,1206,1086,SERVICOS SOCIAIS,624,1,,801040
+623,des,1203,1088,DESCONTOS JUDICIAIS,625,1,,801050
+624,rec,2377,322,Contribuição Autárquica,626,1,,901010
+625,rec,2371,322,Imposto Municipal Sobre Imóveis,627,1,,901020
+626,rec,2372,323,Imposto Único de Circulação,628,1,,901030
+627,rec,2378,324,Imposto Municipal de Sisa,629,1,,901040
+628,rec,2373,324,Imposto Municipal s/Transmissões,630,1,,901050
+629,rec,2425,371,2% Sobre a Venda de Pescado,631,1,,901060
+630,rec,2339,612,Receita do Balão e Quiosque,632,3,,901070
+631,rec,2426,371,Lic.Div.e Licença Policial,633,1,,901080
+632,rec,2422,371,Taxa Municipal de Direitos Passagem,634,1,,901090
+633,rec,2444,423,"Caça,Uso e Porte de Arma",635,1,,901100
+634,rec,2657,440,Multas,636,1,,901110
+635,rec,2612,446,Proveito Financeiro-Juros,637,1,,901120
+636,rec,2616,446,Obrigações-Juros da Administração Pública,638,1,,901130
+637,rec,2342,474,Rendas de Terrenos,639,1,,901140
+638,rec,2710,486,Sociedade Quase Socied Não Financeiras-Publ,640,1,,901150
+639,rec,2710,487,Sociedade Quase Socied Não Financeiras-Priv,641,1,,901160
+640,rec,2710,489,Bancos e Outras Instituições Financeiras,642,1,,901170
+641,rec,2536,493,Fundo de Equilíbrio Financeiro Corrente,643,1,,901180
+642,rec,2537,494,Fundo Social Municipal,644,1,,901190
+643,rec,2538,495,Participação Fixa no IRS,645,1,,901200
+644,rec,2706,497,Programa Socrates e da Vinci,646,1,,901210
+645,rec,2577,497,Projecto Rumo à Cidadania Participativa,647,1,,901220
+646,rec,2540,497,Tranf.Correntes Outros(Fundos),648,1,,901230
+647,rec,2680,517,Contrato-Programa Intempérie,649,1,,901231
+648,rec,1343,523,Sist. De Solidariedade e Segurança Social,650,1,,901240
+649,rec,2710,530,Donativos de Familias,651,1,,901250
+650,rec,2577,532,Transferências União  Europeia,652,1,,901260
+651,rec,1343,564,Utilização da Estação Biologia,653,2,,901270
+652,rec,2294,590,Comparticipação transporte escolar,654,1,,901280
+653,rec,2313,601,Rendas de Outros Edificios SEP,655,3,3,901290
+654,rec,2368,606,Pagamento electricidade e água,656,3,,901300
+655,rec,2342,609,Rendas de Lojas,657,3,3,901310
+656,rec,2342,609,Renda Escola Profissional Atlântico,658,5,2,901311
+657,rec,2342,609,Rendas de Lojas,659,5,3,901312
+658,rec,2342,609,Rendas de Lojas,660,2,,901320
+659,rec,2337,609,Utilização edifício Palácio Justiça,661,2,,901330
+660,rec,2528,609,Rendas de Outros edifícios,662,3,3,901340
+661,rec,2342,609,Rendas de Outros edifícios,663,3,,901350
+662,rec,2342,609,Rendas de Outros edifícios,664,3,3,901360
+663,rec,2342,609,Renda Parque Santa catarina,665,3,,901361
+664,rec,2342,609,Rendas de Outros edifícios,666,3,3,901362
+665,rec,2336,612,Cidade da Criança,667,3,,901370
+666,rec,1343,612,Contrato Teleféricos da Madeira,668,1,,901380
+667,rec,2655,621,Indemizações Estragos provocados,669,1,,901390
+668,des,2678,622,Diferenças Câmbio Favoráveis,670,1,,901400
+669,rec,2595,622,Subsidio Social Mobilidade,671,1,,901410
+670,rec,2541,719,Fundo de Equilíbrio Financeiro de Capital,672,1,,901420
+671,rec,1397,729,IHRU-IIIP rot. Comparticipação,673,1,,901430
+672,rec,1401,736,IFAP,674,1,,901440
+673,rec,1391,745,Contratos Programa,675,1,,901450
+674,rec,1410,758,EU Programa INTERVIR +,676,1,,901460
+675,rec,1411,759,PCT-MAC (Programa Cooperação Transnacional),677,1,,901470
+676,rec,1415,791,EU Programa CIVITAS-MIMOSA,678,1,,901480
+677,rec,1408,793,INTERREG III B,679,1,,901490
+678,rec,2577,793,Programa Juventude em  Acção,680,1,,901500
+679,rec,895,977,Empréstimos a Curto Prazo,681,1,,901510
+680,rec,935,992,Empréstimos M/L Prazo,682,1,,901520
+681,rec,2672,1031,Reposições Não Abatidas aos Pagamentos,683,1,,901530
+682,rec,950,995,INH Emprést.M/L Prazo,684,1,,901540
+683,rec,950,995,INH Emprést. Alegria,685,1,,901550
+684,rec,952,995,INH Emprést.Cruzes,686,1,,901560
+685,rec,955,995,INH Emprést.Viveiros,687,1,,901570
+686,rec,1400,762,IHM III-Prot .Comparticipação,688,1,,901580
+687,rec,1391,745,Contratos Programa O.R.2002,689,1,,901590
+688,rec,1403,737,Programa de Intervenção do Turismo (PIT),690,1,,901600
+689,rec,2653,625,Venda de Terrenos,691,1,,901610
+690,rec,2653,651,Alienação fracções,692,1,,901620
+691,rec,2653,660,Venda de bens de investimento,693,1,,901630
+692,rec,2653,666,Outros bens de Investimento,694,1,,901640
+693,rec,1395,729,IHRU-Protocolo II,695,1,,901650
+694,rec,2710,622,Seguros crianças Atelier,696,1,,901660
+695,rec,2710,622,Outras Receitas correntes,697,1,,901670
+696,rec,2710,622,Outras Receitas correntes,698,1,,901680
+697,rec,2667,622,Outras Receitas correntes,699,1,,901690
+698,rec,2710,622,Outras Receitas correntes,700,1,,901700
+699,rec,2368,622,Pagamento água e electricidade,701,1,,901710
+700,rec,1145,622,Recuperação de Iva,702,1,,901720
+701,rec,2340,612,Concessão Publicidade/MUPIS,703,3,,901730
+702,rec,2675,355,Comércio e Serviços,704,1,,901740
+703,rec,2659,440,Taxa de Justiça,705,1,,901750
+704,rec,2655,622,Indemnizações diversas,706,1,,902010
+705,rec,2454,433,Taxas-Outros Registos,707,1,,902020
+706,rec,2710,622,Outras Receitas correntes,708,1,,903010
+707,rec,2658,436,Multas e Penalalidades-Juros Mora,709,1,,904010
+708,rec,2286,562,Autocolantes p/a contentores recolha selectiva,710,1,,905010
+709,rec,2279,552,Venda de Resíduos para Reciclar,711,2,,905020
+710,rec,2277,552,Venda Resíduos c/ IVA,712,2,,905030
+711,rec,2277,552,Contrapartidas resíduos sol.,713,2,,905040
+712,rec,2278,552,Serv.rec.e consolidação-REEE,714,2,,905050
+713,rec,2278,552,Venda Resíduos c/IVA(VIM),715,2,,905060
+714,rec,2278,552,Venda de resíduos (VIM),716,2,,905070
+715,rec,2368,606,Outras Receitas,717,2,,905080
+716,rec,2530,622,Transporte Marítimo,718,2,,905090
+717,rec,2531,622,Transportes terrestre,719,2,,905100
+718,rec,2342,609,Rendas de espaços,720,4,2,906010
+719,rec,2342,609,Rendas de espaços - 30D,721,2,2,906011
+720,rec,2342,609,Rendas de Lojas,722,3,3,906020
+721,rec,2342,609,Rendas de Lojas,723,4,2,906030
+722,rec,2342,609,Rendas de Lojas - 30D,724,2,2,906031
+723,rec,2342,609,Rendas de Lojas,725,3,2,906040
+724,rec,2342,609,Rendas de espaços,726,3,3,906050
+725,rec,2342,609,Rendas Loja Merc Lavradores,727,2,3,906051
+726,rec,2342,609,Rendas Lojas Merc Penteada,728,2,3,906052
+727,rec,2342,612,Bancadas de Peixe c/contrato,729,2,3,906053
+728,rec,2432,411,Lugares do Terrado c/contrato,730,2,3,906054
+729,rec,2432,609,Rendas de Outros edfifícios,731,3,3,906060
+730,rec,2342,612,Rendas e Aluguer Outros Bens,732,2,3,906070
+731,rec,2342,612,Rendas e Aluguer Outros Bens,733,4,2,906080
+732,rec,2432,411,Lugares do Terrado,734,3,3,906090
+733,rec,2342,609,Rendas de espaços,735,3,3,906100
+734,rec,2342,609,Rendas de espaços,736,3,3,906101
+735,rec,2285,562,Out.Vendas Museu Açucar,737,1,,907010
+736,rec,2285,562,Out.Vendas Museu F Franco,738,1,,908010
+737,rec,2284,542,Venda Publicações Editadas CMF Museu H Fran,739,1,,908020
+738,rec,2286,562,Merchandising,740,1,,909010
+739,rec,2284,542,Venda Publicações Editadas CMF Teatro,741,1,,909020
+740,rec,2284,542,Venda Publicações Editadas pela CMF,742,1,,909030
+741,rec,2285,562,Outras Vendas Bens,743,1,,910010
+742,rec,2667,622,Outras Receitas correntes,744,1,,911010
+743,rec,2710,622,Indeminizações,745,1,,911020
+744,rec,2529,604,Máquinas de Vending,746,1,,911030
+745,rec,2658,436,Multas e Penal.-Juros Mora,747,1,,914010
+746,rec,2454,433,Taxas-Outros,748,1,,914020
+747,rec,2655,621,Indemizações Estragos provocados,749,1,,914030
+748,rec,2312,600,Parquímetros - Outros,750,3,,914040
+749,rec,2710,622,Outras Receitas correntes,751,1,,916010
+750,rec,2710,622,Indemnizações de seguros pessoais,752,1,,919010
+751,rec,2653,647,Alienação de imóveis habitaçao,753,1,,920010
+752,rec,2710,622,Emolumentos Notariais,754,1,,920020
+753,rec,2658,436,Juros-Execuções fiscais,755,1,,921010
+754,rec,2452,433,Outros encargos,756,1,,921020
+755,rec,2452,433,Taxas-Outros Registos,757,1,,921030
+756,rec,2659,440,Taxa de Justiça,758,1,,921040
+757,rec,2660,439,Despesa Processo Contra-Ordenação,759,1,,922010
+758,rec,2657,439,Multas e Penalidades por Contra-Ordenação,760,1,,922020
+759,rec,2710,622,Outras Receitas correntes,761,1,,923010
+760,rec,2451,433,Taxa Coeficiente Conservação,762,1,,924010
+761,rec,2451,433,Taxa submissão litígio,763,1,,924020
+762,rec,2286,562,Venda de produtos,764,1,,924030
+763,rec,2284,542,Venda Publicações,765,1,,924040
+764,rec,2451,433,Taxa Def. obras Necessarias,766,1,,924050
+765,rec,2449,433,"PORT.Nº1637/2006,17Out.Art.º3Nº1",767,1,,924060
+766,rec,2286,562,Merchandising,768,1,,925010
+767,rec,2268,551,PAPELEIRA PLASTICO VERDE 50 l DIM,7403,1,2,LC01010101
+768,rec,2268,551,PAPELEIRA PLASTICO VERDE AZEITONA 50 l DIM,7404,1,2,LC01010102
+769,rec,2268,551,PAPELEIRA PLASTICO VERDE 50 l DIMOVA SPLASH,7405,1,2,LC01010103
+770,rec,2270,551,EMBALAO PLASTICO AMARELO 50 l,7410,1,2,LC03010101
+771,rec,2270,551,EMBALAO PLASTICO AMARELO 75 l,7411,1,2,LC03010102
+772,rec,2270,551,EMBALAO PLASTICO AMARELO 120 l,7412,1,2,LC03010103
+773,rec,2270,551,EMBALAO PLASTICO AMARELO 240 l,7413,1,2,LC03010104
+774,rec,2269,551,VIDRAO PLASTICO VERDE 50 l,7419,1,2,LC04010101
+775,rec,2269,551,VIDRAO PLASTICO VERDE 120 l,7420,1,2,LC04010102
+776,rec,2268,551,PAPELAO PLASTICO AZUL 50 l,7428,1,2,LC05010101
+777,rec,2268,551,PAPELAO PLASTICO AZUL 120 l,7429,1,2,LC05010102
+778,rec,2271,551,CONTENTOR RESIDUO ORGANICO CASTANHO 120 l,7441,1,2,LC08030101
+779,rec,2271,551,CONTENTOR RESIDUO ORGANICO CASTANHO 240 l,7442,1,2,LC08030102
+780,rec,2271,551,CONTENTOR RESIDUO ORGANICO CASTANHO 50 l,7443,1,2,LC08030103
+781,rec,2272,551,SACOS PLASTICO LIXO 110x70 CMF AZUIS,7471,1,2,LO05010202

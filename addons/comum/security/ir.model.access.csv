@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+sncp_comum_calendario_manager,Calendario,model_sncp_comum_calendario,group_comum_manager,1,1,1,1
+sncp_comum_feriados_manager,"Feriados manager",model_sncp_comum_feriados,group_comum_manager,1,1,1,1
+sncp_comum_cpv_manager,"CPV manager",model_sncp_comum_cpv,group_comum_manager,1,1,1,1
+sncp_comum_meios_pagamento_manager,"Meios Pagamento manager",model_sncp_comum_meios_pagamento,group_comum_manager,1,1,1,1
+sncp_comum_cond_pagam_manager,"Condicoes Pagamento manager",model_sncp_comum_cond_pagam,group_comum_manager,1,1,1,1
+sncp_comum_codigos_contab_manager,"Codigos contabilizacao manager",model_sncp_comum_codigos_contab,group_comum_manager,1,1,1,1
+sncp_comum_param_manager,"Paramentros manager",model_sncp_comum_param,group_comum_manager,1,1,1,1
+sncp_comum_freguesias_manager,"Freguesias",model_sncp_comum_freguesias,group_comum_manager,1,1,1,1
+sncp_comum_bairros_manager,"Bairros",model_sncp_comum_bairros,group_comum_manager,1,1,1,1
+sncp_comum_arruamentos_manager,"Arruamentos",model_sncp_comum_arruamentos,group_comum_manager,1,1,1,1
+sncp_comum_etiquetas_manager,"Etiquetas",model_sncp_comum_etiquetas,group_comum_manager,1,1,1,1

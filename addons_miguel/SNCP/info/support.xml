@@ -1,0 +1,24 @@
+,
+                                                        ('state', 'not in', ['draft'])
+
+
+,
+                                               'readonly': [('state', 'not in', ['draft'])]
+
+
+attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+
+        {'model': 'sncp.comum.feriados',
+        'attachment_ids': [[6, False, []]],
+        'res_id': 5,
+        'auto_delete': False,
+        'body_html': 'Corpo de mensagem',
+        'reply_to': 'aksana.ivanova@exeq.pt(RP)',
+        'email_to': 'aksana.ivanova@exeq.pt',
+        'date': '2014-09-04 13:55:57',
+        'email_cc': 'aksana.ivanova@exeq.pt(CC)',
+        'author_id': 3,
+        'partner_ids': [[6, False, [3]]],
+        'type': 'email',
+        'email_from': 'admin@localhost',
+        'subject': 'Ass'}

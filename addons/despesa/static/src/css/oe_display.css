@@ -1,0 +1,60 @@
+@charset "utf-8";
+.openerp .my_oe_red{
+ color: #ff0000;
+}
+[data-id="codigo_120"] {
+    width: 120px;
+}
+[data-id="ano"]{
+    width: 20px;
+}
+[data-id="mes"]{
+    width: 60px;
+}
+[data-id="montante"]{
+    width: 100px;
+}
+[data-id="reservado"]{
+    width: 100px;
+}
+[data-id="cabimento_id"]{
+    width: 150px;
+}
+[data-id="res_partner_id"]{
+    width: 350px;
+    align-self: center;
+}
+[data-id="total_pagar"]{
+    width: 100px;
+}
+[data-id="datahora"]{
+    width: 130px;
+}
+.openerp .my_oe_r_space_50{
+ margin-right: 50px;
+}
+.openerp .my_oe_r_space_20{
+ margin-right: 20px;
+}
+.openerp .my_oe_r_space_150{
+ margin-right: 150px;
+}
+.openerp .my_oe_total{
+    font-size: 18px;
+    float: right;
+}
+[data-id="total_fatura"]{
+    width: 120px;
+    padding-right: 20px;
+}
+
+.openerp .my_oe_total p{
+    font-weight: bold;
+    display: inline;
+}
+
+.openerp .my_message{
+    font-size: 18px;
+}
+
+

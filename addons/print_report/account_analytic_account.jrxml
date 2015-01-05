@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AAA" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="IDS" class="java.lang.Object">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PIDS" class="java.util.List">
+		<defaultValueExpression><![CDATA[$P{IDS}.toList()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT A.code, A.name,
+       (CASE
+	WHEN A.type = 'view' THEN 'Vista Analítica'
+	WHEN A.type = 'normal' THEN 'Conta Analítica'
+	WHEN A.type = 'contract' THEN 'Contrato ou Projeto'
+	ELSE 'Modelo de Contrato'
+	END) AS tipo, A.parent_id,
+	(CASE
+	WHEN A.tipo_dim = 'cc' THEN '4. Centro de Custos'
+	WHEN A.tipo_dim = 'uo' THEN '1. Orgânica'
+	WHEN A.tipo_dim = 'ce' THEN '2. Económica'
+	ELSE '3. Funcional'
+	END) AS num_dim,
+	(CASE
+	WHEN A.tipo_dim = 'cc' THEN 'Centro de Custos'
+	WHEN A.tipo_dim = 'uo' THEN 'Orgânica'
+	WHEN A.tipo_dim = 'ce' THEN 'Económica'
+	ELSE 'Funcional'
+	END) AS dim,
+       COALESCE((SELECT code FROM account_analytic_account AS A1
+		WHERE  A1.id = A.parent_id),'') AS parent_code
+FROM account_analytic_account AS A
+WHERE $X{IN,A.id,PIDS}
+ORDER BY num_dim,code]]>
+	</queryString>
+	<field name="code" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="parent_id" class="java.lang.Integer"/>
+	<field name="num_dim" class="java.lang.String"/>
+	<field name="dim" class="java.lang.String"/>
+	<field name="parent_code" class="java.lang.String"/>
+	<group name="DIMENSION" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{dim}]]></groupExpression>
+		<groupHeader>
+			<band height="63">
+				<textField>
+					<reportElement x="0" y="0" width="555" height="32"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{dim}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="0" y="32" width="86" height="31" backcolor="#404040"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="86" y="32" width="291" height="31" backcolor="#404040"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="377" y="32" width="97" height="31" backcolor="#404040"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="474" y="32" width="81" height="31" backcolor="#404040"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="10" y="32" width="76" height="31"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Código]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="96" y="32" width="281" height="31"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Descrição]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="377" y="32" width="97" height="31"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tipo de Conta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="474" y="32" width="81" height="31"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Conta Descendente]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="15" width="555" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contas Analíticas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="86" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="86" y="0" width="291" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="377" y="0" width="97" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="474" y="0" width="81" height="20"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="86" y="0" width="291" height="20"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="86" height="20"/>
+				<box leftPadding="10"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="474" y="0" width="81" height="20"/>
+				<box leftPadding="10"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{parent_code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="377" y="0" width="97" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

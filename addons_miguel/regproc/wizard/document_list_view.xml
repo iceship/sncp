@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="document_tree_view">
+            <field name="name">document.list.tree</field>
+            <field name="model">ir.attachment</field>
+            <field name="arch" type="xml">
+                <tree string="Attachments"  version="7.0">
+                    <field name="name"/>
+                    <field name="parent_id" />
+                    <field name="user_id"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+        <act_window name="Anexos"
+                    res_model="ir.attachment"
+                    src_model="sncp.regproc.aquis.alien"
+                    key2="client_action_multi"
+                    view_mode="filter_manager_tree,form"
+                    target="current"
+                    view_type="form"
+                    view_id = "document_tree_view"
+                    id="aquis_alien_anexos"
+                    groups="base.group_user"
+                    domain="[
+                             ('res_model', '=', context['active_model']),
+                             ('res_id', '=', context['active_id'])]"
+                />
+
+        <act_window name="Anexos"
+                    res_model="ir.attachment"
+                    src_model="sncp.regproc.notario.actos"
+                    key2="client_action_multi"
+                    view_mode="filter_manager_tree,form"
+                    target="current"
+                    view_type="form"
+                    view_id = "document_tree_view"
+                    id="aquis_alien_anexos"
+                    groups="base.group_user"
+                    domain="[
+                             ('res_model', '=', context['active_model']),
+                             ('res_id', '=', context['active_id'])]"
+                />
+
+    </data>
+</openerp>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <!-- ALTEREI AQUI 9 DE JULHO 2014-->
+        <record id="formulario_guia_cobrar_view" model="ir.ui.view">
+            <field name="model">formulario.sncp.tesouraria.guia.cobrar.diario</field>
+            <field name="arch" type="xml">
+                <form string="Formulario" version="7.0">
+                    <group >
+                        <!-- CAMPOS DE CONTROLO-->
+                        <!-- END-->
+                        <group>
+                            <field name="name" required="1" />
+                            <field name="diario_liq_id" required="1" options="{'no_open': True}" />
+                            <field name="diario_cobr_id" required="1" options="{'no_open': True}" />
+                            <field name="caixa_id" required="1" options="{'no_open': True}"/>
+                        </group>
+                        </group>
+                    <footer>
+                        <div align="left" style="width:500px">
+                            <button name="end" type="object" string="Continuar" />
+                            <button name="descartar" type="object" string="Descartar" class="oe_link"/>
+                        </div>
+                    </footer>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>
+
+

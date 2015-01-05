@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <record id="view_sncp_despesa_pagamentos_reposicoes_form" model="ir.ui.view">
+                <field name="name">view.sncp.despesa.pagamentos.reposicoes.form</field>
+                <field name="model">sncp.despesa.pagamentos.reposicoes</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Reposições" version="7.0">
+
+                        <field name="state" invisible="1"/>
+
+                        <!-- _______campos de estado_______________-->
+                        <field name="estado_linhas" invisible="1"/>
+                        <!-- _______FIM_____-->
+
+                        <label for="opag_id"/>
+                        <field name="opag_id" required="1" on_change="on_change_opag_id(opag_id,data,departamento_id,motivo)"
+                               options="{'no_open': True}"
+                               attrs="{'readonly': ['|',('state','not in',['draft']),
+                                                    ('estado_linhas','in',[1,2])],
+                                       'required': [('estado_linhas','in',[0])]
+                                       }"
+                               class="oe_inline my_oe_r_space_50"/>
+
+                        <label for="data_pag_op"/>
+                        <field name="data_pag_op" readonly="1" class="oe_inline my_oe_r_space_50"/>
+                        <label for="montante_iliq"/>
+                        <field name="montante_iliq" readonly="1" class="oe_inline my_oe_r_space_50"/>
+
+                        <separator/>
+                        <label for="parceiro"/>
+                        <field name="parceiro" readonly="1" class="oe_inline my_oe_r_space_50"/>
+                        <label for="departamento_id"/>
+                        <field name="departamento_id" required="1" options="{'no_open': True}"
+                               attrs="{'readonly': ['|',('state','not in',['draft']),
+                                                    ('estado_linhas','in',[1,2])],
+                                       'required': [('estado_linhas','in',[0])]
+                                       }"
+
+                               class="oe_inline my_oe_r_space_50"/>
+                        <label for="data"/>
+                        <field name="data" required="1" class="oe_inline"
+                               attrs="{'readonly': ['|',('state','not in',['draft']),
+                                                    ('estado_linhas','in',[1,2])],
+                                       'required': [('estado_linhas','in',[0])]
+                                       }" />
+
+                        <separator/>
+                        <group>
+                            <field name="montante" readonly="1"/>
+                        </group>
+
+                        <group>
+                            <field name="motivo" attrs="{'readonly':[('state', 'not in', ['draft'])]}"/>
+                        </group>
+
+                        <button name="continuar" string="Prosseguir" type="object"
+                                attrs="{'invisible':[('estado_linhas','in',[1,2])]}"/>
+                        <button name="confirma" string="Confirmar" type="object"
+                                attrs="{'invisible':[('estado_linhas','in',[0,1])]}"/>
+                        <button name="finalizar" string="Finalizar" type="object"
+                                attrs="{'invisible':[('estado_linhas','in',[0,2])]}"/>
+                        <button name="unlink" string="Descartar" type="object"/>
+                        <notebook>
+                                <page>
+                                    <field name="reposicao_linha_id" nolabel="1"
+                                           attrs="{'readonly': ['|',('state','not in',['draft']),
+                                                                    ('estado_linhas','in',[2])],
+                                                   'invisible': [('estado_linhas','in',[0])]}">
+                                        <tree string="Linhas da Reposição" editable="true" create="false" delete="false">
+                                            <field name="name" readonly="1"/>
+                                            <field name="account_invoice_line_id" readonly="1"/>
+                                            <field name="compromisso" readonly="1"/>
+                                            <field name="compromisso_linha_id" readonly="1"/>
+                                            <field name="montante" readonly="1"/>
+                                            <field name="montante_repor" required="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                        </notebook>
+                    </form>
+                </field>
+            </record>
+
+
+        <!--_________________ Reposições _____________________________-->
+        <record id="action_sncp_despesa_pagamentos_reposicoes_view" model="ir.actions.act_window"  >
+            <field name="name">Reposições</field>
+            <field name="res_model">sncp.despesa.pagamentos.reposicoes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_despesa_pagamentos_reposicoes_form"/>
+        </record>
+            <record id="action_sncp_despesa_pagamentos_reposicoes_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_despesa_pagamentos_reposicoes_form"/>
+                <field name="act_window_id" ref="action_sncp_despesa_pagamentos_reposicoes_view"/>
+            </record>
+        <record id="view_sncp_despesa_pagamentos_reposicoes_board" model="ir.ui.view">
+            <field name="name">board.reposicao</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Reposições" version="7.0">
+                    <board style="1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_despesa_pagamentos_reposicoes_view)d"  readonly="1"
+                                    string="Reposições"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_despesa_pagamentos_reposicoes_board" model="ir.actions.act_window">
+            <field name="name">Reposições</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_despesa_pagamentos_reposicoes_board"/>
+        </record>
+
+        <menuitem name="Criar Guia de Reposição" parent="menu_despesa_pagamentos"
+                  id="menu_sncp_despesa_pagamentos_reposicoes_board"
+                  action="action_sncp_despesa_pagamentos_reposicoes_board" sequence="60"/>
+
+        </data>
+</openerp>

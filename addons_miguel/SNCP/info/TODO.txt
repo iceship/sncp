@@ -1,0 +1,16 @@
+def send_email => avisos automaticos associados aos workflows
+
+sequence implementation no_gap dont work
+
+UPDATE account_analytic_account
+SET code=T2.code
+FROM dblink('dbname=new_BD', 'select id,code from account_analytic_account where id > 1605')
+AS T2(ide integer,code varchar)
+WHERE id=T2.ide;
+
+
+
+#amount_total=self.moneyfmt(Decimal(fatura.amount_total),sep='.',dp=',')
+# (fatura.amount_total).ljust(5,u'0')
+
+# REMOVER PRINT EM CERTAS CLASSES

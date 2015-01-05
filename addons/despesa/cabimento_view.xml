@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Cabimento -->
+        <record id="view_sncp_despesa_cabimento_tree" model="ir.ui.view">
+            <field name="name">view_sncp_despesa_cabimento_tree</field>
+            <field name="model">sncp.despesa.cabimento</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Cabimento" delete="false">
+                    <field name="cabimento"/>
+                    <field name="name"/>
+                    <field name="data" readonly="True"/>
+                    <field name="state"/>
+                    <field name="origem_id" options="{'no_open': True}"/>
+                    <button name="unlink" string="Apagar" states="draft,anul" type="object" icon="gtk-cancel"/>
+                    <button name="imprimir_report" type="object" string="Imprimir" states="cont" icon="gtk-print"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_despesa_cabimento_form" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.cabimento.form</field>
+            <field name="model">sncp.despesa.cabimento</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Cabimento" version="7.0" create="false" delete="false"
+                      attrs="{'readonly':[('state', 'not in', ['draft'])]}">
+                    <header>
+                        <div class="oe_inline">
+                        <button name="call_param" type="object" string="Contabilizar"  states="draft"/>
+                        <button name="cabimento_anul" type="object" string="Anular" states="cont" class="oe_highlight"/>
+                        </div>
+                        <field name='state' widget='statusbar' readonly="1"/>
+                    </header>
+                    <!-- ___________________________________Cabimento__________________________________-->
+                    <group  colspan="4" col="1">
+                        <group col="4">
+                            <field name="cabimento" readonly="1"/>
+                            <field name="data" readonly="1"/>
+                            <field name="origem_id" options="{'no_open': True}"
+                                   attrs="{'readonly':['|',('estado','=',1),('state', 'not in', ['draft'])]}"/>
+                            <button string="Carregar linhas" name="criar_linha_cabimento" type="object"
+                            context="{'cabimento_id': id, 'origem_id': origem_id}"
+                            attrs="{'invisible':['|', ('state', 'not in', ['draft']),'|',('estado', '=', 1),
+                            ('origem_id','in',[False])]}"/>
+                        </group>
+                        <group col="2">
+                            <field name="name" attrs="{'readonly':[('state', 'not in', ['draft'])]}"/>
+                            <field name="desc2" attrs="{'readonly':[('state', 'not in', ['draft'])]}"/>
+                        <field name="observ" attrs="{'readonly':[('state', 'not in', ['draft'])]}"/>
+                        </group>
+                    </group>
+                    <field name="id" invisible="True"/>
+                    <field name="estado" invisible="1"/>
+                    <notebook >
+                        <page>
+                            <!-- ___________________________________Linhas__________________________________-->
+                            <field  name="cab_linhas_id" nolabel="1" attrs="{'readonly':[('state', 'not in', ['draft'])]}">
+                                <tree editable="top">
+                                    <field name="linha" readonly="1"/>
+                                    <field name="estado" invisible="1"/>
+                                    <field name="organica_id" required="1" options="{'no_open': True}"
+                                           attrs="{'readonly': [('estado', 'in', [1])]}"/>
+                                    <field name="economica_id" required="1" options="{'no_open': True}"
+                                           attrs="{'readonly': [('estado', 'in', [1])]}"/>
+                                    <field name="funcional_id" options="{'no_open': True}"
+                                           attrs="{'readonly': [('estado', 'in', [1])]}"/>
+                                    <field name="montante" string="Dotação" required="1"
+                                           />
+                                    <field name="name"/>
+                                    <field name="state_line" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_despesa_cabimento_view" >
+            <field name="name">Cabimentos</field>
+            <field name="res_model">sncp.despesa.cabimento</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Despesa" parent="comum.menu_sncp" id="menu_despesa" sequence="40"/>
+        <menuitem name="Cabimentos" parent="menu_despesa" id="menu_sncp_despesa_cabimento_view"
+                      action="action_sncp_despesa_cabimento_view" sequence="10"/>
+    </data>
+</openerp>

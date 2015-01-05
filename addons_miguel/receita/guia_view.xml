@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- _________________Vistas__________________________-->
+
+        <!--Guia Receita-->
+        <record id="view_sncp_receita_guia_rec_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.guia.rec.tree</field>
+            <field name="model">sncp.receita.guia.rec</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Guia de Receita" create="false" delete="false">
+                    <field name="state" invisible="1"/>
+                    <field name="data_emissao"/>
+                    <field name="montante"/>
+                    <field name="partner_department"/>
+                    <field name="natureza"/>
+                    <field name="user_id" string="Criada por"/>
+                    <button name="anula_guia_receita" string="Anular" states="cri" type="object" icon="gtk-cancel"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_guia_rec_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.guia.rec.form</field>
+            <field name="model">sncp.receita.guia.rec</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+
+                <form string="Guia de Receita" version="7.0" create="false" delete="false">
+                    <header>
+                        <field name='state' widget='statusbar'/>
+                    </header>
+                    <div>
+                        <separator/>
+                        <label for="name" class="oe_inline"/>
+                            <field name="name" readonly="1"
+                                   class="oe_inline my_oe_r_space_20"
+                                   attrs="{'readonly': ['|',('natureza', 'not in', ['ots']),
+                                                                ('state', 'not in', ['cri'])]}"/>
+                        <label for="data_emissao" class="oe_inline"/>
+                            <field name="data_emissao" readonly="1"
+                                   class="oe_inline my_oe_r_space_50"
+                                   attrs="{'readonly': ['|',('natureza', 'not in', ['ots']),
+                                                                ('state', 'not in', ['cri'])]}"/>
+                        <label for="montante" class="oe_inline"/>
+                            <field name="montante" readonly="1"
+                                   class="oe_inline"
+                                   attrs="{'readonly': ['|',('natureza', 'not in', ['ots']),
+                                                                ('state', 'not in', ['cri'])]}"/>
+
+                        <separator/>
+                        <label for="origem"/>
+                            <field name="origem" class="oe_inline my_oe_r_space_50" readonly="1"/>
+
+                        <label for="partner_id" class="oe_inline"
+                                attrs="{'invisible': ['|',('origem', 'in', ['serv'])]}"/>
+                            <field name="partner_id" readonly="1"
+                                   class="oe_inline my_oe_r_space_20"
+                                   on_change="on_change_part_depart(partner_id, department_id)"
+                                   attrs="{'invisible': ['|',('origem', 'in', ['serv'])],
+                                           'readonly': ['|',('natureza', 'not in', ['ots']),
+                                                                ('state', 'not in', ['cri'])]}"/>
+
+                        <label for="department_id" class="oe_inline"
+                                attrs="{'invisible': [('origem', 'in', ['part']),
+                                                      ('natureza', 'in', ['rec'])]}"/>
+                            <field name="department_id" readonly="1"
+                                   class="oe_inline my_oe_r_space_20"
+                                   on_change="on_change_part_depart(partner_id, department_id)"
+                                   attrs="{'invisible': [('origem', 'in', ['part']),
+                                                         ('natureza', 'in', ['rec'])],
+                                           'readonly': ['|',('natureza', 'not in', ['ots']),
+                                                                ('state', 'not in', ['cri'])]}"/>
+                        <separator/>
+
+                        <group colspan="4" cols="2">
+                            <group>
+                                <field name="natureza" readonly="1"/>
+                                <field name="user_id" readonly="1"
+                                       attrs="{'invisible': [('state', 'in', ['cri'])]}"/>
+                                <field name="categoria" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="impressa" readonly="1"
+                                       attrs="{'readonly': ['|',('natureza', 'not in', ['ots']),
+                                                                ('state', 'not in', ['cri'])]}"/>
+                                <field name="liquidada" readonly="1"
+                                       attrs="{'readonly': ['|',('natureza', 'not in', ['ots']),
+                                                                ('state', 'not in', ['cri'])]}"/>
+                                <field name="cobrada" readonly="1"
+                                       attrs="{'readonly': ['|',('natureza', 'not in', ['ots']),
+                                                                ('state', 'not in', ['cri'])]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="obsv" class="oe_inline"
+                                   attrs="{'readonly': [('state', 'in', ['liq', 'rec'])]}"/>
+                        </group>
+
+                    </div>
+
+                <notebook colspan="4">
+                    <page string="Linhas">
+                        <field name="linhas_id" nolabel="1"
+                                   attrs="{'readonly': [('state', 'not in', ['cri'])]}">
+                                <tree string="Linhas" create="false" editable="true">
+                                    <field name="name" readonly="1"/>
+                                    <field name="natureza" readonly="1" on_change="on_change_natureza(natureza)"/>
+                                    <field name="tax_rate" readonly="1"/>
+                                    <field name="conta_id" readonly="1"/>
+                                    <field name="economica_id" readonly="1"/>
+                                    <field name="calc_montante" invisible="1"/>
+                                    <field name="montante_tax" readonly="1"/>
+                                    <field name="montante_ots" readonly="1"
+                                           on_change="on_change_calc_mont(montante_ots, calc_montante)"/>
+                                    <field name="montante_orc" readonly="1"
+                                           attrs="{'readonly': [('natureza', '=', 'ots')]}"/>
+                                    <field name="obsv" />
+                                    <field name="desc" readonly="1"/>
+                                </tree>
+                            </field>
+                    </page>
+                    <page string="Meios" attrs="{'invisible': [('state', 'not in', ['rec'])]}">
+                        <field name="meios_id" nolabel="1">
+                            <tree>
+                                <field name="name"/>
+                                <field name="meio_rec"/>
+                                <field name="montante"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Relações" attrs="{'invisible': [('natureza', 'not in', ['rec'])]}">
+                        <field name="rel_id" nolabel="1">
+                            <tree>
+                                <field name="fatura_id" options="{'no_open': True}"/>
+                                <field name="montante_pend"/>
+                                <field name="montante_cobr"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_guia_rec_view">
+            <field name="name">Guias de Receita</field>
+            <field name="res_model">sncp.receita.guia.rec</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sncp_receita_guia_rec_tree"/>
+        </record>
+            <record id="action_sncp_receita_guia_rec_view1" model="ir.actions.act_window.view">
+              <field eval="1" name="sequence"/>
+              <field name="view_mode">tree</field>
+              <field name="view_id" ref="view_sncp_receita_guia_rec_tree"/>
+              <field name="act_window_id" ref="action_sncp_receita_guia_rec_view"/>
+            </record>
+            <record id="action_sncp_receita_guia_rec_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_receita_guia_rec_form"/>
+                <field name="act_window_id" ref="action_sncp_receita_guia_rec_view"/>
+            </record>
+        <menuitem name="Guia de Receita" parent="menu_receita" id="menu_sncp_receita_guia_rec_view"
+                      action="action_sncp_receita_guia_rec_view" sequence="40"/>
+
+    </data>
+</openerp>

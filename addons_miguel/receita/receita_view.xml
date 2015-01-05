@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+
+        <!-- Diários para departamentos-->
+        <record id="view_sncp_receita_diarios_dept_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.diarios.dept.tree</field>
+            <field name="model">sncp.receita.diarios.dept</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Diários" version="7.0" editable="top">
+                    <field name="department_id" required="1" options="{'no_open': True}"
+                           on_change="on_change_department_id()"/>
+                    <field name="journal_id" required="1" options="{'no_open': True}"
+                           on_change="on_change_journal_id()"/>
+                    <field name="padrao"
+                           on_change="on_change_padrao(padrao, department_id, journal_id)"/>
+                    <field name="name" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_diarios_dept_view">
+            <field name="name">Diários</field>
+            <field name="res_model">sncp.receita.diarios.dept</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Diários" parent="menu_receita_dados_gerais" id="menu_sncp_receita_diarios_dept_view"
+                          action="action_sncp_receita_diarios_dept_view" sequence="20"/>
+
+        <!-- Itens por departamento -->
+        <record id="view_sncp_receita_itens_dept_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.itens.dept.tree</field>
+            <field name="model">sncp.receita.itens.dept</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Itens por departamento">
+                    <field name="department_id"/>
+                    <field name="item_id"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_itens_dept_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.itens.dept.form</field>
+            <field name="model">sncp.receita.itens.dept</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Itens por departamento" version="7.0" create="false" delete="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="department_id" required="1" options="{'no_open': True}"
+                                       on_change="on_change_department()"/>
+                                <field name="muda_preco"/>
+                            </group>
+                            <group>
+                                <field name="item_id" required="1" options="{'no_open': True}"
+                                       attrs="{'readonly': [('department_id', '=', False)]}"/>
+                                <field name="name" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_itens_dept_view">
+            <field name="name">Itens por departamento</field>
+            <field name="res_model">sncp.receita.itens.dept</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_sncp_receita_itens_dept_tree"/>
+            <field name="view_mode">tree_pesquisa_departamento,form</field>
+            <field name="context">{'tree_view_ref': 'receita.view_sncp_receita_itens_dept_tree' }</field>
+        </record>
+        <menuitem name="Permissões"  parent="menu_receita_dados_gerais" id="menu_receita_dados_gerais_permissoes"
+                          sequence="40"/>
+                    <menuitem name="Itens por departamento" parent="menu_receita_dados_gerais_permissoes"
+                              id="menu_sncp_receita_itens_dept_view"
+                              sequence="10" action="action_sncp_receita_itens_dept_view"/>
+
+        <!-- Itens por utilizador-->
+        <record id="view_sncp_receita_itens_user_tree" model="ir.ui.view">
+            <field name="name">view.sncp.receita.itens.user.tree</field>
+            <field name="model">sncp.receita.itens.user</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Excepções" version="7.0">
+                    <field name="user_id"/>
+                    <field name="regra"/>
+                    <field name="item_id"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_receita_itens_user_form" model="ir.ui.view">
+            <field name="name">view.sncp.receita.itens.user.form</field>
+            <field name="model">sncp.receita.itens.user</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Excepções" version="7.0" create="false" delete="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="user_id" options="{'no_open': True}" required="1"/>
+                                <field name="regra" required="1"
+                                       on_change="on_change_regra(regra, user_id)"/>
+                            </group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="item_id" options="{'no_open': True}" required="1"
+                                       on_change="on_change_item_id(item_id, regra, user_id)"
+                                       attrs="{'readonly': [('regra', 'not in', ['inc', 'exc', 'mod'])]}"/>
+                                <field name="muda_preco"
+                                       attrs="{'invisible': [('regra', '=', 'exc')],
+                                               'readonly': [('regra', '=', 'mod')]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_receita_itens_user_view">
+            <field name="name">Excepções</field>
+            <field name="res_model">sncp.receita.itens.user</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Excepções" parent="menu_receita_dados_gerais_permissoes"
+                  id="menu_sncp_receita_itens_user_view"
+                  sequence="20" action="action_sncp_receita_itens_user_view"/>
+
+    </data>
+</openerp>

@@ -1,0 +1,1 @@
+﻿SELECT insere_titulos(false);

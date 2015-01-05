@@ -1,0 +1,30 @@
+@charset "utf-8";
+[data-id="meio_id"] {
+    width: 700px;
+}
+
+.openerp .my_oe_r_space_50{
+ margin-right: 50px;
+}
+.openerp .my_oe_r_space_20{
+ margin-right: 20px;
+}
+.openerp .my_oe_r_space_150{
+ margin-right: 150px;
+}
+.openerp .my_oe_total{
+    font-size: 18px;
+    float: right;
+}
+.openerp .my_middle_button{
+
+    position: relative;
+    left: 20%;
+}
+
+.openerp .my_message{
+    font-size: 18px;
+}
+
+
+

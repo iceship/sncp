@@ -1,0 +1,4 @@
+id,conta,name,moeda_id/id,state,iban,codigo,diario_id/id,conta_id/id,swift,tipo
+1,003509620000600150069,Caixa Geral de Depósitos - depósitos à ordem,1,act,PT050003509620000600150069,CGD01,19,1698,XXXXXXXXXXX,prz
+2,003509620000600123401,Caixa Geral de Depósitos - Ambiente,1,act,PT050003509620000600123401,CGD02,19,836,CCCCCCCCCCC,tit
+3,000700001590063151002,Banco Espírito Santo - Programa RECRIA,1,act,PT050003509620000600123401,BES01,19,2138,TTTTTTTTTTT,ord

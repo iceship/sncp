@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Compromisso -->
+        <record id="view_sncp_despesa_compromisso_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.compromisso.tree</field>
+            <field name="model">sncp.despesa.compromisso</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Compromisso" delete="false">
+                    <field name="state" invisible="1"/>
+                    <field name="compromisso"/>
+                    <field name="name"/>
+                    <field name="tipo"/>
+                    <field name="partner_id" options="{'no_open': True}"/>
+                    <button name="unlink" string="Apagar" states="draft,anul" type="object" icon="gtk-cancel"/>
+                    <button name="imprimir_report" type="object" string="Imprimir" states="proc" icon="gtk-print"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_despesa_compromisso_form" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.compromisso.form</field>
+            <field name="model">sncp.despesa.compromisso</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Compromisso" version="7.0" create="false" delete="false"
+                      attrs="{'readonly':[('state', 'not in', ['draft'])]}">
+                    <header>
+                        <div class="oe_inline">
+                        <button string="Criar anos" type="object" name="criar_anos"
+                                context ="{'ano_ini':ano_ini, 'ano_fim':ano_fim, 'tipo':tipo}"
+                                attrs="{'invisible':[('next', 'not in', [0])]}"/>
+                        <button name="compromisso_anul" type="object" string="Anular" states="proc" class="oe_highlight"/>
+                        <button name="call_diario" type="object" string="Processar"
+                                attrs="{'invisible':['|', ('next', 'not in', [2]),('state', 'not in', ['draft'])]}" />
+                        <button string="Dados adicionais" type="object" name="dados_adic"/>
+                        </div>
+                    <field name='state' widget='statusbar' nolabel="1" readonly="1"/>
+                    </header>
+                    <!-- __________________________VISTA COMPROMISSO_______________________________-->
+
+                    <field name="dados_adic_id" invisible="1"/>
+                    <field name="next" invisible="1"/>
+                    <field name="id" invisible="1"/>
+
+                    <group colspan="4" cols="2">
+                        <group>
+                            <field name="compromisso" readonly="1"/>
+                            <field name="tipo" required="True" attrs="{'readonly':['|',('state', 'not in', ['draft']),
+                                                                                ('next', 'not in', [0])]}" />
+                        </group>
+                        <group>
+                            <field name="ano_ini" required="1" on_change="on_change_teste_ano_ini(ano_ini)"
+                                                attrs="{'readonly':['|',('state', 'not in', ['draft']),
+                                                                        ('next', 'not in', [0])]}" />
+                            <field name="ano_fim" required="1"
+                                                   on_change="on_change_teste_ano_fim(ano_ini, ano_fim)"
+                                                   attrs="{'readonly':['|',('state', 'not in', ['draft']),
+                                                                           ('next', 'not in', [0])],
+                                                           'invisible':[('tipo','not in',['plu'])]}" />
+                        </group>
+                    </group>
+                    <group colspan="4" cols="2">
+                        <field name="name"  attrs="{'readonly':['|',('state', 'not in', ['draft']),
+                                                                   ('next', 'not in', [0])]}" />
+                        <field name="desc2" attrs="{'readonly':['|',('state', 'not in', ['draft']),
+                                                                    ('next', 'not in', [0])]}" />
+                        <field name="obsv" attrs="{'readonly':['|',('state', 'not in', ['draft']),
+                                                                   ('next', 'not in', [0])]}" />
+                        <field name="partner_id" required="1" options="{'no_open': True}"
+                               attrs="{'readonly':['|',('state', 'not in', ['draft']),
+                                                                         ('next', 'not in', [0])]}"/>
+
+                    </group>
+
+                    <field name="anos_id"
+                                          attrs="{'invisible':[('next', 'in', [0])]}">
+                        <tree string="Anos" create="false" delete="false" >
+                            <field name="ano" readonly="True" class="my_oe_center"/>
+                            <field name="cabimento_id" colspan="2" options="{'no_open': True}"/>
+                            <field name="name" string="Observações" />
+                            <field name="id" invisible="True"/>
+                            <field name="compromisso_id" invisible="1"/>
+                        </tree>
+                        <!--__________________________VISTA ANOS_____________________________________-->
+                        <form string="Anos" version="7.0">
+                            <group>
+                                <group>
+                                    <field name="estado" invisible="1"/>
+                                    <field name="editar" invisible="1"/>
+                                    <field name="state_comp" invisible="1"/>
+                                    <field name="id" invisible="1"/>
+                                    <field name="next_comp" invisible="1"/>
+                                    <field name="compromisso_id" invisible="1"/>
+                                    <field name="tipo_comp" invisible="1"/>
+
+                                    <field name="cabimento_id" options="{'no_open': True}"
+                                           attrs="{'readonly': ['|',('estado','not in',[0,10]),('editar', 'not in', [1, 2])],
+                                                   'required': ['|',('tipo_comp','not in',['plu']), ('editar', 'in', [1])],}"/>
+                                    <button name="referenciar_cabimento" string="Referenciar" type="object"
+                                                    context ="{'ano':ano, 'ano_id':id, 'cabimento_id': cabimento_id,
+                                                                'compromisso_id': compromisso_id}"
+                                                    attrs="{'invisible': ['|', ('editar','not in',[2]), ('next_comp','not in',[1])]}"/>
+                                </group>
+                                <group><field name="ano" readonly="True"/></group>
+                            </group>
+                            <group>
+                                <field name="name" string="Observações" attrs="{'readonly':[('state_comp','not in',['draft'])]}"/>
+                                <newline/>
+
+                            </group>
+
+                            <button name="criar_linha_compromisso" string="Criar Linhas" type="object"
+                                                    context ="{'ano':ano, 'ano_id':id, 'cabimento_id': cabimento_id,
+                                                                'compromisso_id': compromisso_id,
+                                                                'tipo': tipo_comp}"
+                                                    attrs="{'invisible': ['|', ('estado', 'in', [1, 2]),
+                                                                                ('editar', 'in', [0])]}"/>
+                            <button name="atualizar_montantes" type="object" context="{'compromisso_id': compromisso_id}"
+                                                            attrs="{'invisible': [ '|',('state_comp','in',['anul']),('estado', 'not in', [2])]}"
+                                                            string="Atualizar Montantes"/>
+
+                            <field name="linha_comp_id"  attrs="{'readonly':[('state_comp','in',['anul'])]}">
+                                <tree create="false" delete="false" version="7.0">
+                                    <field name="estado" invisible="1"/>
+                                    <field name="compromisso_ano_id" invisible="1"/>
+                                    <field name="estado_ano" invisible="1"/>
+                                    <field name="state_comp" invisible="1"/>
+
+                                    <field name="linha" readonly="1"/>
+                                    <field name="organica_id" options="{'no_open': True}"/>
+                                    <field name="economica_id" options="{'no_open': True}"/>
+                                    <field name="funcional_id" options="{'no_open': True}"/>
+                                    <field name="anual_prev"/>
+                                    <field name="montante"/>
+                                    <field name="name"/>
+                                    <field name="state_line" />
+
+                                    <button name="delete" type="object" icon="STOCK_CUT"
+                                                          attrs="{'invisible': ['|',('state_comp','not in',['draft']),('estado', 'in', [0])]}"
+                                                          context="{'linha':linha, 'compromisso_ano_id':compromisso_ano_id}" />
+                                </tree>
+                                <!-- _____________________________VISTA LINHAS___________________________-->
+                                <form version="7.0" >
+                                    <header>
+                                        <field name="state_line" widget='statusbar' readonly="1"/>
+                                    </header>
+                                    <group>
+                                        <group>
+                                            <field name="tipo_comp" invisible="1"/>
+                                            <field name="state_comp"  invisible="1"/>
+                                            <field name="estado" invisible="1"/>
+                                            <field name="estado_ano" invisible="1"/>
+
+                                            <field name="linha" readonly="1"/>
+                                            <field name="anual_prev" on_change="on_change_anual_prev(anual_prev,montante)"
+                                                    attrs="{'readonly':[('tipo_comp', 'in', ['com', 'plu'])],
+                                                            'required':[('tipo_comp', 'in', ['per', 'cal'])]}"/>
+                                            <field name="montante" required="1"
+                                                   on_change="on_change_montante(montante)"/>
+                                        </group>
+                                        <group>
+                                            <field name="organica_id" options="{'no_open': True}"
+                                                   on_change="on_change_dim(parent.compromisso_id,linha,organica_id, 'organica_id')"
+                                                   attrs="{'readonly':['|',('estado','not in',[2]),('state_comp','not in',['draft'])],
+                                                           'required': [('estado','in',[2])]}" />
+                                            <field name="economica_id" options="{'no_open': True}"
+                                                   on_change="on_change_dim(parent.compromisso_id,linha,economica_id, 'economica_id')"
+                                                   attrs="{'readonly':['|',('estado','not in',[2]),('state_comp','not in',['draft'])],
+                                                           'required': [('estado','in',[2])]}" />
+                                            <field name="funcional_id" options="{'no_open': True}"
+                                                   on_change="on_change_dim(parent.compromisso_id,linha, funcional_id, 'funcional_id')"
+                                                   attrs="{'readonly':['|',('estado','not in',[2]),('state_comp','not in',['draft'])]}"/>
+                                        </group>
+                                        <group cols="4">
+                                            <field name="name" required="1" attrs="{'readonly':[('state_line','not in',['draft'])]}"/>
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <field name="agenda_id" nolabel="1"
+                                               attrs="{'readonly':[('state_line','in',['anul'])]}">
+                                            <tree string="Agenda" editable="true" create="false" delete="false" version="7.0">
+                                                <field name="name" readonly="1"/>
+                                                <field name="montante" required="1"
+                                                        on_change="on_change_montante(montante)"/>
+                                                <field name="data_prevista"/>
+                                                <field name="last_doc_contab_id" readonly="1"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </form>
+                            </field>
+                        </form>
+
+                    </field>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_despesa_compromisso_view" >
+            <field name="name">Compromissos</field>
+            <field name="res_model">sncp.despesa.compromisso</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Compromissos" parent="menu_despesa" id="menu_sncp_despesa_compromisso_view"
+                      action="action_sncp_despesa_compromisso_view" sequence="30"/>
+
+        <!-- Dados adicionais -->
+        <record id="view_sncp_despesa_compromisso_dados_adic_form" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.compromisso.dados.adic.form</field>
+            <field name="model">sncp.despesa.compromisso.dados.adic</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Dados Adicionais" version="7.0">
+                    <header>
+                        <button string="Guardar" type="object" name="save" class="oe_highlight"/>
+                    </header>
+                    <group colspan="2" cols="4">
+                        <group>
+                            <field name="name"/>
+                            <field name="procedimento_id" options="{'no_open': True}"/>
+                            <field name="fundamento_id" options="{'no_open': True}"/>
+                            <field name="natureza_id" options="{'no_open': True}"/>
+                            <field name="cofinanciamento_id" options="{'no_open': True}"/>
+                            <field name="cpv_id" options="{'no_open': True}"/>
+                            <field name="criterio"/>
+                            <field name="publicado"/>
+                        </group>
+                        <group>
+                            <field name="tc_visto" on_change="on_change_tc_visto(tc_visto)"/>
+                            <field name="tc_remessa" attrs="{'readonly':[('tc_visto', 'in', [False])]}"/>
+                            <field name="tc_data" attrs="{'readonly':[('tc_visto', 'in', [False])]}"/>
+                            <field name="tc_res" attrs="{'readonly':[('tc_visto', 'in', [False])]}"/>
+                            <field name="data_contrado"/>
+                            <field name="prazo"/>
+                            <field name="preco_contrat"/>
+                            <field name="data_fecho"/>
+                            <field name="preco_efetivo"/>
+                        </group>
+
+                    </group>
+                    <label for="autoriza_esp"/>
+                        <field name="autoriza_esp" class="oe_inline"/>
+                    <label for="contr_alter"/>
+                        <field name="contr_alter" class="oe_inline"/>
+                    <label for="contr_revog"/>
+                        <field name="contr_revog"/>
+                    <label for="contr_resol"/>
+                        <field name="contr_resol"/>
+
+                    <group>
+                        <field name="notas"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,6 @@
+id,name,company_id/id,state,expected_employees,no_of_employee,department_id/id
+1,Director de Departamento,1,open,1.00,1.00,
+2,Técnico Inferior de 4.ª Classe,1,open,2.00,2.00,
+3,Director do Departamento Financeiro,1,open,1.00,1.00,1
+4,Técnico Auxiliar Principal,1,open,1.00,1.00,
+5,Tesoureiro,1,open,1.00,1.00,2

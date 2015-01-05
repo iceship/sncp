@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+
+        <!-- ________________Board test___________________-->
+        <record id="board_test_form" model="ir.ui.view">
+            <field name="name">board.test.form</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Test" version="7.0">
+                    <board style="2-1">
+                        <column>
+                            <action name="%(action_mapa_ots_view)d" string="Ordem"/>
+                        </column>
+
+                    </board>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_board_test" model="ir.actions.act_window">
+            <field name="name">Test</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="board_test_form"/>
+        </record>
+
+        <menuitem id="menu_dashboard_test"
+                  sequence="99"
+                  parent="menu_tesouraria"
+                  action="action_board_test"/>
+
+    </data>
+</openerp>
+

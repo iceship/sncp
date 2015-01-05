@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Requisições Internas -->
+        <record id="view_sncp_despesa_requisicoes_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.requisicoes.tree</field>
+            <field name="model">sncp.despesa.requisicoes</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Requisições Internas" delete="false">
+                    <field name="name"/>
+                    <field name="datahora"/>
+                    <field name="armazem_req_id"/>
+                    <field name="requisitante_dep_id"/>
+                    <field name="requisitante_emp_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_despesa_requisicoes_form" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.requisicoes.form</field>
+            <field name="model">sncp.despesa.requisicoes</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Requisições Internas" version="7.0" delete="false">
+                    <header>
+                        <div class="oe_inline">
+                        <button name="anular" string="Anular" type="object" states="draft"/>
+                        <button name="para_aprovar" string="Enviar para Aprovação" type="object"
+                                attrs="{'invisible': ['|',('estado', 'not in', [1]),
+                                                          ('state', 'not in', ['draft'])]}"
+                                confirm="Não vai poder editar a partir deste momento"/>
+                        </div>
+                        <field name="state" widget='statusbar' nolabel="1"/>
+
+                    </header>
+                    <!-- Campos de controlo -->
+                    <field name="estado" invisible="1"/>
+                    <!-- END -->
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="armazem_req_id"  options="{'no_open': True}"
+                                   required="1"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="requisitante_dep_id" options="{'no_open': True}"
+                                   required="1"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="requisitante_emp_id" options="{'no_open': True}"
+                                   readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="datahora" readonly="1"/>
+                            <field name="justificacao"
+                               attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                        </group>
+                    </group>
+                    <button name="continuar" string="Continuar" type="object"
+                            attrs="{'invisible': [('estado', 'not in', [0])]}"/>
+
+                    <notebook>
+                        <!-- __________________________________________________LINHAS____________-->
+                        <page string="Linhas"  attrs="{'invisible': [('estado', 'in', [0])]}">
+                            <field name="linhas_ids" attrs="{'readonly': [('state', 'not in', ['draft'])]}">
+                                <tree string="Linhas" editable="top">
+                                    <field name="parent_state" invisible="1"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="item_id" required="1" options="{'no_open': True}"
+                                           on_change="on_change_item_id(item_id)"/>
+                                    <field name="quant_req" required="1"/>
+                                    <field name="preco_unit" readonly="1"/>
+                                    <field name="uom_id" readonly="1"/>
+                                    <field name="taxa_iva" readonly="1"/>
+                                    <field name="quant_sat" readonly="1"/>
+                                    <field name="state" readonly="1"/>
+
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Histórico"  attrs="{'invisible': [('estado', 'in', [0])]}">
+                            <field name="historico_ids" attrs="{'readonly': [('state', 'not in', ['draft'])]}">
+                                <tree string="Historico" editable="false" create="false" delete="false">
+                                    <field name="accao" readonly="1"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="user_id" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_despesa_requisicoes_view" >
+            <field name="name">Requisições Internas</field>
+            <field name="res_model">sncp.despesa.requisicoes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', 'not in', ['complt', 'rejeit'])]</field>
+        </record>
+            <record id="action_sncp_despesa_requisicoes_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_despesa_requisicoes_tree"/>
+                <field name="act_window_id" ref="action_sncp_despesa_requisicoes_view"/>
+            </record>
+            <record id="action_sncp_despesa_requisicoes_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_despesa_requisicoes_form"/>
+                <field name="act_window_id" ref="action_sncp_despesa_requisicoes_view"/>
+            </record>
+
+        <menuitem name="Requisições Internas" parent="menu_despesa" id="menu_despesa_requisicoes"
+                    sequence="40"/>
+                <menuitem name="Requisições Internas" parent="menu_despesa_requisicoes" sequence="10"
+                      id="menu_sncp_despesa_requisicoes_view" action="action_sncp_despesa_requisicoes_view"/>
+
+
+        <!-- Aprovar Requisições-->
+        <record id="view_sncp_despesa_requisicoes_aprovar_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.requisicoes.aprovar.tree</field>
+            <field name="model">sncp.despesa.requisicoes</field>
+            <field name="arch" type="xml">
+                <tree string="Requisições Internas" create="false" delete="false" edit="false">
+                    <field name="name"/>
+                    <field name="datahora"/>
+                    <field name="armazem_req_id"/>
+                    <field name="requisitante_dep_id"/>
+                    <field name="requisitante_emp_id"/>
+                    <field name="state"/>
+                    <button name="aprovar" string="Aprovar" type="object"
+                            icon="gtk-apply" states="remetd"/>
+                    <button name="rejeitar" string="Rejeitar" type="object"
+                            icon="gtk-cancel" states="remetd"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_despesa_requisicoes_aprovar_form" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.requisicoes.aprovar.form</field>
+            <field name="model">sncp.despesa.requisicoes</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Requisições Internas" version="7.0" readonly="1">
+                    <header>
+                        <button name="aprovar" string="Aprovar" type="object"
+                            icon="gtk-apply" states="remetd"/>
+                        <button name="rejeitar" string="Rejeitar" type="object"
+                                icon="gtk-cancel" states="remetd"/>
+                        <field name="state" widget='statusbar' nolabel="1"/>
+                    </header>
+                    <field name="estado" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="armazem_req_id" readonly="1"/>
+                            <field name="requisitante_dep_id" readonly="1"/>
+                            <field name="requisitante_emp_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="datahora" readonly="1"/>
+                            <field name="justificacao" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Linhas">
+                            <field name="linhas_ids">
+                                <tree string="Linhas" editable="false" create="false" delete="false">
+                                    <field name="name" readonly="1"/>
+                                    <field name="item_id"  readonly="1"/>
+                                    <field name="quant_req"  readonly="1"/>
+                                    <field name="preco_unit" readonly="1"/>
+                                    <field name="uom_id" readonly="1"/>
+                                    <field name="taxa_iva" readonly="1"/>
+                                    <field name="quant_sat" readonly="1"/>
+                                    <field name="state" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Histórico"  attrs="{'invisible': [('estado', 'in', [0])]}">
+                            <field name="historico_ids">
+                                <tree string="Historico" editable="false" create="false" delete="false">
+                                    <field name="accao" readonly="1"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="user_id" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_despesa_requisicoes_aprovar_view" >
+            <field name="name">Aprovar Requisições</field>
+            <field name="res_model">sncp.despesa.requisicoes</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_sncp_despesa_requisicoes_aprovar_tree"/>
+            <field name="view_mode">tree_aprovador_autorizado_requisicao,form</field>
+            <field name="domain">[('state', '=', 'remetd')]</field>
+            <field name="context">{'text':'aprovar','state':'remetd',
+                                   'tree_view_ref':'despesa.view_sncp_despesa_requisicoes_aprovar_tree',
+                                   'form_view_ref':'despesa.view_sncp_despesa_requisicoes_aprovar_form'}</field>
+        </record>
+        <menuitem name="Aprovar Requisições" parent="menu_despesa_requisicoes" sequence="20"
+                      id="menu_sncp_despesa_requisicoes_aprovar_view"
+                      action="action_sncp_despesa_requisicoes_aprovar_view"/>
+
+        <!--Satisfazer Requisições-->
+        <record id="view_sncp_despesa_requisicoes_satis_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.requisicoes.satis.tree</field>
+            <field name="model">sncp.despesa.requisicoes</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Satisfazer Requisições" delete="false" create="false" edit="false">
+                    <field name="name"/>
+                    <field name="datahora"/>
+                    <field name="armazem_req_id"/>
+                    <field name="requisitante_dep_id"/>
+                    <field name="requisitante_emp_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_despesa_requisicoes_satis_form" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.requisicoes.satis.form</field>
+            <field name="model">sncp.despesa.requisicoes</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Satisfazer Requisições" version="7.0" delete="false"
+                      create="false">
+                    <form string="Requisições Internas" version="7.0" readonly="1">
+                        <field name="estado" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="armazem_req_id" readonly="1"/>
+                                <field name="requisitante_dep_id" readonly="1"/>
+                                <field name="requisitante_emp_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="datahora" readonly="1"/>
+                                <field name="justificacao" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group/>
+                            <group>
+                            <button name="criar_entrega" string="Criar Entrega" type="object"
+                                    attrs="{'invisible': [('estado', 'not in', [2])]}"/>
+                            <button name="entregar" string="Entregar" type="object"
+                                    attrs="{'invisible': [('estado', 'not in', [3])]}"/>
+
+                            </group>
+                        </group>
+                        <notebook>
+
+                            <page string="Linhas">
+                                <field name="linhas_ids" attrs="{'readonly': [('state', 'not in', ['draft'])]}">
+                                    <tree string="Linhas" editable="false" create="false" delete="false">
+                                        <field name="name" readonly="1"/>
+                                        <field name="item_id"  readonly="1"/>
+                                        <field name="quant_req"  readonly="1"/>
+                                        <field name="preco_unit" readonly="1"/>
+                                        <field name="uom_id" readonly="1"/>
+                                        <field name="taxa_iva" readonly="1"/>
+                                        <field name="quant_sat" readonly="1"/>
+                                        <field name="state" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Entregas do Armazém" attrs="{'invisible': [('estado', 'not in', [3,4])]}">
+                                <field name="movim_stock_ids">
+                                    <tree string="Entregas do Armazem" editable="true">
+                                        <field name="state" invisible="1"/>
+                                        <field name="name" readonly="1"/>
+                                        <field name="product_qty"/>
+                                        <field name="price_unit" readonly="1"/>
+                                        <field name="price_currency_id" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Histórico">
+                                <field name="historico_ids" attrs="{'readonly': [('state', 'not in', ['draft'])]}">
+                                    <tree string="Historico" editable="false" create="false" delete="false">
+                                        <field name="accao" readonly="1"/>
+                                        <field name="name" readonly="1"/>
+                                        <field name="user_id" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                        </notebook>
+                    </form>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_despesa_requisicoes_satis_view" >
+            <field name="name">Satisfazer Requisições</field>
+            <field name="res_model">sncp.despesa.requisicoes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','aprovd')]</field>
+        </record>
+            <record id="action_sncp_despesa_requisicoes_satis_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_despesa_requisicoes_satis_tree"/>
+                <field name="act_window_id" ref="action_sncp_despesa_requisicoes_satis_view"/>
+            </record>
+            <record id="action_sncp_despesa_requisicoes_satis_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_despesa_requisicoes_satis_form"/>
+                <field name="act_window_id" ref="action_sncp_despesa_requisicoes_satis_view"/>
+            </record>
+        <menuitem name="Satisfazer Requisições" parent="menu_despesa_requisicoes" sequence="30"
+                      id="menu_sncp_despesa_requisicoes_satis_view"
+                      action="action_sncp_despesa_requisicoes_satis_view"/>
+
+        <!-- Recuperar Requisições-->
+        <record id="view_sncp_despesa_requisicoes_recuperar_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.requisicoes.recuperar.tree</field>
+            <field name="model">sncp.despesa.requisicoes</field>
+            <field eval="24" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Requisições Internas" create="false" delete="false" edit="false">
+                    <field name="name"/>
+                    <field name="datahora"/>
+                    <field name="armazem_req_id"/>
+                    <field name="requisitante_dep_id"/>
+                    <field name="requisitante_emp_id"/>
+                    <field name="state"/>
+                    <button name="recuperar" string="Recuperar" type="object"
+                                    icon="gtk-undelete" states="rejeit"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_despesa_requisicoes_recuperar_form" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.requisicoes.recuperar.form</field>
+            <field name="model">sncp.despesa.requisicoes</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Recuperar Requisições" version="7.0" readonly="1">
+                    <header>
+                        <button name="recuperar" string="Recuperar" type="object"
+                                    icon="gtk-undelete" states="rejeit"/>
+                        <field name="state" widget='statusbar' nolabel="1"/>
+
+                    </header>
+                            <field name="estado" invisible="1"/>
+                            <group>
+                                <group>
+                                    <field name="name" readonly="1"/>
+                                    <field name="armazem_req_id" readonly="1"/>
+                                    <field name="requisitante_dep_id" readonly="1"/>
+                                    <field name="requisitante_emp_id" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="datahora" readonly="1"/>
+                                    <field name="justificacao" readonly="1"/>
+                                </group>
+                            </group>
+                            <notebook>
+
+                                <page string="Linhas">
+                                    <field name="linhas_ids">
+                                        <tree string="Linhas" editable="false" create="false" delete="false">
+                                            <field name="name" readonly="1"/>
+                                            <field name="item_id"  readonly="1"/>
+                                            <field name="quant_req"  readonly="1"/>
+                                            <field name="preco_unit" readonly="1"/>
+                                            <field name="uom_id" readonly="1"/>
+                                            <field name="taxa_iva" readonly="1"/>
+                                            <field name="quant_sat" readonly="1"/>
+                                            <field name="state" readonly="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page string="Histórico"  attrs="{'invisible': [('estado', 'in', [0])]}">
+                                    <field name="historico_ids">
+                                        <tree string="Historico" editable="false" create="false" delete="false">
+                                            <field name="accao" readonly="1"/>
+                                            <field name="name" readonly="1"/>
+                                            <field name="user_id" readonly="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+
+                            </notebook>
+                        </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"  id="action_sncp_despesa_requisicoes_recuperar_view" >
+            <field name="name">Requisições para Recuperar</field>
+            <field name="res_model">sncp.despesa.requisicoes</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_sncp_despesa_requisicoes_recuperar_tree"/>
+            <field name="view_mode">tree_aprovador_autorizado_requisicao,form</field>
+            <field name="domain">[('state', '=', 'rejeit')]</field>
+            <field name="context">{'text':'recuperar', 'state': 'rejeit',
+                'tree_view_ref': 'despesa.view_sncp_despesa_requisicoes_recuperar_tree',
+                'form_view_ref': 'despesa.view_sncp_despesa_requisicoes_recuperar_form'}</field>
+        </record>
+        <menuitem name="Recuperar Requisições" parent="menu_despesa_requisicoes" sequence="40"
+                      id="menu_sncp_despesa_requisicoes_recuperar_view"
+                      action="action_sncp_despesa_requisicoes_recuperar_view"/>
+
+        <!-- Requisições ordem  de compra -->
+        <record id="view_sncp_despesa_requisicoes_ordem_compra_form" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.requisicoes.ordem.compra.form</field>
+            <field name="model">sncp.despesa.requisicoes.ordem.compra</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Requisições Ordem de Compra" version="7.0" create="false" delete="false">
+                    <group>
+                        <group>
+                            <field name="fornecedor_id" required="1" options="{'no_open': True}"/>
+                            <field name="req_de_id" required="1" options="{'no_open': True}"
+                                   on_change="on_change_requisicao(req_de_id)"
+                                   />
+                        </group>
+                        <group>
+                            <field name="armazem_id" required="1" options="{'no_open': True}"/>
+                            <field name="req_ate_id" required="1" options="{'no_open': True}"
+                                   />
+                        </group>
+                        <group>
+                            <field name="name"  required="1" on_change="on_change_data(name)"/>
+                            <field name="depart_de_id" required="1" options="{'no_open': True}"
+                                    on_change="on_change_departamento(depart_de_id)"/>
+                        </group>
+                        <group>
+                            <field name="data_ate" required="1"/>
+                            <field name="depart_ate_id" required="1" options="{'no_open': True}"/>
+                        </group>
+                    </group>
+                    <button name="continuar" type="object" string="Continuar"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_despesa_requisicoes_ordem_compra_view" >
+            <field name="name">Requisições Ordem de Compra</field>
+            <field name="res_model">sncp.despesa.requisicoes.ordem.compra</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record id="view_sncp_despesa_requisicoes_ordem_compra_board" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.requisicoes.ordem.compra.board</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Requisições Ordem de Compra" version="7.0">
+                    <board style="1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_despesa_requisicoes_ordem_compra_view)d"  readonly="1"
+                                    string="Requisições Ordem de Compra"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_despesa_requisicoes_ordem_compra_board" model="ir.actions.act_window">
+            <field name="name">Requisições Ordem de Compra</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_despesa_requisicoes_ordem_compra_board"/>
+        </record>
+        <menuitem name="Gerar Ordem Compra" parent="menu_despesa_requisicoes" sequence="50"
+                      id="menu_sncp_despesa_requisicoes_ordem_compra_board"
+                      action="action_sncp_despesa_requisicoes_ordem_compra_board"/>
+
+        <!-- Historico de Requisições -->
+        <record id="view_sncp_despesa_requisicoes_historico_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.requisicoes.historico.tree</field>
+            <field name="model">sncp.despesa.requisicoes.historico</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Histórico de Requisições" delete="false" create="false">
+                    <field name="name"/>
+                    <field name="accao"/>
+                    <field name="req_id"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_despesa_requisicoes_historico_view" >
+            <field name="name">Pesquisa por Histórico das Requisições</field>
+            <field name="res_model">sncp.despesa.requisicoes.historico</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_sncp_despesa_requisicoes_historico_tree"/>
+            <field name="view_mode">tree_requisicoes_pesquisa</field>
+            <field name="context">{'tree_view_ref': 'despesa.view_sncp_despesa_requisicoes_historico_tree'}</field>
+        </record>
+
+        <menuitem name="Histórico das Requisições" parent="menu_despesa_requisicoes" sequence="60"
+                          id="menu_sncp_despesa_requisicoes_historico_view"
+                          action="action_sncp_despesa_requisicoes_historico_view"/>
+    </data>
+</openerp>

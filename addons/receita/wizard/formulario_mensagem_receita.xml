@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record model="ir.ui.view" id="formulario_mensagem_view">
+            <field name="model">formulario.mensagem.receita</field>
+            <field name="arch" type="xml">
+            <form string="" version="7.0">
+                <!-- ALTEREI ESTA VISTA 2 DE JULHO DE 2014-->
+                     <div style="width:500px;">
+                        <field name="name" class="my_message"
+                               readonly="1"/>
+                        <footer>
+                                <div align="left" style="width:500px">
+                                    <button name="end" type="object" string="Fechar"/>
+                                </div>
+                        </footer>
+                     </div>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

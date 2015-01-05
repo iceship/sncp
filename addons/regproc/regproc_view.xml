@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Objetos Notariais -->
+        <record id="view_sncp_regproc_notario_objecto_tree" model="ir.ui.view">
+            <field name="name">view.sncp.regproc.notario.objecto.tree</field>
+            <field name="model">sncp.regproc.notario.objecto</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Objetos Notariais" editable="top" version="7.0">
+                    <field name="name" required="1"/>
+                    <field name="cod_estatistico" required="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_regproc_notario_objecto_view">
+            <field name="name">Objetos Notariais</field>
+            <field name="res_model">sncp.regproc.notario.objecto</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Registo de Processos" parent="comum.menu_sncp" id="menu_regproc" sequence="70"/>
+            <menuitem name="Actos Notariais" parent="menu_regproc" id="menu_regproc_actos_notar" sequence="10"/>
+                <menuitem name="Objetos" parent="menu_regproc_actos_notar"
+                          id="menu_sncp_regproc_notario_objecto_view"
+                          action="action_sncp_regproc_notario_objecto_view" sequence="10"/>
+
+        <!-- Actos Notariais -->
+        <record id="view_sncp_regproc_notario_actos_tree" model="ir.ui.view">
+            <field name="name">view.sncp.regproc.notario.actos.tree</field>
+            <field name="model">sncp.regproc.notario.actos</field>
+            <field name="arch" type="xml">
+                <tree string="Registos Notariais">
+                    <field name="id" invisible="1"/>
+                    <field name="name"/>
+                    <field name="datahora"/>
+                    <field name="objecto_id"/>
+                    <field name="outorgantes"/>
+                    <field name="aquis_alien_ids" widget="many2many_tags"/>
+                    <field name="desc"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_regproc_notario_actos_form" model="ir.ui.view">
+            <field name="name">view.sncp.regproc.notario.actos.form</field>
+            <field name="model">sncp.regproc.notario.actos</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Registos Notariais" version="7.0" create="false" delete="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="datahora" required="1"/>
+                                <field name="objecto_id" required="1" options="{'no_open': True}"/>
+                                <field name="outorgantes" readonly="1"/>
+                                <field name="livro" required="1"/>
+                                <field name="folhas_ini" required="1"/>
+                                <field name="folhas_fim" required="1"/>
+                                <field name="desc"/>
+                                <field name="aquis_alien_ids" widget="many2many_tags"/>
+                            </group>
+
+                        </group>
+                        <notebook>
+                            <page string="Outorgantes">
+                                <field name="outrg_ids">
+                                    <tree string="Outorgantes" editable="top">
+                                        <field name="id" invisible="1"/>
+                                        <field name="name" readonly="1"
+                                               attrs="{'invisible': [('name', '=', 0)]}"/>
+                                        <field name="qualidade" required="1"
+                                               on_change="on_change_qualidade(qualidade)"/>
+                                        <field name="employee_id" options="{'no_open': True}"
+                                               attrs="{'readonly': [('qualidade', '=', 'parc')],
+                                                        'required': [('qualidade', '=', 'empr')]}"/>
+                                        <field name="partner_id" options="{'no_open': True}"
+                                               attrs="{'required': [('qualidade', '=', 'parc')],
+                                                       'readonly': [('qualidade', '=', 'empr')]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_regproc_notario_actos_view">
+            <field name="name">Registos Notariais</field>
+            <field name="res_model">sncp.regproc.notario.actos</field>
+            <field name="view_id" ref="view_sncp_regproc_notario_actos_tree"/>
+            <field name="view_mode">tree_pesquisa,form</field>
+        </record>
+        <menuitem name="Registo" parent="menu_regproc_actos_notar"
+                  id="menu_sncp_regproc_notario_actos_view"
+                  action="action_sncp_regproc_notario_actos_view" sequence="20"/>
+
+        <!-- Pesquisa de Actos Notariais-->
+        <record id="view_sncp_regproc_pesquisa_notario_actos_form" model="ir.ui.view">
+            <field name="name">view.sncp.regproc.pesquisa.notario.actos.form</field>
+            <field name="model">sncp.regproc.pesquisa.notario.actos</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Pesquisa de Actos Notariais" version="7.0" create="false" delete="false">
+                    <header>
+                        <button name="pesquisar" string="Pesquisar" type="object"/>
+                    </header>
+                    <group>
+                        <group string="Pesquisa por texto">
+                            <field name="name"/>
+                            <field name="invert"/>
+                        </group>
+                        <group colspan="2">
+                            <group string="Pesquisa pela data">
+                                <field name="datahora_ini"/>
+                                <field name="datahora_fim"/>
+                            </group>
+                            <group string="Pesquisa por referências">
+                                <field name="objecto_id" options="{'no_open': True}"/>
+                                <field name="outrg_id" options="{'no_open': True}"/>
+                                <field name="aquis_alien_id" options="{'no_open': True}"/>
+                            </group>
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page>
+                            <field name="notario_actos_ids" readonly="1" delete="false"/>
+
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_regproc_pesquisa_notario_actos_view">
+            <field name="name">Pesquisa de Actos Notariais</field>
+            <field name="res_model">sncp.regproc.pesquisa.notario.actos</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record id="view_sncp_regproc_pesquisa_notario_actos_board" model="ir.ui.view">
+            <field name="name">view.sncp.regproc.pesquisa.notario.actos.board</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Pesquisa avançada de Actos Notariais" version="7.0">
+                    <board style="1" readonly="1">
+                        <column>
+                            <action name="%(action_sncp_regproc_pesquisa_notario_actos_view)d"  readonly="1"
+                                    string="Pesquisar"/>
+                        </column>
+
+                    </board>
+                </form>
+            </field>
+        </record>
+        <record id="action_sncp_regproc_pesquisa_notario_actos_board" model="ir.actions.act_window">
+            <field name="name">Pesquisa de Actos Notariais</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sncp_regproc_pesquisa_notario_actos_board"/>
+        </record>
+        <menuitem name="Pesquisa" parent="menu_regproc_actos_notar"
+                  id="menu_sncp_regproc_pesquisa_notario_actos_board"
+                  action="action_sncp_regproc_pesquisa_notario_actos_board" sequence="30"/>
+
+        <!-- Aquisições e Alienações-->
+        <record id="view_sncp_regproc_aquis_alien_tree" model="ir.ui.view">
+            <field name="name">view.sncp.regproc.aquis.alien.tree</field>
+            <field name="model">sncp.regproc.aquis.alien</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Aquisições e Alienações">
+                    <field name="natureza"/>
+                    <field name="name"/>
+                    <field name="desc"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_regproc_aquis_alien_form" model="ir.ui.view">
+            <field name="name">view.sncp.regproc.aquis.alien.form</field>
+            <field name="model">sncp.regproc.aquis.alien</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Aquisições e Alienações" version="7.0" create="false" delete="false">
+                    <sheet>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <label for="natureza"/>
+                                <div>
+                                    <field name="natureza" class="oe_inline my_oe_r_space_20"
+                                           required="1"
+                                           attrs="{'readonly': [('id', 'not in', [False])]}"/>
+                                <label for="name" class="oe_inline my_oe_r_space_20"/>
+                                    <field name="name" class="oe_inline my_oe_r_space_20"
+                                            readonly="1"/>
+                                <label for="expro" class="oe_inline my_oe_r_space_20"/>
+                                    <field name="expro" class="oe_inline" on_change="on_change_expro(expro)"
+                                           attrs="{'readonly': [('natureza', 'not in', ['aquis'])]}"/>
+                                </div>
+                            <field name="desc"/>
+                            <label for="delib_cm_data"/>
+                                <div>
+                                    <field name="delib_cm_data" class="oe_inline my_oe_r_space_20"/>
+                                <label for="delib_cm_por" class="oe_inline my_oe_r_space_20"/>
+                                    <field name="delib_cm_por" class="oe_inline"/>
+                                </div>
+                            <label for="delib_am_data"/>
+                                <div>
+                                    <field name="delib_am_data" class="oe_inline my_oe_r_space_20"/>
+                                <label for="delib_am_por" class="oe_inline my_oe_r_space_20"/>
+                                    <field name="delib_am_por" class="oe_inline"/>
+                                </div>
+                            <field name="autorizada"/>
+                            <field name="publicada"/>
+                            <field name="acto_not_ids"  widget="many2many_tags"/>
+                            <label for="posse"/>
+                                <div>
+                                    <field name="posse"
+                                           class="oe_inline my_oe_r_space_50" attrs="{'readonly':[('expro', '=', False)]}"/>
+                                    <label for="caucao_mont" class="oe_inline "/>
+                                        <field name="caucao_mont" class="oe_inline"/>
+                                </div>
+                            <label for="limite"/>
+                                <div>
+                                    <field name="limite" class="oe_inline my_oe_r_space_50" />
+                                    <label for="caucao_dep" class="oe_inline  my_oe_r_space_50"/>
+                                        <field name="caucao_dep"  class="oe_inline"/>
+                                </div>
+                        </group>
+                        <notebook>
+                            <page string="Parcelas"><!-- __________________________ PARCELAS _____________-->
+                                <field name="parcelas_ids">
+                                    <tree string="Parcelas">
+                                        <field name="name"/>
+                                        <field name="natureza"/>
+                                        <field name="freguesia_id"/>
+                                        <field name="art_crp"/>
+                                        <field name="area_total"/>
+                                        <field name="preco"/>
+                                    </tree>
+                                    <form version="7.0">
+                                        <group>
+                                            <field name="id" invisible="1"/>
+                                            <field name="name" required="1"
+                                                   attrs="{'readonly': [('id', 'not in', [False])]}"/>
+                                            <field name="desc"/>
+                                        </group>
+                                        <group>
+                                            <group>
+
+                                                <field name="natureza" required="1"
+                                                       on_change="on_change_natureza(natureza)"/>
+                                                <field name="freguesia_id" options="{'no_open': True}" required="1"/>
+
+                                                <field name="art_crp"/>
+                                                <field name="art_matr_rust"
+                                                       attrs="{'readonly': [('natureza', 'not in', ['rustico', 'misto'])]}"/>
+                                                <field name="art_matr_urb"
+                                                       attrs="{'readonly': [('natureza', 'not in', ['urbano', 'misto'])]}"/>
+                                            </group>
+                                            <group>
+                                                <field name="area_coberta"/>
+                                                <field name="area_total"/>
+                                                <field name="id" invisible="1"/>
+                                                <field name="preco"/>
+                                                <field name="caucao_forma"
+                                                       attrs="{'required': [('natureza', 'not in', ['napl'])]}"/>
+                                                <field name="caucao_montante"
+                                                       attrs="{'required': [('natureza', 'not in', ['napl'])]}"/>
+
+                                            </group>
+                                        </group>
+
+                                        <newline/>
+                                        <field name="aquis_alien_parcel_titls_ids" nolabel="1">
+                                            <tree editable="top" string="Titulares">
+                                                <field name="name" readonly="1"/>
+                                                <field name="partner_id" options="{'no_open': True}"/>
+                                                <field name="street" readonly="1"/>
+                                                <field name="city" readonly="1"/>
+                                            </tree>
+                                        </field>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Notificações"><!-- _______________________ Notificações _____________-->
+                                <field name="notific_ids">
+                                    <tree string="Notificações">
+                                        <field name="id" invisible="1"/>
+                                        <field name="evento"/>
+                                        <field name="name"/>
+                                        <field name="notificar"/>
+                                        <field name="name_notific"/>
+                                        <field name="prazo"/>
+                                        <field name="unidade"/>
+                                        <field name="done"/>
+                                    </tree>
+                                    <form string="Notificações" version="7.0">
+                                        <group>
+                                            <group>
+                                                <field name="id" invisible="1"/>
+                                                <field name="evento" required="1"/>
+                                                <field name="notificar" required="1"/>
+                                            </group>
+                                            <group>
+                                                <field name="name" readonly="1"/>
+                                                <field name="done"/>
+                                                <label for="prazo"/>
+                                                <div>
+                                                    <field name="prazo" class="oe_inline"/>
+                                                    <field name="unidade" class="oe_inline"
+                                                           required="1"/>
+                                                </div>
+                                            </group>
+                                        </group>
+                                        <group>
+                                            <group>
+                                                <field name="user_id" options="{'no_open': True}"
+                                                       attrs="{'readonly': [('notificar', 'not in', ['user'])],
+                                                               'required': [('notificar', 'in', ['user'])]}"
+                                                       on_change="on_change_notificado_id('user', user_id)"/>
+                                                <field name="employee_id" options="{'no_open': True}"
+                                                       attrs="{'readonly': [('notificar', 'not in', ['empr'])],
+                                                               'required': [('notificar', 'in', ['empr'])]}"
+                                                       on_change="on_change_notificado_id('empr', employee_id)"/>
+                                                <field name="partner_id" options="{'no_open': True}"
+                                                       attrs="{'readonly': [('notificar', 'not in', ['parc'])],
+                                                               'required': [('notificar', 'in', ['parc'])]}"
+                                                       on_change="on_change_notificado_id('parc', partner_id)"/>
+                                            </group>
+                                            <group>
+                                                <field name="teor" required="1"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_regproc_aquis_alien_view">
+            <field name="name">Aquisições e Alienações</field>
+            <field name="res_model">sncp.regproc.aquis.alien</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Aquisições e Alienações" parent="menu_regproc"
+                  id="menu_sncp_regproc_aquis_alien_view"
+                  action="action_sncp_regproc_aquis_alien_view" sequence="20"/>
+    </data>
+</openerp>

@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record model="ir.module.category" id="module_tesouraria_category">
+            <field name="name">Tesouraria</field>
+            <field name="description">Tesouraria descricao</field>
+        </record>
+
+        <record id="group_tesouraria_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="module_tesouraria_category"/>
+        </record>
+        <record id="group_tesouraria_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="implied_ids" eval="[(4, ref('group_tesouraria_user'))]"/>
+            <field name="category_id" ref="module_tesouraria_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+    </data>
+</openerp>

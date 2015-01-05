@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record model="ir.module.category" id="module__category">
+            <field name="name"/>
+            <field name="description"> descricao</field>
+        </record>
+
+        <record id="group__user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="module__category"/>
+        </record>
+        <record id="group__manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="implied_ids" eval="[(4, ref('group__user'))]"/>
+            <field name="category_id" ref="module__category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+    </data>
+</openerp>

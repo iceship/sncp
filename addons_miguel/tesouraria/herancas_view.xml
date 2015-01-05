@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <!-- Guia Receita para cobrar-->
+        <record id="view_sncp_tesouraria_guia_rec_cobra_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.guia.rec.cobra.tree</field>
+            <field name="model">sncp.receita.guia.rec</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Guia de Receita" create="false" delete="false">
+                    <field name="state" invisible="1"/>
+                    <field name="data_emissao"/>
+                    <field name="montante"/>
+                    <field name="partner_department"/>
+                    <field name="natureza"/>
+                    <field name="user_id" string="Criada por"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_tesouraria_guia_rec_cobra_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.guia.rec.form</field>
+            <field name="model">sncp.receita.guia.rec</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Meios de pagamento da Guia de receita" version="7.0" delete="false" create="false">
+                    <header>
+                            <button string="Cobrar" name="cobrar" type="object"
+                                    class="oe_highlight" attrs="{'invisible': ['|',('estado', '=', 1),
+                                                                            ('state', 'not in', 'cri')]}"/>
+                            <button string="Continuar" name="cobranca" type="object"
+                                    class="oe_highlight" attrs="{'invisible': ['|',('estado', 'not in', [1]),
+                                                                            ('state', 'not in', 'cri')]}"/>
+                        </header>
+                        <!-- CAMPOS DE CONTROLO-->
+                        <field name="state" invisible="1"/>
+                        <field name="name" invisible="1"/>
+                        <field name="estado" invisible="1"/>
+                        <!-- END-->
+                        <group attrs="{'readonly': True}">
+                            <group>
+                                <field name="origem" readonly="1"/>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="montante" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="natureza" readonly="1"/>
+                                <field name="department_id" readonly="1"/>
+                                <field name="data_emissao" readonly="1"/>
+                            </group>
+
+                        </group>
+                        <button name="atualiza" string="Atualiza Meios" type="object"
+                                attrs="{'invisible': ['|',('estado', '=', 1),
+                                        ('state', 'not in', 'cri')]}"/>
+                        <button string="Reiniciar Meios" name="limpa_meios" type="object"
+                                    attrs="{'invisible': ['|',('estado', '=', 1),
+                                                           ('state', 'not in', 'cri')]}"/>
+                        <notebook colspan="4">
+                            <page string="Meios">
+                            <field name="meios_id" nolabel="1">
+                                <tree string="1" editable="true" delete="false" create="false">
+                                    <field name="edit" invisible="1"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="meio_rec" required="1"
+                                           attrs="{'readonly': [('edit', 'in', [1])],'required': [('edit', 'in', [0])]}"/>
+                                    <field name="obs"/>
+                                    <field name="montante" required="1"
+                                           attrs="{'readonly': [('edit', 'in', [1])],'required': [('edit', 'in', [0])]}"
+                                           on_change="on_change_montante(meio_rec,obs,montante)"/>
+                                    </tree>
+                            </field>
+                        </page>
+                            <page string="Linhas">
+                                <field name="linhas_id" nolabel="1"
+                                    attrs="{'readonly': [('state', 'not in', ['cri'])]}">
+                                <tree string="Linhas" create="false" editable="true">
+                                    <field name="name" readonly="1"/>
+                                    <field name="natureza" readonly="1" on_change="on_change_natureza(natureza)"/>
+                                    <field name="tax_rate" readonly="1"/>
+                                    <field name="conta_id" readonly="1"/>
+                                    <field name="economica_id" readonly="1"/>
+                                    <field name="calc_montante" invisible="1"/>
+                                    <field name="montante_tax" readonly="1"/>
+                                    <field name="montante_ots" readonly="1"/>
+                                    <field name="montante_orc" readonly="1"/>
+                                    <field name="obsv" readonly="1"/>
+                                    <field name="desc" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_guia_rec_cobra_view">
+            <field name="name">Guias de Receita a Cobrar</field>
+            <field name="res_model">sncp.receita.guia.rec</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sncp_tesouraria_guia_rec_cobra_tree"/>
+            <field name="domain">[('state', '=', 'cri')]</field>
+        </record>
+            <record id="action_sncp_tesouraria_guia_rec_cobra_view1" model="ir.actions.act_window.view">
+              <field eval="1" name="sequence"/>
+              <field name="view_mode">tree</field>
+              <field name="view_id" ref="view_sncp_tesouraria_guia_rec_cobra_tree"/>
+              <field name="act_window_id" ref="action_sncp_tesouraria_guia_rec_cobra_view"/>
+            </record>
+            <record id="action_sncp_tesouraria_guia_rec_cobra_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_tesouraria_guia_rec_cobra_form"/>
+                <field name="act_window_id" ref="action_sncp_tesouraria_guia_rec_cobra_view"/>
+            </record>
+        <menuitem name="Tesouraria" parent="comum.menu_sncp" id="menu_tesouraria" sequence="60"/>
+
+        <menuitem name="Cobranças" parent="menu_tesouraria" id="menu_tesouraria_cobrancas" sequence="10"/>
+                <menuitem name="Guia Para Cobrar" parent="menu_tesouraria_cobrancas"
+                          id="menu_sncp_tesouraria_guia_rec_cobra_view"
+                          action="action_sncp_tesouraria_guia_rec_cobra_view" sequence="10"/>
+
+        <!-- Guias Cobradas-->
+        <record id="view_sncp_tesouraria_guia_rec_cobradas_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.guia.rec.cobradas.tree</field>
+            <field name="model">sncp.receita.guia.rec</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Guia de Receita" create="false" delete="false">
+                    <field name="state" invisible="1"/>
+                    <field name="name"/>
+                    <field name="data_emissao"/>
+                    <field name="montante"/>
+                    <field name="partner_department"/>
+                    <field name="natureza"/>
+                    <field name="user_id"/>
+                    <button name="imprimir_report" string="Imprimir Relatório" icon="gtk-print" type="object"/>
+                    <button name="anula_cobranca" string="Anular Cobrança" icon="gtk-stop" type="object"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_guia_rec_cobradas_view">
+            <field name="name">Guias Cobradas</field>
+            <field name="res_model">sncp.receita.guia.rec</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_sncp_tesouraria_guia_rec_cobradas_tree"/>
+            <field name="domain">[('state', '=', 'rec')]</field>
+        </record>
+            <record id="action_sncp_tesouraria_guia_rec_cobradas_view1" model="ir.actions.act_window.view">
+              <field eval="1" name="sequence"/>
+              <field name="view_mode">tree</field>
+              <field name="view_id" ref="view_sncp_tesouraria_guia_rec_cobradas_tree"/>
+              <field name="act_window_id" ref="action_sncp_tesouraria_guia_rec_cobradas_view"/>
+            </record>
+        <menuitem name="Guias Cobradas" parent="menu_tesouraria_cobrancas"
+                  id="menu_sncp_tesouraria_guia_rec_cobradas_view"
+                  action="action_sncp_tesouraria_guia_rec_cobradas_view" sequence="20"/>
+
+        <!-- Guias de Reposição Abatidas a Pagamento -->
+        <record id="view_sncp_tesouraria_pagamentos_reposicoes_tree" model="ir.ui.view">
+        <field name="name">view.sncp.tesouraria.pagamentos.reposicoes.tree</field>
+        <field name="model">sncp.despesa.pagamentos.reposicoes</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml" >
+                <tree string="Reposições" delete="false" create="false">
+                    <field name="name"/>
+                    <field name="data"/>
+                    <field name="nome_parceiro"/>
+                    <field name="opag_id"/>
+                    <field name="montante"/>
+                    <field name="state"/>
+                    <field name="imprimir" invisible="1"/>
+                    <button name="call_param" string="Cobrar" type="object" icon="kanban-apply"
+                            attrs="{'invisible': [('imprimir','in',[1])]}"/>
+                    <button name="imprimir_report" string="Imprimir" type="object" icon="gtk-print"
+                            attrs="{'invisible': [('imprimir','in',[0])]}"/>
+                </tree>
+        </field>
+    </record>
+        <record id="view_sncp_tesouraria_pagamentos_reposicoes_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.pagamentos.reposicoes.form</field>
+            <field name="model">sncp.despesa.pagamentos.reposicoes</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <form string="Reposições" version="7.0" editable="false" create="false" delete="false" edit="false">
+                    <header>
+                      <field name='state' widget='statusbar'/>
+                    </header>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="data" readonly="1"/>
+                        <field name="departamento_id" readonly="1"/>
+                        <field name="opag_id" readonly="1"/>
+                        <field name="motivo" readonly="1"/>
+                        <field name="montante" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="meio_pag_id" readonly="1"/>
+                        <field name="ref_meio" invisible="1"/>
+                        <field name="banco_id" class="oe_inline" options="{'no_open': True}"
+                                 attrs="{'invisible': [('ref_meio', 'not in', ['bk'])],
+                                        'required': [('ref_meio', 'in', ['bk'])],
+                                        'readonly':[('state', 'not in', ['draft'])]}"/>
+                        <field name="caixa_id" class="oe_inline" options="{'no_open': True}"
+                                 attrs="{'invisible': [('ref_meio', 'not in', ['cx'])],
+                                 'required': [('ref_meio', 'in', ['cx'])],
+                                 'readonly':[('state', 'not in', ['draft'])]}"/>
+                        <field name="fundo_id" class="oe_inline" options="{'no_open': True}"
+                                 attrs="{'invisible': [('ref_meio', 'not in', ['fm'])],
+                                 'required': [('ref_meio', 'in', ['fm'])],
+                                 'readonly':[('state', 'not in', ['draft'])]}"/>
+                        <field name="num_pag" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="cobrada_emp" readonly="1"/>
+                        <field name="cobrada_data" readonly="1"/>
+                    </group>
+
+                    <notebook>
+                            <page>
+                                <field name="reposicao_linha_id" readonly="1" nolabel="1">
+                                    <tree string="Linhas da Reposição" editable="false" create="false" delete="false">
+                                        <field name="name" readonly="1"/>
+                                        <field name="account_invoice_line_id" readonly="1"/>
+                                        <field name="compromisso" readonly="1"/>
+                                        <field name="compromisso_linha_id" readonly="1"/>
+                                        <field name="montante" readonly="1"/>
+                                        <field name="montante_repor" required="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                     </notebook>
+                  </form>
+                </field>
+        </record>
+        <record id="action_sncp_tesouraria_pagamentos_reposicoes_view" model="ir.actions.act_window"  >
+            <field name="name">Guias de Reposições Abatidas a Pagamento</field>
+            <field name="res_model">sncp.despesa.pagamentos.reposicoes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sncp_tesouraria_pagamentos_reposicoes_tree"/>
+        </record>
+            <record id="action_sncp_tesouraria_pagamentos_reposicoes_view1" model="ir.actions.act_window.view">
+                <field eval="1" name="sequence"/>
+                <field name="view_mode">tree</field>
+                <field name="view_id" ref="view_sncp_tesouraria_pagamentos_reposicoes_tree"/>
+                <field name="act_window_id" ref="action_sncp_tesouraria_pagamentos_reposicoes_view"/>
+            </record>
+            <record id="action_sncp_tesouraria_pagamentos_reposicoes_view2" model="ir.actions.act_window.view">
+                <field eval="2" name="sequence"/>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_sncp_tesouraria_pagamentos_reposicoes_form"/>
+                <field name="act_window_id" ref="action_sncp_tesouraria_pagamentos_reposicoes_view"/>
+            </record>
+        <menuitem name="Guias de Reposições Abatidas a Pagamento" parent="menu_tesouraria_cobrancas"
+                      id="menu_sncp_tesouraria_pagamentos_reposicoes_view"
+                      action="action_sncp_tesouraria_pagamentos_reposicoes_view" sequence="30"/>
+
+        <!-- _____________________Pagar___________________-->
+        <record id="view_sncp_tesouraria_pagamentos_ordem_pagar_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.pagamentos.ordem.pagar.tree</field>
+            <field name="model">sncp.despesa.pagamentos.ordem</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Pagamento Ordem" version="7.0" create="false" delete="false"
+                      attrs="{'readonly':[('state', 'not in', ['draft'])]}">
+                    <field name="state" invisible="1"/>
+                    <field name="nif"/>
+                    <field name="partner_id"/>
+                    <field name="montante_iliq"/>
+                    <field name="montante_ret"/>
+                    <field name="meio_desc"/>
+                    <field name="bcfm"/>
+                    <field name="num_pag"/>
+                    <field name="name" invisible="1"/>
+                    <button string="Liquidar/Pagar" name="call_param" type="object" states="aut" icon="kanban-apply"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_pagamentos_ordem_pagar_view">
+            <field name="name">Ordens de Pagamento a Pagar</field>
+            <field name="res_model">sncp.despesa.pagamentos.ordem</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_sncp_tesouraria_pagamentos_ordem_pagar_tree"/>
+            <field name="domain">[('state', 'in', ['aut'])]</field>
+        </record>
+            <record id="action_sncp_tesouraria_pagamentos_ordem_pagar_view1" model="ir.actions.act_window.view">
+              <field eval="1" name="sequence"/>
+              <field name="view_mode">tree</field>
+              <field name="view_id" ref="view_sncp_tesouraria_pagamentos_ordem_pagar_tree"/>
+              <field name="act_window_id" ref="action_sncp_tesouraria_pagamentos_ordem_pagar_view"/>
+            </record>
+        <menuitem name="Pagamentos" parent="menu_tesouraria" id="menu_tesouraria_pagamentos" sequence="20"/>
+                <menuitem name="Pagar" parent="menu_tesouraria_pagamentos"
+                          id="menu_sncp_tesouraria_pagamentos_ordem_pagar_view"
+                          action="action_sncp_tesouraria_pagamentos_ordem_pagar_view" sequence="10"/>
+
+        <!-- _____________________Anular Pagar___________________-->
+        <record id="view_sncp_tesouraria_pagamentos_ordem_anular_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.pagamentos.ordem.anular.tree</field>
+            <field name="model">sncp.despesa.pagamentos.ordem</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Pagamento Ordem" version="7.0" create="false" delete="false"
+                      attrs="{'readonly':[('state', 'not in', ['draft'])]}">
+                    <field name="state" invisible="1"/>
+                    <field name="nif"/>
+                    <field name="partner_id"/>
+                    <field name="montante_iliq"/>
+                    <field name="montante_ret"/>
+                    <field name="meio_desc"/>
+                    <field name="bcfm"/>
+                    <field name="num_pag"/>
+                    <field name="name" invisible="1"/>
+                    <field name="anular" invisible="1"/>
+                    <button string="Anular" name="call_questionario" type="object"
+                            icon="kanban-stop" attrs="{'invisible': [('anular', 'not in', [0])]}"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_pagamentos_ordem_anular_view">
+            <field name="name">Ordens de Pagamentos a Anular</field>
+            <field name="res_model">sncp.despesa.pagamentos.ordem</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_sncp_tesouraria_pagamentos_ordem_anular_tree"/>
+            <field name="domain">[('state', '=', 'pag')]</field>
+        </record>
+            <record id="action_sncp_tesouraria_pagamentos_ordem_anular_view1" model="ir.actions.act_window.view">
+              <field eval="1" name="sequence"/>
+              <field name="view_mode">tree</field>
+              <field name="view_id" ref="view_sncp_tesouraria_pagamentos_ordem_anular_tree"/>
+              <field name="act_window_id" ref="action_sncp_tesouraria_pagamentos_ordem_anular_view"/>
+            </record>
+            <menuitem name="Anular Pagamento" parent="menu_tesouraria_pagamentos"
+                      id="menu_sncp_tesouraria_pagamentos_ordem_anular_view"
+                      action="action_sncp_tesouraria_pagamentos_ordem_anular_view" sequence="20"/>
+
+    <!--  Herança de ordem de pagamento direta-->
+        <record model="ir.ui.view" id="view_sncp_tesouraria_pagamentos_ordem_add_meios_pag_form">
+		      <field name="name">view.sncp.tesouraria.pagamentos.ordem.add.meios.pag.form</field>
+		      <field name="model">sncp.despesa.pagamentos.ordem</field>
+		      <field name="inherit_id" ref="despesa.view_sncp_despesa_pagamentos_ordem_form"/>
+		      <field name="arch" type="xml">
+		          <data>
+
+		              <xpath expr="//field[@name='meio_pag_id']" position="replace">
+                      <field name="meio_pag_id" class="oe_inline my_oe_r_space_20"
+                              options="{'no_open': True}"
+                              attrs="{'readonly':[('state', 'not in', ['draft'])]}"
+                              on_change="on_change_meio(meio_pag_id)" required="1"/>
+                      <field name="ref_meio" invisible="1"/>
+
+                      <label for="banco_id" attrs="{'invisible': [('ref_meio', 'not in', ['bk'])]}"/>
+		                  <field name="banco_id" class="oe_inline my_oe_r_space_20"
+                                 options="{'no_open': True}"
+                                 on_change="on_change_codigo(meio_pag_id,banco_id, 'banco')"
+                                 attrs="{'invisible': [('ref_meio', 'not in', ['bk'])],
+                                        'required': [('ref_meio', 'in', ['bk'])],
+                                        'readonly':[('state', 'not in', ['draft'])]}"/>
+                      <field name="estado_serie" invisible="1"/>
+
+                      <label for="serie_id" attrs="{'invisible': [('estado_serie', 'not in', [2])]}"/>
+                          <field name="serie_id" options="{'no_open': True}" style="width: 100px;"
+                                 attrs="{'invisible': [('estado_serie', 'not in', [2])],
+                                         'required':  [('estado_serie', 'in', [2])],
+                                         'readonly':  [('state', 'not in', ['draft'])]}"/>
+                      <label for="caixa_id" class="oe_inline"
+                             attrs="{'invisible': [('ref_meio', 'not in', ['cx'])]}"/>
+                          <field name="caixa_id" class="oe_inline" options="{'no_open': True}"
+                                 on_change="on_change_codigo(meio_pag_id, caixa_id, 'caixa')"
+                                 attrs="{'invisible': [('ref_meio', 'not in', ['cx'])],
+                                 'required': [('ref_meio', 'in', ['cx'])],
+                                 'readonly':[('state', 'not in', ['draft'])]}"/>
+
+		              <label for="fundo_id" attrs="{'invisible': [('ref_meio', 'not in', ['fm'])]}"/>
+                          <field name="fundo_id" class="oe_inline" options="{'no_open': True}"
+                                 on_change="on_change_codigo(meio_pag_id, fundo_id, 'fundo')"
+                                 attrs="{'invisible': [('ref_meio', 'not in', ['fm'])],
+                                 'required': [('ref_meio', 'in', ['fm'])],
+                                 'readonly':[('state', 'not in', ['draft'])]}"/>
+                      <separator/>
+		              </xpath>
+		          </data>
+		      </field>
+		  </record>
+
+    </data>
+</openerp>

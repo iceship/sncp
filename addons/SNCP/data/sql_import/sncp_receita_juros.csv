@@ -1,0 +1,5 @@
+id,name,descricao,contagem,periodo,item_id/id,ignora,aviso
+1,SJR,Sem Juros,pag,dia,709,FALSE,FALSE
+2,M00,Juros Mensais,mes,dia,709,TRUE,TRUE
+3,P50,Acréscimo 50% de Juros,pag,dia,709,FALSE,FALSE
+4,D00,Juros Águas e MA,pag,dia,755,TRUE,TRUE

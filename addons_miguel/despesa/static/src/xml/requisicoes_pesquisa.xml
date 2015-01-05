@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="RequisicoesPesquisa">
+        <div class="ui-toolbar oe_inline text_center" style="margin-bottom:0px;">
+
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Requisição:</h4>
+                <select class="oe_despesa_select_requisicao" >
+
+                </select>
+            </div>
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Acção :</h4>
+                <select class="oe_despesa_select_accao" >
+
+                </select>
+            </div>
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <h4>Utilizador:</h4>
+                <select class="oe_despesa_select_user" >
+
+                </select>
+            </div>
+
+            <!-- Bloco de tentativa de colocar a data-->
+
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <script>
+                    $(function() {
+                    $( "#from" ).datepicker({
+                        dateFormat: 'dd-mm-yy',
+                        changeMonth: true,
+                        changeYear: true     }).val();
+                    });
+                </script>
+                <h4>Desde a data: </h4>
+                <input type="text" id="from" class="oe_despesa_input_date_from"/>
+
+            </div>
+            <div class="oe_form_dropdown_section oe_inline my_oe_r_space_50">
+                <script>
+                    $(function() {
+                        $( "#to" ).datepicker({
+                            dateFormat: 'dd-mm-yy',
+                            changeMonth: true,
+                            changeYear: true     }).val();
+                   });
+                </script>
+                <h4>Até a data: </h4>
+                <input type="text" id="to" class="oe_despesa_input_date_to"/>
+
+            </div>
+
+        </div>
+
+    </t>
+
+</templates>

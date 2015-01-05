@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record model="ir.ui.view" id="formulario_sncp_despesa_tesouraria_reposicao_view">
+            <field name="model">formulario.sncp.tesouraria.pagamentos.reposicoes.diario</field>
+            <field name="arch" type="xml">
+                <form string="Diário" version="7.0">
+                    <div style="width:500px;">
+                    <group colspan="4">
+                        <field name="meio_pag_id" on_change="on_change_meio(meio_pag_id)" options="{'no_open': True}"
+                               required="1" />
+                        <field name="meio_desc" invisible="1"/>
+                        <field name="ref_meio" invisible="1"/>
+                        <field name="bcfm" invisible="1"/>
+
+                        <field name="banco_id" class="oe_inline" options="{'no_open': True}"
+                                on_change="on_change_codigo(banco_id, 'banco')"
+                                attrs="{'invisible': [('ref_meio', 'not in', ['bk'])],
+                                        'required': [('ref_meio', 'in', ['bk'])]}"/>
+
+		                <field name="caixa_id" class="oe_inline" options="{'no_open': True}"
+                                 on_change="on_change_codigo(caixa_id, 'caixa')"
+                                 attrs="{'invisible': [('ref_meio', 'not in', ['cx'])],
+                                 'required': [('ref_meio', 'in', ['cx'])]}"/>
+
+		                <field name="fundo_id" class="oe_inline" options="{'no_open': True}"
+                                 on_change="on_change_codigo(fundo_id, 'fundo')"
+                                 attrs="{'invisible': [('ref_meio', 'not in', ['fm'])],
+                                          'required': [('ref_meio', 'in', ['fm'])]}"/>
+
+                        <field name="name" required="1"/>
+                        <field name="diario_cob_id" required="1"
+                               options="{'no_open': True}"/>
+                        <field name="data" required="1"/>
+
+                    </group>
+                    <footer>
+                        <div align="left" style="width:500px">
+                            <button name="end" type="object" string="Processar" />
+                            <button name="descartar" type="object" string="Descartar"/>
+                        </div>
+                    </footer>
+                    </div>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record id="formulario_tesouraria_series_view" model="ir.ui.view">
+            <field name="model">formulario.tesouraria.series</field>
+            <field name="arch" type="xml">
+                <form string="Cheques" version="7.0">
+                    <div style="width:500px;">
+                    <group colspan="4">
+                        <field name="nome_serie" required="1"/>
+                        </group>
+                    <footer>
+                        <div align="left" style="width:500px">
+                            <button name="criar_serie" type="object" string="Criar serie"/>
+                            <button name="descartar" type="object" string="Descartar"/>
+                        </div>
+                    </footer></div>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

@@ -1,0 +1,33 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+sncp_receita_juros_manager,Juros,model_sncp_receita_juros,group_receita_manager,1,1,1,1
+sncp_receita_juros_periodos_manager,"Juros periodos manager",model_sncp_receita_juros_periodos,group_receita_manager,1,1,1,1
+sncp_receita_juros_periodos_linhas_manager,"Juros periodos linhas manager",model_sncp_receita_juros_periodos_linhas,group_receita_manager,1,1,1,1
+sncp_receita_guia_rec_manager,"Guia de receita manager",model_sncp_receita_guia_rec,group_receita_manager,1,1,1,1
+sncp_receita_guia_rec_linhas_manager,"Linhas da guia de receita manager",model_sncp_receita_guia_rec_linhas,group_receita_manager,1,1,1,1
+sncp_receita_guia_rec_meios_manager,"Meios da guia de receita manager",model_sncp_receita_guia_rec_meios,group_receita_manager,1,1,1,1
+sncp_receita_guia_rec_rel_manager,"guia rel OP manager",model_sncp_receita_guia_rec_rel,group_receita_manager,1,1,1,1
+sncp_receita_fact_cobrar_manager,"Faturas para cobrar manager",model_sncp_receita_fact_cobrar,group_receita_manager,1,1,1,1
+sncp_receita_fact_cobrar_linhas_manager,"Linhas faturas para cobrar manager",model_sncp_receita_fact_cobrar_linhas,group_receita_manager,1,1,1,1
+sncp_receita_op_tes_manager,"Operacoes de tesouraria manager",model_sncp_receita_op_tes,group_receita_manager,1,1,1,1
+sncp_receita_op_tes_linhas_manager,"Linhas de operacoes de tesouraria manager",model_sncp_receita_op_tes_linhas,group_receita_manager,1,1,1,1
+teste_juros_manager,"Teste Juros manager",model_teste_juros,group_receita_manager,1,1,1,1
+teste_cond_pagam_manager,"Teste condicoes pagamento manager",model_teste_cond_pagam,group_receita_manager,1,1,1,1
+formulario_mensagem_receita_manager,"Mensagem receita manager",model_formulario_mensagem_receita,group_receita_manager,1,1,1,1
+sncp_receita_itens_dept_manager,"Itens de Departamento",model_sncp_receita_itens_dept,group_receita_manager,1,1,1,1
+sncp_receita_itens_user_manager,"Itens de Utilizador",model_sncp_receita_itens_user,group_receita_manager,1,1,1,1
+sncp_receita_diarios_dept_manager,"Diarios por departamento",model_sncp_receita_diarios_dept,group_receita_manager,1,1,1,1
+sncp_receita_fatura_wizard_manager,"Wizard Faturas",model_sncp_receita_fatura_wizard,group_receita_manager,1,1,1,1
+sncp_receita_fatura_linha_wizard_manager,"Wizard linha Faturas",model_sncp_receita_fatura_linha_wizard,group_receita_manager,1,1,1,1
+sncp_receita_fatura_item_aut_manager,"Fatura Itens Autorizados",model_sncp_receita_fatura_item_aut,group_receita_manager,1,1,1,1
+sncp_receita_controlo_config_manager,"Configuração de Controlo",model_sncp_receita_controlo_config,group_receita_manager,1,1,1,1
+sncp_receita_zonas_venda_amb_manager,"Zonas de Venda Ambulante",model_sncp_receita_zonas_venda_amb,group_receita_manager,1,1,1,1
+sncp_receita_mercados_feiras_manager,"Mercados e Feitas",model_sncp_receita_mercados_feiras,group_receita_manager,1,1,1,1
+sncp_receita_oep_finalidades_manager,"Ocupação de Espaço Publico/Finalidades",model_sncp_receita_oep_finalidades,group_receita_manager,1,1,1,1
+sncp_receita_controlo_manager,"Controlo",model_sncp_receita_controlo,group_receita_manager,1,1,1,1
+sncp_receita_controlo_guias_manager,"Guias relacionadas com os Controlos",model_sncp_receita_controlo_guias,group_receita_manager,1,1,1,1
+formulario_sncp_receita_select_guia_manager,"Selecção de Guia de Receita(Controlo)",model_formulario_sncp_receita_select_guia,group_receita_manager,1,1,1,1
+formulario_sncp_receita_select_guia_linhas_manager,"Selecção de linhas de Guia de Receita(Controlo)",model_formulario_sncp_receita_select_guia_linhas,group_receita_manager,1,1,1,1
+sncp_receita_fatura_modelo_manager,"fatura_modelo",model_sncp_receita_fatura_modelo,group_receita_manager,1,1,1,1
+sncp_receita_fatura_modelo_linha_manager,"fatura_modelo_linha",model_sncp_receita_fatura_modelo_linha,group_receita_manager,1,1,1,1
+sncp_receita_recorrente_manager,"recorrente",model_sncp_receita_recorrente,group_receita_manager,1,1,1,1
+sncp_receita_recorrente_parceiros_manager,"recorrente_parceiros",model_sncp_receita_recorrente_parceiros,group_receita_manager,1,1,1,1

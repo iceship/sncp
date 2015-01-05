@@ -1,0 +1,4 @@
+.openerp .oe_vm_switch_tree_regproc_pesquisa:after {
+    padding: 2px;
+    content: "i";
+}

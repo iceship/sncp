@@ -1,0 +1,5 @@
+id,name,lang,company_id/id,color,active,supplier,employee,customer,is_company,display_name,notification_email_send,use_parent_adress,opt_out
+5,Funcionário das Águas,pt_PT,1,0,TRUE,TRUE,TRUE,TRUE,TRUE,Funcionário das Águas,comment,FALSE,FALSE
+6,Secretário Geral,pt_PT,1,0,TRUE,TRUE,TRUE,TRUE,TRUE,Secretário Geral,comment,FALSE,FALSE
+7,"Fornecedor Geral, SA",pt_PT,1,0,TRUE,TRUE,TRUE,TRUE,TRUE,"Fornecedor Geral, SA",comment,FALSE,FALSE
+8,Empresa Geral de Serviços,pt_PT,1,0,TRUE,TRUE,TRUE,TRUE,TRUE,Empresa Geral de Serviços,comment,FALSE,FALSE

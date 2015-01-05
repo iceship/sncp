@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record model="ir.ui.view" id="formulario_cabimento_view">
+            <field name="model">formulario.sncp.despesa.cabimento.diario</field>
+            <field name="arch" type="xml">
+                <form string="Parâmetros" version="7.0">
+                    <div style="width:500px;">
+                    <group colspan="4">
+                        <field name="name" required="1"/>
+                        <field name="diario_id" required="1" options="{'no_open': True}" />
+                        <field name="datahora" required="1"/>
+                    </group>
+                    <footer>
+                        <div align="left" style="width:500px">
+                            <button name="end" type="object" string="Contabilizar" />
+                            <button name="descartar" type="object" string="Descartar" />
+                        </div>
+                    </footer></div>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

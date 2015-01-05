@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--Fundos disponiveis-->
+        <record id="view_sncp_despesa_fundos_disponiveis_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.fundos.disponiveis.tree</field>
+            <field name="model">sncp.despesa.fundos.disponiveis</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Fundos disponiveis" editable="top" version="7.0">
+                    <field name="name" required="1"/>
+                    <field name="mes" required="1"/>
+                    <field name="montante"/>
+                    <field name="reservado"/>
+                    <field name="dummy" readonly="1"/><field name="dummy" readonly="1"/><field name="dummy" readonly="1"/>
+                    <field name="dummy" readonly="1"/><field name="dummy" readonly="1"/><field name="dummy" readonly="1"/>
+                    <field name="dummy" readonly="1"/><field name="dummy" readonly="1"/><field name="dummy" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_despesa_fundos_disponiveis_view">
+            <field name="name">Fundos Disponíveis</field>
+            <field name="res_model">sncp.despesa.fundos.disponiveis</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Fundos Disponíveis" parent="menu_despesa" id="menu_sncp_despesa_fundos_disponiveis_view"
+                      action="action_sncp_despesa_fundos_disponiveis_view" sequence="20"/>
+
+
+        <!-- Programas.Co-Financiados -->
+        <record id="view_sncp_despesa_cofinanciamentos_tree" model="ir.ui.view">
+            <field name="name">view.sncp.despesa.cofinanciamentos.tree</field>
+            <field name="model">sncp.despesa.cofinanciamentos</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Cofinanciamentos" editable="top">
+                    <field name="codigo" attrs="{'readonly':[('state', '=', 1)]}" required="1"/>
+                    <field name="name" attrs="{'readonly':[('state', '=', 1)]}"/>
+                    <field name="encerramento" readonly="1"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_despesa_cofinanciamentos_view">
+            <field name="name">Programas Co-Financiados</field>
+            <field name="res_model">sncp.despesa.cofinanciamentos</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem name="Programas Co-Financiados" parent="menu_despesa"
+                  id="menu_sncp_despesa_cofinanciamentos_view"
+                  action="action_sncp_despesa_cofinanciamentos_view" sequence="50"/>
+
+    </data>
+</openerp>

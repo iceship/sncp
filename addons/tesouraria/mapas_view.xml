@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- _________________Vistas__________________________-->
+
+        <!-- Mapas Diários-->
+        <record id="view_sncp_tesouraria_mapas_diario_tree" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.mapas.diario.tree</field>
+            <field name="model">sncp.tesouraria.mapas.diario</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Mapas Diários de Tesouraria" delete="false" create="false">
+                    <field name="name"/>
+                    <field name="ano"/>
+                    <field name="numero"/>
+                    <field name="folha_linhas"/>
+                    <field name="folha_pagina"/>
+                    <field name="resumo_linhas"/>
+                    <field name="fechado"/>
+                    <button name="unlink" string="Apagar" attrs="{'invisible': [('fechado','=',True)]}"
+                            icon="gtk-cancel" type="object"/>
+                    <button name="imprimir_report_caixa" string="Imprimir Folha de Caixa" type="object" icon="fc"/>
+                    <button name="imprimir_report_diario" string="Imprimir Resumo Diário" type="object" icon="rd"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sncp_tesouraria_mapas_diario_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.mapas.diario.form</field>
+            <field name="model">sncp.tesouraria.mapas.diario</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Diário de Mapas de Tesouraria" version="7.0">
+                    <field name="linhas_id">
+                        <tree edit="false">
+                            <field name="mapa_id" invisible="1"/>
+                            <field name="name"/>
+                            <field name="cod_sncp"/>
+                            <field name="montante_col01" sum="Total col01"/>
+                            <field name="montante_col02" sum="Total col02"/>
+                            <field name="montante_col03" sum="Total col03"/>
+                            <field name="montante_col04" sum="Total col04"/>
+                            <field name="montante_col05" sum="Total col05"/>
+                            <field name="montante_col06" sum="Total col06"/>
+                            <field name="montante_col11" sum="Total col11"/>
+                            <field name="montante_col12" sum="Total col12"/>
+                            <field name="montante_col13" sum="Total col13"/>
+                            <field name="montante_col14" sum="Total col14"/>
+                            <field name="montante_col15" sum="Total col15"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_mapas_diario_view">
+            <field name="name">Mapas Diário da Tesouraria </field>
+            <field name="res_model">sncp.tesouraria.mapas.diario</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Mapas" parent="menu_tesouraria" id="menu_tesouraria_mapas" sequence="50"/>
+        <menuitem name="Mapas diários" parent="menu_tesouraria_mapas"
+                  id="menu_sncp_tesouraria_mapas_diario_view"
+                  action="action_sncp_tesouraria_mapas_diario_view" sequence="10"/>
+
+        <!-- Vista forma Folha Caixa-->
+        <record id="view_sncp_tesouraria_folha_caixa_form" model="ir.ui.view">
+            <field name="name">view.sncp.tesouraria.folha.caixa.form</field>
+            <field name="model">sncp.tesouraria.folha.caixa</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Folha de Caixa e Resumo de Diário" version="7.0" create="false">
+                    <sheet>
+                        <!-- Campos de estado -->
+                        <field name="state" invisible="1"/>
+                        <!-- END -->
+                        <group >
+                            <group>
+                                <field name="name"
+                                       attrs="{'readonly': [('state', 'not in', ['new'])]}"/>
+                                <field name="imprimir_fc"
+                                       attrs="{'invisible': [('state', 'in', ['new'])]}"
+                                       on_change="on_change_imprimir(imprimir_fc,'False')"/>
+                                <field name="imprimir_rd"
+                                       attrs="{'invisible': [('state', 'in', ['new'])]}"
+                                       on_change="on_change_imprimir('False',imprimir_rd)"/>
+                                <field name="encerrar_fc"
+                                       attrs="{'invisible': ['|',('state', 'in', ['new','closed']),
+                                                                ('imprimir_fc', 'in', [False]),
+                                                                ('imprimir_rd', 'in', [False])]}"/>
+                                <field name="encerrar_apenas"
+                                       attrs="{'invisible': [('state', 'in', ['new','closed'])]}"
+                                       on_change="on_change_encerrar_apenas(encerrar_apenas)"/>
+                            </group>
+                            <group>
+                                <button name="select_date" string="Confirmar" type="object"
+                                        states="new"/>
+                                <button name="imprimir_fechar" string="Imprimir/Fechar" type="object"
+                                        states="created,closed"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_sncp_tesouraria_folha_caixa_view">
+            <field name="name">Folha de Caixa e Resumo Diário</field>
+            <field name="res_model">sncp.tesouraria.folha.caixa</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <menuitem name="Folha de Caixa e Resumo de Diário" parent="menu_tesouraria_mapas"
+                  id="menu_sncp_tesouraria_folha_caixa_view"
+                  action="action_sncp_tesouraria_folha_caixa_view" sequence="20"/>
+
+      </data>
+</openerp>
